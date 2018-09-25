@@ -1,7 +1,7 @@
 (function() {
     angular
-      .module('dashboard')
-      .controller('Dashboard', Dashboard);
+        .module('dashboard')
+        .controller('Dashboard', Dashboard);
 
     Dashboard.$inject = ['StakeholderAuth', 'DistrictManager',
         'DistrictModel', '$location', '$scope', '$rootScope'
@@ -10,8 +10,8 @@
     function Dashboard(StakeholderAuth, DistrictManager, DistrictModel,
         $location, $scope, $rootScope) {
         if (StakeholderAuth.needsLogin()) {
-          return
-        };
+            return;
+        }
         var vm = this;
         this.updateHighlight = updateHighlight;
         this.routeTo = routeTo;
@@ -105,8 +105,8 @@
                             stakeholder_type: 'Student'
                         };
                         if (colorIt++ < withSchool && this.highlight) {
-                          aStudent.score = 0.4;
-                        };
+                            aStudent.score = 0.4;
+                        }
                         newNodes.push(aStudent);
                         links.push({ 'source': sourceIdx, 'target': studentIdx++ });
                     }

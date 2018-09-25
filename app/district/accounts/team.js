@@ -71,7 +71,7 @@
         }
 
         function showModal(modal) {
-            modal.scope = $scope.$new();
+            modal.scope = this.$new();
             $mdDialog.show(modal);
         }
         function actuallyExport(detailedReport){
@@ -89,7 +89,7 @@
                     var queryString = DistrictModel.currentFilter;
                     var url = UrlHelper.district.districtExportWithAuth(detailedReport, auth, districtId, queryString);
                     FileHelper.downloadFromUrl(url);
-                })
+                });
         }
         function exportStakeholders(){
             showModal(exportTypeModal);
@@ -156,7 +156,7 @@
             else {
                 this.DistrictModel.visibleMembers = this.DistrictModel.members;
             }
-            DistrictManager.initTeam(params.queryString)
+            DistrictManager.initTeam(params.queryString);
         }
 
         function messageStakeholders() {

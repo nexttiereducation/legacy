@@ -1,5 +1,6 @@
 (function() {
-    angular.module('filter')
+    angular
+        .module('filter')
         .directive('categoryFilter', CategoryFilter);
 
     CategoryFilter.$inject = ['filterModel'];
@@ -17,11 +18,12 @@
 
         function link(scope, element, attr) {
             scope.isExpanded = false;
-            scope.activeCount = scope.category.subCategories ? evaluateSubCategories(scope.category.subCategories) : 0;
+            scope.activeCount = scope.category.subCategories
+                ? evaluateSubCategories(scope.category.subCategories)
+                : 0;
             scope.toggleIsExpanded = toggleIsExpanded;
             scope.clear = clear;
             toggleActive();
-
             scope.$on('nte-filter.toggle', function(event, arg) {
                 arg.category = scope.category.name;
                 if (scope.category.queryName) {
@@ -30,24 +32,20 @@
                 if (arg.option.isActive === true) {
                     scope.activeCount++;
                 }
-
                 if (arg.option.isActive === false && scope.activeCount > 0) {
                     scope.activeCount--;
                 }
-
                 toggleActive();
             });
-
             scope.$on('nte-filter.clear', function(event, arg) {
                 clear(null, true);
             });
-
-            scope.$on('nte-filter.clear-all', function () {
+            scope.$on('nte-filter.clear-all', function() {
                 clear(null, false);
             });
 
             function checkSubcategories() {
-                for(var i = 0, subCategory; subCategory = scope.category.subCategories[i]; ++i) {
+                for (var i = 0, subCategory; subCategory = scope.category.subCategories[i]; ++i) {
                     if (subCategory.isActive) {
                         scope.category.isActive = true;
                         return;
@@ -64,7 +62,8 @@
                     element.find('.category-clear').removeClass('hidden');
                 } else {
                     scope.category.isActive = false;
-                    element.find('.category-indicator').removeClass('active');
+                    element.find('.category-indicator').removeClass(
+                        'active');
                     element.find('.category-clear').addClass('hidden');
                 }
             }
@@ -81,33 +80,30 @@
 
             function clear(event, shouldNotSendEvent) {
                 if (event) event.stopPropagation();
-
                 if (shouldNotSendEvent) {
-                    if (scope.activeCount > 0) scope.activeCount--;
+                    if (scope.activeCount > 0) {
+                        scope.activeCount--;
+                    }
                     toggleActive();
                     checkSubcategories();
                     return;
                 }
-
                 scope.activeCount = 0;
                 toggleActive();
-
-
                 if (scope.category.subCategories) {
-                    for(var i = 0, subCategory; subCategory = scope.category.subCategories[i]; ++i) {
-                        subCategory.isActive = false;
-                        for(var k = 0, option; option = subCategory.options[k]; ++k) {
+                    for (var i = 0; i < scope.category.subCategories; ++i) {
+                        var subCat = scope.category.subCategories[i];
+                        subCat.isActive = false;
+                        for (var k = 0, option; option = subCat.options[k]; ++k) {
                             option.isActive = false;
                         }
                     }
                 }
-
                 if (scope.options) {
-                    for(var u = 0, option; option = scope.options[u]; ++u) {
-                        option.isActive = false;
+                    for (var u = 0, opt; opt = scope.options[u]; ++u) {
+                        opt.isActive = false;
                     }
                 }
-
                 sendClearEvent();
             }
 
@@ -120,13 +116,11 @@
         function evaluateSubCategories(subCategories) {
             if (!subCategories) return;
             var activeCount = 0;
-            for(var i = 0, subCategory; subCategory = subCategories[i]; ++i) {
+            for (var i = 0, subCategory; subCategory = subCategories[i]; ++i) {
                 if (subCategory.isActive) activeCount++;
             }
-
             return activeCount;
         }
-
         return categoryFilter;
     }
 })();

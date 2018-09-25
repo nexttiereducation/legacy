@@ -37,7 +37,7 @@
                 if (!MessagingModel[messageData.chatId]) {
                     MessagingModel[messageData.chatId] = {
                         'messages': []
-                    }
+                    };
                 }
                 MessagingModel[messageData.chatId].messages.push(messageData);
                 $timeout(function() {
@@ -60,10 +60,10 @@
                 'recipientId': recipientId,
                 'type': 'messaging'
             };
-            Track.event("sent_message", {
-                "recipient_id": recipientId,
-                "recipient_grad_year": studentGradYear,
-                "body": messageText
+            Track.event('sent_message', {
+                'recipient_id': recipientId,
+                'recipient_grad_year': studentGradYear,
+                'body': messageText
             });
             WebsocketManager.send(JSON.stringify(message));
         }
@@ -72,7 +72,7 @@
             return API.$post(UrlHelper.messaging.group(), message)
                 .then(function(response) {
                     return response.data;
-                })
+                });
         }
 
         function markRead(stakeholderId) {
@@ -139,10 +139,10 @@
             };
             return API.$post(UrlHelper.messaging.message(stakeholderId), data)
                 .then(function(response) {
-                    Track.event("sent_message", {
-                        "recipient_id": stakeholderId,
-                        "recipient_grad_year": studentGradYear,
-                        "body": message
+                    Track.event('sent_message', {
+                        'recipient_id': stakeholderId,
+                        'recipient_grad_year': studentGradYear,
+                        'body': message
                     });
                     return response.data;
                 });

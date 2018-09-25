@@ -11,7 +11,7 @@
             'Juniors': false,
             'Seniors': false,
             'Counselors': false
-        }
+        };
 
         var PhaseService = {
             buildClassString: buildClassString,
@@ -30,11 +30,11 @@
             phaseHash['Seniors'] = phaseArrayContainsValues(phaseArray, [1,5,6,7,8,9,10,11]) ;
             phaseHash['Counselors'] = phaseArrayContainsValues(phaseArray, [15]);
 
-            if (phaseHash['Freshmen']) { humanReadablePhases.push('Freshmen') };
-            if (phaseHash['Sophomores']) { humanReadablePhases.push('Sophomores') };
-            if (phaseHash['Juniors']) { humanReadablePhases.push('Juniors') };
-            if (phaseHash['Seniors']) { humanReadablePhases.push('Seniors') };
-            if (phaseHash['Counselors']) { humanReadablePhases.push('Counselors') };
+            if (phaseHash['Freshmen']) { humanReadablePhases.push('Freshmen'); }
+            if (phaseHash['Sophomores']) { humanReadablePhases.push('Sophomores'); }
+            if (phaseHash['Juniors']) { humanReadablePhases.push('Juniors'); }
+            if (phaseHash['Seniors']) { humanReadablePhases.push('Seniors'); }
+            if (phaseHash['Counselors']) { humanReadablePhases.push('Counselors'); }
 
             return humanReadablePhases;
         }

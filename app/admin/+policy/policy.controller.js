@@ -5,52 +5,55 @@ angular
 PolicyCtrl.$inject = ['$scope', 'ApiService', 'ApiUrlService'];
 
 function PolicyCtrl($scope, ApiService, ApiUrlService) {
-    $scope.textContent = '';
-    $scope.editingToU = true;
-    $scope.termsId = null;
-    $scope.policyId = null;
-    $scope.editToU = function() {
-        $scope.textContent = '';
-        $scope.editingToU = true;
+    this.textContent = '';
+    this.editingToU = true;
+    this.termsId = null;
+    this.policyId = null;
+
+    function editToU() {
+        this.textContent = '';
+        this.editingToU = true;
         ApiService.$get(ApiUrlService.policy.getToU()).success(function(
             response) {
-            $scope.textContent = response.content;
-            $scope.termsId = response.id;
+            this.textContent = response.content;
+            this.termsId = response.id;
         }).error(function(data, status) {
             if (status == 404) {
                 ApiService.$post(ApiUrlService.policy.create(), {
                     title: 'terms',
                     content: '-empty-'
                 }).success(function(response) {
-                    $scope.textContent = response.content;
-                    $scope.termsId = response.id;
+                    this.textContent = response.content;
+                    this.termsId = response.id;
                 });
             }
         });
-    };
-    $scope.editPP = function() {
-        $scope.textContent = '';
-        $scope.editingToU = false;
+    }
+
+    function editPP() {
+        this.textContent = '';
+        this.editingToU = false;
         ApiService.$get(ApiUrlService.policy.getPP())
             .success(function(response) {
-                $scope.textContent = response.content;
-                $scope.policyId = response.id;
+                this.textContent = response.content;
+                this.policyId = response.id;
             }).error(function(data, status) {
                 if (status == 404) {
                     ApiService.$post(ApiUrlService.policy.create(), {
                         title: 'policy',
                         content: '-empty-'
                     }).success(function(response) {
-                        $scope.textContent = response.content;
-                        $scope.policyId = response.id;
+                        this.textContent = response.content;
+                        this.policyId = response.id;
                     });
                 }
             });
-    };
-    $scope.save = function() {
-        var id = ($scope.editingToU) ? $scope.termsId : $scope.policyId;
+    }
+
+    function save() {
+        var id = (this.editingToU) ? this.termsId : this.policyId;
         var url = ApiUrlService.policy.updateText(id);
-        ApiService.$patch(url, { 'content': $scope.textContent }).success(
+        ApiService.$patch(url, { 'content': this.textContent }).success(
             function() {
                 toastr.info('Content Updated.');
             }).error(function() {
@@ -59,6 +62,7 @@ function PolicyCtrl($scope, ApiService, ApiUrlService) {
                 'Error'
             );
         });
-    };
-    $scope.editToU();
+    }
+
+    this.editToU();
 }

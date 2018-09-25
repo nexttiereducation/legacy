@@ -31,11 +31,11 @@
                 'Use translation as a help tool to read content within NextTier only.';
             $mdDialog.show(
                 $mdDialog.alert()
-                         .clickOutsideToClose(true)
-                         .title('NextTier')
-                         .textContent(messageText)
-                         .ariaLabel('Translation disclaimer')
-                         .ok('Got it!')
+                    .clickOutsideToClose(true)
+                    .title('NextTier')
+                    .textContent(messageText)
+                    .ariaLabel('Translation disclaimer')
+                    .ok('Got it!')
             );
         }
     }

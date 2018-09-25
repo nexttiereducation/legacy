@@ -1,7 +1,7 @@
 (function() {
     angular
-      .module('district')
-      .factory('DistrictManager', DistrictManager);
+        .module('district')
+        .factory('DistrictManager', DistrictManager);
 
     DistrictManager.$inject = ['API', 'UrlHelper', 'DistrictModel', '$q',
         'StakeholderAuth'
@@ -73,26 +73,26 @@
             var data = {
                 'name': 'New Role',
                 'district': id
-            }
+            };
             return API.$post(UrlHelper.district.createRole(), data)
                 .then(function(result) {
                     DistrictModel.district.roles.push(result.data);
-                    return result.data
-                })
+                    return result.data;
+                });
         }
 
         function getActions() {
             return rawGetActions().then(function(result) {
                 DistrictModel.district.actions = result.data.results;
                 return result.data.results;
-            })
+            });
         }
 
         function getRoles() {
             return rawGetRoles().then(function(result) {
                 DistrictModel.district.roles = result.data.results;
                 return result.data.results;
-            })
+            });
         }
 
         function updateActionList(role, action, add) {
@@ -115,7 +115,7 @@
             return API.$delete(UrlHelper.district.updateRole(id, role_id)).then(
                 function(ex) {
                     _.remove(DistrictModel.district.roles, function(n) {
-                        return n.id == role_id
+                        return n.id == role_id;
                     });
                 });
         }
@@ -177,7 +177,7 @@
                         feed[idx].eventDate = convertDateTime(feed[
                             idx].created_on);
                     }
-                })
+                });
             }
         }
 
@@ -186,7 +186,7 @@
                 function(response) {
                     var stakeholderRoles = response.data.results;
                     stakeholder.roles = _.map(stakeholderRoles, 'id');
-                })
+                });
         }
 
         function saveDistrict(data) {
@@ -206,14 +206,14 @@
                 function(response) {
                     DistrictModel.allDistricts.push.apply(DistrictModel.allDistricts, response.data.results);
                     DistrictModel.allDistrictsNextPage = response.data.next;
-                })
+                });
         }
 
         function getDownloadAuth() {
             return API.$get(UrlHelper.district.districtExport()).then(
                 function(response) {
                     return response;
-                })
+                });
         }
 
         function deleteStakeholder(stakeholder) {
@@ -241,7 +241,7 @@
                 }).catch(function(error) {
                 toastr.error('Failed to get all stakeholders');
                 console.log(error);
-            })
+            });
         }
 
         function getMetadata(districtId) {
@@ -269,7 +269,7 @@
             var districtId = DistrictModel.district.id;
             return API.$post(UrlHelper.district.getFieldmap(districtId),
                 data).then(function(response) {
-                data = { field_name: uniqueIdentifier, field_type: 'unique' }
+                data = { field_name: uniqueIdentifier, field_type: 'unique' };
                 return data;
             }).catch(function(error) {
                 toastr.error('Failed to update metadata');
@@ -294,7 +294,7 @@
             }).catch(function(error) {
                 toastr.error('Failed to get more stakeholders');
                 console.log(error);
-            })
+            });
         }
 
         function setCounselorSummaries(idArray) {
@@ -320,13 +320,13 @@
         function initTeam(queryParams) {
             DistrictModel.currentFilter = queryParams;
             DistrictModel.pagedStakeholderList = [];
-            return getAllMembers(null, queryParams)
+            return getAllMembers(null, queryParams);
         }
         //Active district must be set
         function getAllMembers(next, queryParams) {
             return rawGetAllMembers(next, queryParams).then(function(result) {
                 if (!DistrictModel.totalResults) {
-                    DistrictModel.totalResults = result.data.count
+                    DistrictModel.totalResults = result.data.count;
                 }
                 DistrictModel.district.size = result.data.count;
                 DistrictModel.pagedStakeholderList = DistrictModel.pagedStakeholderList
@@ -361,7 +361,7 @@
                         if (filter[key].subCategories) {
                             for (var item = filter[key].subCategories.length; item--;) {
                                 filter[key].subCategories[
-                                        item].type = 'default';
+                                    item].type = 'default';
                             }
                         }
                     }
@@ -435,8 +435,8 @@
                     console.log(ex);
                     toastr.warning(
                         'Failed to find High Schools for districts. Refresh page.'
-                    )
-                })
+                    );
+                });
             }
         }
         //API calls
@@ -476,7 +476,7 @@
         }
 
         function updateFilter(members, filters) {
-            newFilters = _.filter(filters, function(x) { return x.name != 'Counselors' })
+            newFilters = _.filter(filters, function(x) { return x.name != 'Counselors'; });
             var counselors = [];
             var counselorFilter = {
                 name: 'Faculty',
@@ -527,7 +527,7 @@
                 member.score = .7;
                 member.size = 20;
                 member.name = member.emailSplice;
-                member.summary = { connections: 0 }
+                member.summary = { connections: 0 };
             }
             return setCounselorSummaries(allIds);
         }

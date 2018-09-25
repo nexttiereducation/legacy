@@ -1,4 +1,6 @@
 (function() {
+    'use strict';
+
     angular
         .module('messagingModule')
         .directive('groupChatWindow', GroupChat);
@@ -30,15 +32,15 @@
                 var message = {
                     ids: ids,
                     body: scope.groupChat.newMessage
-                }
+                };
                 MessagingManager.sendGroupMessage(message).then(function() {
-                    Track.event("counselor_sent_blast", {
-                        "body": message.body,
-                        "number_of_recipients": message.ids.length
+                    Track.event('counselor_sent_blast', {
+                        'body': message.body,
+                        'number_of_recipients': message.ids.length
                     });
-                   scope.groupChat.newMessage = null;
-                   toastr.success('Message Sent');
-                })
+                    scope.groupChat.newMessage = null;
+                    toastr.success('Message Sent');
+                });
             }
         }
     }

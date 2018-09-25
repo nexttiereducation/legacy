@@ -1,7 +1,7 @@
 (function() {
     angular
         .module('d3', ['d3'])
-        .directive('richNodes', richNodes)
+        .directive('richNodes', richNodes);
 
     richNodes.$inject = ['d3Service', '$window'];
 
@@ -32,7 +32,7 @@
                     key1 = true,
                     key2 = true,
                     key3 = true,
-                    key0 = true
+                    key0 = true;
                 var focus_node = null,
                     highlight_node = null;
                 var text_center = false;
@@ -65,7 +65,7 @@
                 //var min_zoom = 0.1;
                 //var max_zoom = 7;
                 var svg = d3.select(ele[0]).append('svg').style('width', '100%')
-                            .attr('width', w).attr('height', h);
+                    .attr('width', w).attr('height', h);
                 var zoom = d3.behavior.zoom().scaleExtent([min_zoom, max_zoom]);
                 svg.style('cursor', 'move');
                 // watch for data changes and re-render
@@ -111,7 +111,7 @@
                                 if (isNumber(d.score) && d.score >= 0)
                                     return color(d.score);
                                 else return default_link_color;
-                            })
+                            });
                     var node = g.selectAll('.node').data(graph.nodes).enter()
                         .append('g')
                         .attr('class', 'node')
@@ -127,23 +127,23 @@
                     var tocolor = 'fill';
                     var towhite = 'stroke';
                     if (outline) {
-                        tocolor = 'stroke'
-                        towhite = 'fill'
+                        tocolor = 'stroke';
+                        towhite = 'fill';
                     }
                     var circle = node.append('path').attr('d', d3.svg.symbol()
-                            .size(function(d) {
-                                return Math.PI * Math.pow(size(d.size)
+                        .size(function(d) {
+                            return Math.PI * Math.pow(size(d.size)
                                     || nominal_base_node_size, 2);
-                            })
-                            .type(function(d) {
-                                if (d.type) return d.type;
-                                return 'circle';
-                            }))
-                            .style(tocolor, function(d) {
-                                if (isNumber(d.score) && d.score >= 0)
-                                    return color(d.score);
-                                else return default_node_color;
-                            })
+                        })
+                        .type(function(d) {
+                            if (d.type) return d.type;
+                            return 'circle';
+                        }))
+                        .style(tocolor, function(d) {
+                            if (isNumber(d.score) && d.score >= 0)
+                                return color(d.score);
+                            else return default_node_color;
+                        })
                         //.attr('r', function(d) { return size(d.size)||nominal_base_node_size; })
                         .style('stroke-width', nominal_stroke).style(
                             towhite, 'white');
@@ -154,7 +154,7 @@
                     if (text_center) text.text(function(d) {
                         return d.name;
                     })
-                    .style('text-anchor', 'middle');
+                        .style('text-anchor', 'middle');
                     else text.attr('dx', function(d) {
                         return (size(d.size) ||
                             nominal_base_node_size);
@@ -171,9 +171,9 @@
                     }).on('mousedown', function(d) {
                         d3.event.stopPropagation();
                         focus_node = d;
-                        set_focus(d)
+                        set_focus(d);
                         if (highlight_node === null)
-                            set_highlight(d)
+                            set_highlight(d);
                     }).on('mouseout', function(d) {
                         g.select('[idx=" " + d.id + " "]').style('visibility', 'hidden');
                         exit_highlight();
@@ -202,7 +202,7 @@
                                 link.style('stroke', function(o) {
                                     return (isNumber(o.score) && o.score >= 0)
                                         ? color(o.score)
-                                        : default_link_color
+                                        : default_link_color;
                                 });
                             }
                         }
@@ -218,7 +218,7 @@
                             });
                             link.style('opacity', function(o) {
                                 return o.source.index == d.index || o.target.index == d.index
-                                       ? 1 : highlight_trans;
+                                    ? 1 : highlight_trans;
                             });
                         }
                     }
@@ -246,8 +246,8 @@
                     zoom.on('zoom', function() {
                         var stroke = nominal_stroke;
                         if (nominal_stroke * zoom.scale() > max_stroke) {
-                          stroke = max_stroke / zoom.scale()
-                        };
+                            stroke = max_stroke / zoom.scale();
+                        }
                         link.style('stroke-width', stroke);
                         circle.style('stroke-width', stroke);
                         var base_radius = nominal_base_node_size;
@@ -257,18 +257,18 @@
                         circle.attr(
                             'd',
                             d3.svg.symbol().size(
-                            function(d) {
-                                return Math.PI * Math.pow(
-                                    size(d.size) *
+                                function(d) {
+                                    return Math.PI * Math.pow(
+                                        size(d.size) *
                                     base_radius / nominal_base_node_size ||
                                     base_radius, 2);
-                            }).type(function(d) {
+                                }).type(function(d) {
                                 if (d.type) {
-                                    return d.type
-                                };
+                                    return d.type;
+                                }
                                 return 'circle';
                             })
-                          )
+                        );
                         //circle.attr('r', function(d) { return (size(d.size)*base_radius/nominal_base_node_size||base_radius); })
                         if (!text_center) text.attr('dx',
                             function(d) {
@@ -276,8 +276,8 @@
                             });
                         var text_size = nominal_text_size;
                         if (nominal_text_size * zoom.scale() > max_text_size) {
-                            text_size = max_text_size / zoom.scale()
-                        };
+                            text_size = max_text_size / zoom.scale();
+                        }
                         text.style('font-size', text_size + 'px');
                         g.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
                     });
@@ -328,45 +328,45 @@
                                    && !d3.event.altKey
                                    && !d3.event.metaKey) {
                             switch (String.fromCharCode(d3.event.keyCode)) {
-                                case 'C':
-                                    keyc = !keyc;
-                                    break;
-                                case 'S':
-                                    keys = !keys;
-                                    break;
-                                case 'T':
-                                    keyt = !keyt;
-                                    break;
-                                case 'R':
-                                    keyr = !keyr;
-                                    break;
-                                case 'X':
-                                    keyx = !keyx;
-                                    break;
-                                case 'D':
-                                    keyd = !keyd;
-                                    break;
-                                case 'L':
-                                    keyl = !keyl;
-                                    break;
-                                case 'M':
-                                    keym = !keym;
-                                    break;
-                                case 'H':
-                                    keyh = !keyh;
-                                    break;
-                                case '1':
-                                    key1 = !key1;
-                                    break;
-                                case '2':
-                                    key2 = !key2;
-                                    break;
-                                case '3':
-                                    key3 = !key3;
-                                    break;
-                                case '0':
-                                    key0 = !key0;
-                                    break;
+                            case 'C':
+                                keyc = !keyc;
+                                break;
+                            case 'S':
+                                keys = !keys;
+                                break;
+                            case 'T':
+                                keyt = !keyt;
+                                break;
+                            case 'R':
+                                keyr = !keyr;
+                                break;
+                            case 'X':
+                                keyx = !keyx;
+                                break;
+                            case 'D':
+                                keyd = !keyd;
+                                break;
+                            case 'L':
+                                keyl = !keyl;
+                                break;
+                            case 'M':
+                                keym = !keym;
+                                break;
+                            case 'H':
+                                keyh = !keyh;
+                                break;
+                            case '1':
+                                key1 = !key1;
+                                break;
+                            case '2':
+                                key2 = !key2;
+                                break;
+                            case '3':
+                                key3 = !key3;
+                                break;
+                            case '0':
+                                key0 = !key0;
+                                break;
                             }
                             link.style('display', function(d) {
                                 var flag = vis_by_type(d.source.type)
@@ -380,19 +380,19 @@
                             node.style('display', function(d) {
                                 return (key0 || hasConnections(d)) && vis_by_type(d.type)
                                         && vis_by_node_score(d.score)
-                                        ? 'inline' : 'none';
+                                    ? 'inline' : 'none';
                             });
                             text.style('display', function(d) {
                                 return (key0 || hasConnections(d)) && vis_by_type(d.type)
                                         && vis_by_node_score(d.score)
-                                        ? 'inline' : 'none';
+                                    ? 'inline' : 'none';
                             });
                             if (highlight_node !== null) {
                                 if ((key0 || hasConnections(highlight_node))
                                     && vis_by_type(highlight_node.type)
                                     && vis_by_node_score(highlight_node.score)) {
                                     if (focus_node !== null) {
-                                      set_focus(focus_node);
+                                        set_focus(focus_node);
                                     }
                                     set_highlight(highlight_node);
                                 } else {
@@ -405,20 +405,20 @@
 
                 function vis_by_type(type) {
                     switch (type) {
-                        case 'circle':
-                            return keyc;
-                        case 'square':
-                            return keys;
-                        case 'triangle-up':
-                            return keyt;
-                        case 'diamond':
-                            return keyr;
-                        case 'cross':
-                            return keyx;
-                        case 'triangle-down':
-                            return keyd;
-                        default:
-                            return true;
+                    case 'circle':
+                        return keyc;
+                    case 'square':
+                        return keys;
+                    case 'triangle-up':
+                        return keyt;
+                    case 'diamond':
+                        return keyr;
+                    case 'cross':
+                        return keyx;
+                    case 'triangle-down':
+                        return keyd;
+                    default:
+                        return true;
                     }
                 }
 
@@ -443,7 +443,7 @@
                 function isNumber(n) {
                     return !isNaN(parseFloat(n)) && isFinite(n);
                 }
-            }
+            };
         }
     }
     mod.directive('d3Nodes', d3Nodes);
@@ -471,8 +471,8 @@
                     barPadding = parseInt(attrs.barPadding) || 5;
                 // our d3 code will go here
                 var svg = d3.select(ele[0]).append('svg').style('width', '100%')
-                            .attr('width', w)
-                            .attr('height', h);
+                    .attr('width', w)
+                    .attr('height', h);
                 // Browser onresize event
                 window.onresize = function() {
                     scope.$apply();
@@ -514,7 +514,7 @@
                         .call(force.drag);
                     var text = svg.selectAll('.text').data(graph.nodes)
                         .enter().append('text').attr('dy', '.35em')
-                        .style('font-size', nominal_text_size + 'px')
+                        .style('font-size', nominal_text_size + 'px');
                     node.append('title').text(function(d) { return d.name; });
                     force.on('tick', function() {
                         node[0].x = w / 2;
@@ -525,10 +525,10 @@
                             .attr('y2', function(d) { return d.target.y; });
                         node.attr('cx', function(d) { return d.x; })
                             .attr('cy', function(d) { return d.y; }
-                        );
+                            );
                     });
-                }
-            }
+                };
+            };
         }
     }
     mod.directive('d3Bars', d3Bars);
@@ -601,8 +601,8 @@
                         .attr('width', function(d) {
                             return xScale(d.score);
                         });
-                }
-            }
+                };
+            };
         }
-    };
+    }
 })();

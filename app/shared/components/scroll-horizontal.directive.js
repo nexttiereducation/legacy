@@ -25,7 +25,7 @@
             	scope.leftPosition = scrollBox.scrollLeft();
             	scope.wrapperWidth = scrollBox.width();
 
-               scope.scrollRight = function() {
+                scope.scrollRight = function() {
                     scrollBox.animate({ scrollLeft: scope.leftPosition + clickOffset }, clickOffsetTiming);
                     scope.leftPosition = scope.leftPosition + clickOffset;
                     scope.contentWidth = scrollContent.width();
@@ -36,7 +36,7 @@
                     scope.leftPosition = scope.leftPosition - clickOffset;
                 };
             }
-        }
+        };
     }
 })();
 

@@ -1,5 +1,8 @@
 (function() {
-    angular.module('connections')
+    'use strict';
+
+    angular
+        .module('connections')
         .service('ConnectionsModel', ConnectionsModel);
 
     ConnectionsModel.$inject = [];
@@ -9,5 +12,4 @@
         this.pendingConnections = [];
         this.studentRecs = [];
     }
-
 })();

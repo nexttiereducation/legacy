@@ -44,22 +44,22 @@
             'contrastDarkColors': '50 100 200 300 400 A100 A200 A400'
         });
         $mdThemingProvider.definePalette('nextTier-warn', {
-          '50': '#ffffff',
-          '100': '#f9c2d2',
-          '200': '#f48ead',
-          '300': '#ee4d7d',
-          '400': '#eb3169',
-          '500': '#e81655',
-          '600': '#cc134b',
-          '700': '#b01141',
-          '800': '#940e36',
-          '900': '#780b2c',
-          'A100': '#ffffff',
-          'A200': '#f9c2d2',
-          'A400': '#eb3169',
-          'A700': '#b01141',
-          'contrastDefaultColor': 'light',
-          'contrastDarkColors': '50 100 200 300 A100 A200'
+            '50': '#ffffff',
+            '100': '#f9c2d2',
+            '200': '#f48ead',
+            '300': '#ee4d7d',
+            '400': '#eb3169',
+            '500': '#e81655',
+            '600': '#cc134b',
+            '700': '#b01141',
+            '800': '#940e36',
+            '900': '#780b2c',
+            'A100': '#ffffff',
+            'A200': '#f9c2d2',
+            'A400': '#eb3169',
+            'A700': '#b01141',
+            'contrastDefaultColor': 'light',
+            'contrastDarkColors': '50 100 200 300 A100 A200'
         });
 
         $mdThemingProvider.theme('default')

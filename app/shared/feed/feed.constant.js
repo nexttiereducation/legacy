@@ -38,21 +38,21 @@
                 'https://s3.amazonaws.com/next-tier/images/counselor/cd_empty_mobile-4.svg'
             ],
             feedSummaryKeys: {
-                accepted_connections: "Accepted Connections",
-                accepted_recommendations: "Accepted Recommendations",
-                achievements_earned: "Achievements Earned",
-                failed_logins: "Failed Logins",
-                files_uploaded_to_profile: "Files Uploaded to Profile",
-                files_uploaded_to_task: "Files Uploaded to Tasks",
-                notes_added: "Notes Added",
-                rejected_recommendations: "Rejected Recommendations",
-                schools_added: "Schools Added",
-                schools_removed: "Schools Removed",
-                submitted_applications: "Submitted Applications",
-                successful_logins: "Successful Logins",
-                tasks_completed: "Tasks Completed",
-                tasks_due: "Tasks Due",
-                tasks_started: "Tasks Started"
+                accepted_connections: 'Accepted Connections',
+                accepted_recommendations: 'Accepted Recommendations',
+                achievements_earned: 'Achievements Earned',
+                failed_logins: 'Failed Logins',
+                files_uploaded_to_profile: 'Files Uploaded to Profile',
+                files_uploaded_to_task: 'Files Uploaded to Tasks',
+                notes_added: 'Notes Added',
+                rejected_recommendations: 'Rejected Recommendations',
+                schools_added: 'Schools Added',
+                schools_removed: 'Schools Removed',
+                submitted_applications: 'Submitted Applications',
+                successful_logins: 'Successful Logins',
+                tasks_completed: 'Tasks Completed',
+                tasks_due: 'Tasks Due',
+                tasks_started: 'Tasks Started'
             },
             categories: {
                 accepted_connections: 8,
@@ -72,10 +72,10 @@
                 tasks_started: 1
             },
             icons: {
-                failed_logins: "https://next-tier.s3.amazonaws.com/build/images/ic_student_badge.png",
-                files_uploaded_to_profile: "https://s3.amazonaws.com/next-tier/build/images/activity/files_uploaded.svg",
-                files_uploaded_to_task: "https://s3.amazonaws.com/next-tier/build/images/activity/files_uploaded.svg",
-                successful_logins: "https://next-tier.s3.amazonaws.com/build/images/ic_student_badge.png"
+                failed_logins: 'https://next-tier.s3.amazonaws.com/build/images/ic_student_badge.png',
+                files_uploaded_to_profile: 'https://s3.amazonaws.com/next-tier/build/images/activity/files_uploaded.svg',
+                files_uploaded_to_task: 'https://s3.amazonaws.com/next-tier/build/images/activity/files_uploaded.svg',
+                successful_logins: 'https://next-tier.s3.amazonaws.com/build/images/ic_student_badge.png'
             }
-        })
+        });
 })();

@@ -11,7 +11,7 @@
     ];
 
     function NavbarCtrl($scope, $rootScope, $mdMedia, $window, $location, $timeout,
-                    $q, $filter, StakeholderAuthService, InstitutionTracker, localStorageService) {
+        $q, $filter, StakeholderAuthService, InstitutionTracker, localStorageService) {
         var vm = this;
         $rootScope.$mdMedia = $mdMedia;
         this.openMenu = openMenu;
@@ -29,7 +29,7 @@
             return $q.all(promises).then(function() {
                 StakeholderAuthService.updateStakeholder().then(function(response) {
                     setupStakeholder(response, forceUpdate);
-                })
+                });
             });
         }
         activate();
@@ -90,7 +90,7 @@
                     && (institution.application_group.id === this.nteApplicationGroup.id)) {
                     hasNextTierApplication++;
                 }
-            })
+            });
             return hasNextTierApplication > 0;
         }
         /* ======================= TABS ======================= */
@@ -98,23 +98,23 @@
             this.currentPath = getCurrentLocation();
             this.noNavbarHighlights = (this.currentPath === '/profile/') || (this.currentPath === '/apply/achievements');
             switch (this.currentPath) {
-                case '/profile/':
-                    this.placeholder = 'Profile';
-                    break;
-                case '/apply/achievements':
-                    this.placeholder = 'Achievements';
-                    break;
-                case '/scholarships/':
-                    this.placeholder = 'Scholarships';
-                    break;
-                default:
-                    if (this.currentPath.indexOf('/applications/') > -1) {
-                        this.placeholder = 'Applications';
-                    } else {
-                        this.placeholder = '';
-                    }
-                    break;
-            };
+            case '/profile/':
+                this.placeholder = 'Profile';
+                break;
+            case '/apply/achievements':
+                this.placeholder = 'Achievements';
+                break;
+            case '/scholarships/':
+                this.placeholder = 'Scholarships';
+                break;
+            default:
+                if (this.currentPath.indexOf('/applications/') > -1) {
+                    this.placeholder = 'Applications';
+                } else {
+                    this.placeholder = '';
+                }
+                break;
+            }
             if (!forceUpdate) {
                 var storedTabs = localStorageService.get('tabs');
                 this.selectedTabIndex = -1;
@@ -128,7 +128,7 @@
                 var configObj = getConfig();
                 $timeout(configureTabs(configObj), 0);
             }
-        };
+        }
 
         function switchTabs(newTabRole) {
             var configObj = getConfig(newTabRole);
@@ -140,7 +140,7 @@
             angular.forEach(configObj.tabs, function(tab) {
                 if (!tab.label) {
                     tab.label = $filter('toTitleCase')(tab.path);
-                };
+                }
                 if (tab.condition == false) {
                     return;
                 } else {
@@ -390,24 +390,24 @@
             var configObj = {};
             var tabRole = newTabRole || this.stakeholder.stakeholder_type;
             switch (tabRole) {
-                case 'Admin':
+            case 'Admin':
+                configObj = admin;
+                break;
+            case 'Student':
+                if (StakeholderAuthService.isAdmin() && !newTabRole) {
                     configObj = admin;
-                    break;
-                case 'Student':
-                    if (StakeholderAuthService.isAdmin() && !newTabRole) {
-                        configObj = admin;
-                    } else {
-                        configObj = student;
-                    }
-                    break;
-                case 'Counselor':
-                    configObj = counselor;
-                    break;
-                case 'Parent':
-                    configObj = parent;
-                    break;
-                default:
-                    configObj = anonymous;
+                } else {
+                    configObj = student;
+                }
+                break;
+            case 'Counselor':
+                configObj = counselor;
+                break;
+            case 'Parent':
+                configObj = parent;
+                break;
+            default:
+                configObj = anonymous;
             }
             return configObj;
         }
@@ -425,14 +425,14 @@
         function openMenu($mdOpenMenu, ev) {
             originatorEv = ev;
             $mdOpenMenu(ev);
-        };
+        }
 
         function toggleMessaging() {
             $rootScope.$broadcast('toggleMessaging');
         }
         /* ======================= LISTENERS ======================= */
         function setupListeners() {
-            $scope.$watch(
+            this.$watch(
                 function watchStakeholder(scope) {
                     return (this.stakeholder);
                 },

@@ -11,7 +11,7 @@
     function NotificationsCtrl($scope, $rootScope, $q, ngDialog,
         NotificationManager, Track, $mdDialog, $mdMedia, $location) {
         var vm = this;
-        $scope.$mdMedia = $mdMedia;
+        this.$mdMedia = $mdMedia;
         //vm methods
         this.removeNotification = removeNotification;
         this.removeAll = removeAll;
@@ -49,15 +49,15 @@
         function removeAll(category) {
             //set the correct value to 0 so that the DOM update doesn't have to wait on the backend to finish
             switch (category) {
-                case NotificationTypes.tasks:
-                    this.counts.tasks = 0;
-                    break;
-                case NotificationTypes.communications:
-                    this.counts.communications = 0;
-                    break;
-                case NotificationTypes.achievements:
-                    this.counts.achievements = 0;
-                    break;
+            case NotificationTypes.tasks:
+                this.counts.tasks = 0;
+                break;
+            case NotificationTypes.communications:
+                this.counts.communications = 0;
+                break;
+            case NotificationTypes.achievements:
+                this.counts.achievements = 0;
+                break;
             }
             NotificationManager.deleteCategory(category).then(function() {
                 loadNotifications();
@@ -67,7 +67,7 @@
 
         function closeNotificationDialog() {
             $mdDialog.cancel();
-            // $scope.closeThisDialog(); //worth doing, even if it doesn't work on mobile
+            // this.closeThisDialog(); //worth doing, even if it doesn't work on mobile
         }
         ////////private methods////////
         function updateCount() {

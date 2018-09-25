@@ -8,24 +8,24 @@ SponsoredSchoolsCtrl.$inject = ['ApiUrlService', 'ApiService', 'QueryBuilder',
 
 function SponsoredSchoolsCtrl(ApiUrlService, ApiService, QueryBuilder,
     ngDialog, $scope, infiniteScroll, jsUtilities) {
-    var vm = this;
-    this.showSponsored = true;
-    this.items = [];
-    this.sponsoredSchools = [];
-    this.prevSponsored = [];
-    this.showActiveSchools = showActiveSchools;
-    this.hideActiveSchools = hideActiveSchools;
-    this.openEditSponsorForm = openEditSponsorForm;
-    this.openDeleteSponsorForm = openDeleteSponsorForm;
-    this.openNewSponsorForm = openNewSponsorForm;
-    this.getInstItems = getInstItems;
-    this.removeSponsor = removeSponsor;
+
     this.createNewSponsor = createNewSponsor;
     this.dateValidate = dateValidate;
-    this.sponsorship = {};
-    this.orderingField = 'name';
-    this.query = '';
+    this.getInstItems = getInstItems;
+    this.hideActiveSchools = hideActiveSchools;
     this.index = -1;
+    this.items = [];
+    this.openDeleteSponsorForm = openDeleteSponsorForm;
+    this.openEditSponsorForm = openEditSponsorForm;
+    this.openNewSponsorForm = openNewSponsorForm;
+    this.orderingField = 'name';
+    this.prevSponsored = [];
+    this.query = '';
+    this.removeSponsor = removeSponsor;
+    this.showActiveSchools = showActiveSchools;
+    this.showSponsored = true;
+    this.sponsoredSchools = [];
+    this.sponsorship = {};
     this.valid = true;
 
     init();
@@ -108,8 +108,7 @@ function SponsoredSchoolsCtrl(ApiUrlService, ApiService, QueryBuilder,
             closeByEscape: true,
             closeByDocument: true
         }).then(function() {
-            var start = jsUtilities.dates.convertToString(this.sponsorship
-                .start_date);
+            var start = jsUtilities.dates.convertToString(this.sponsorship.start_date);
             var end = jsUtilities.dates.convertToString(this.sponsorship.end_date);
             ApiService.$patch(ApiUrlService.sponsoredSchools.update(this.sponsorship
                 .id), {
@@ -117,37 +116,33 @@ function SponsoredSchoolsCtrl(ApiUrlService, ApiService, QueryBuilder,
                 'start_date': start,
                 'end_date': end
             })
-            .success(function(response) {
-                toastr.info('Edit Successful');
-                this.valid = true;
-                var active = isActive(this.sponsorship.start_date,
-                    this.sponsorship.end_date);
-                if (!active === temp) {
-                    response.start_date = jsUtilities.dates.convertToDate(
-                        start);
-                    response.end_date = jsUtilities.dates.convertToDate(
-                        end);
-                    response.name = getInstName(response);
-                    if (active) {
-                        this.prevSponsored.splice(index, 1);
-                        this.sponsoredSchools.push(response);
+                .success(function(response) {
+                    toastr.info('Edit Successful');
+                    this.valid = true;
+                    var active = isActive(this.sponsorship.start_date,
+                        this.sponsorship.end_date);
+                    if (!active === temp) {
+                        response.start_date = jsUtilities.dates.convertToDate(start);
+                        response.end_date = jsUtilities.dates.convertToDate(end);
+                        response.name = getInstName(response);
+                        if (active) {
+                            this.prevSponsored.splice(index, 1);
+                            this.sponsoredSchools.push(response);
+                        } else {
+                            this.sponsoredSchools.splice(index, 1);
+                            this.prevSponsored.push(response);
+                        }
                     } else {
-                        this.sponsoredSchools.splice(index, 1);
-                        this.prevSponsored.push(response);
+                        sponsorship.priority = response.priority;
+                        sponsorship.end_date = jsUtilities.dates.convertToDate(end);
+                        sponsorship.start_date = jsUtilities.dates.convertToDate(start);
                     }
-                } else {
-                    sponsorship.priority = response.priority;
-                    sponsorship.end_date = jsUtilities.dates.convertToDate(
-                        end);
-                    sponsorship.start_date = jsUtilities.dates.convertToDate(
-                        start);
-                }
-                this.sponsorship = {};
-            }).error(function(response) {
-                this.sponsorship = {};
-                toastr.error(response, 'Error');
-            });
-        })
+                    this.sponsorship = {};
+                }).error(function(response) {
+                    this.sponsorship = {};
+                    toastr.error(response, 'Error');
+                });
+        });
     }
 
     function openDeleteSponsorForm(sponsorship, index) {
@@ -248,8 +243,7 @@ function SponsoredSchoolsCtrl(ApiUrlService, ApiService, QueryBuilder,
             closeByEscape: true,
             closeByDocument: true
         }).then(function() {
-            var begin = jsUtilities.dates.convertToString(this.sponsorship
-                .start_date);
+            var begin = jsUtilities.dates.convertToString(this.sponsorship.start_date);
             var end = jsUtilities.dates.convertToString(this.sponsorship.end_date);
             ApiService.$post(ApiUrlService.sponsoredSchools.create(), {
                 'institution': item.id,

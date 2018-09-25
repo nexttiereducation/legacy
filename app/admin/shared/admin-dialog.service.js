@@ -6,7 +6,7 @@ AdminDialog.$inject = ['ApiService', 'ApiUrlService', 'ngDialog', '$filter'];
 
 function AdminDialog(ApiService, ApiUrlService, ngDialog, $filter) {
 
-    this.editDialog = function(scope, itemId, itemIndex, page) {
+    function editDialog(scope, itemId, itemIndex, page) {
 
         var template = 'templates/partials/' + page + '-list-view-detail.html';
 
@@ -25,15 +25,15 @@ function AdminDialog(ApiService, ApiUrlService, ngDialog, $filter) {
                             function(response) {
                                 scope.items.items[itemIndex] = response;
                                 toastr.info('Item Updated.');
-                        })
+                            })
                         .error(function() {
                             toastr.error('Oops, Something went wrong, please try again.', 'Error');
                         });
                 });
             });
-    };
+    }
 
-    this.disableDialog = function(scope, itemId, itemIndex, page, field) {
+    function disableDialog(scope, itemId, itemIndex, page, field) {
         var dataPack = {};
         dataPack[field] = false;
         ngDialog.openConfirm({
@@ -48,9 +48,9 @@ function AdminDialog(ApiService, ApiUrlService, ngDialog, $filter) {
                     toastr.error('Oops, Something went wrong, please try again.', 'Error');
                 });
         });
-    };
+    }
 
-    this.newDialog = function(scope, page) {
+    function newDialog(scope, page) {
         var template = 'templates/partials/' + page + '-list-view-detail.html';
         if (!(scope.item && scope.item.isNew)) {
             scope.item = { isNew: true };
@@ -72,15 +72,15 @@ function AdminDialog(ApiService, ApiUrlService, ngDialog, $filter) {
                     scope.item.isNew = true;
                 });
         });
-    };
+    }
 
-    this.convertDateFormat = function(date) {
+    function convertDateFormat(date) {
         if (Object.prototype.toString.call(date) !== '[object Date]') { return date; }
         var formatted = $filter('date')(date, 'yyyy-MM-dd', 'UTC');
         return formatted;
-    };
+    }
 
-    this.getObjectChanges = function(initial, modified) {
+    function getObjectChanges(initial, modified) {
         if (initial == modified) {
             return {};
         }
@@ -97,7 +97,7 @@ function AdminDialog(ApiService, ApiUrlService, ngDialog, $filter) {
             }
         }
         return changes;
-    };
+    }
 
     return this;
 }

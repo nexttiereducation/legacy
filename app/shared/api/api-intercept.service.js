@@ -57,7 +57,7 @@
         service.response = function (response) {
             handleResponse(response);
             return response;
-        }
+        };
 
         function handleResponse(response) {
             if (!(response.config.params && response.config.params.hideLoader)) {

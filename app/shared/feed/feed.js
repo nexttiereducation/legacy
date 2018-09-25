@@ -3,12 +3,12 @@
         .controller('Feed', Feed);
 
     Feed.$inject = ['$sce', '$modal', '$mdMedia', '$mdDialog', '$scope', '$rootScope', '$location', '$window',
-                    '$mdSidenav', 'StakeholderAuth', 'FeedManager', 'FeedModel', 'FeedConstants',
-                    'UrlHelper', 'localStorageService', 'Track'];
+        '$mdSidenav', 'StakeholderAuth', 'FeedManager', 'FeedModel', 'FeedConstants',
+        'UrlHelper', 'localStorageService', 'Track'];
 
     function Feed($sce, $modal, $mdMedia, $mdDialog, $scope, $rootScope, $location, $window,
-                  $mdSidenav, StakeholderAuth, FeedManager, FeedModel, FeedConstants,
-                  UrlHelper, localStorageService, Track) {
+        $mdSidenav, StakeholderAuth, FeedManager, FeedModel, FeedConstants,
+        UrlHelper, localStorageService, Track) {
 
         var feedVM = this;
         //feed methods
@@ -45,21 +45,21 @@
         };
         feedthis.feedConstants = FeedConstants;
         feedthis.weeklySummary = {
-            "submitted_applications": 0,
-            "schools_added": 0,
-            "tasks_started": 0,
-            "tasks_completed": 0,
-            "notes_added": 0,
-            "achievements_earned": 0,
-            "accepted_recommendations": 0,
-            "rejected_recommendations": 0,
-            "accepted_connections": 0,
-            "tasks_due": 0,
-            "schools_removed": 0,
-            "successful_logins": 0,
-            "failed_logins": 0,
-            "files_uploaded_to_task": 0,
-            "files_uploaded_to_profile": 0
+            'submitted_applications': 0,
+            'schools_added': 0,
+            'tasks_started': 0,
+            'tasks_completed': 0,
+            'notes_added': 0,
+            'achievements_earned': 0,
+            'accepted_recommendations': 0,
+            'rejected_recommendations': 0,
+            'accepted_connections': 0,
+            'tasks_due': 0,
+            'schools_removed': 0,
+            'successful_logins': 0,
+            'failed_logins': 0,
+            'files_uploaded_to_task': 0,
+            'files_uploaded_to_profile': 0
         };
         feedthis.showCarousel = false;
 
@@ -79,8 +79,8 @@
 
         ///////////////////////////////////////////////////////////////
         //private vars
-        var categoryQuery = "category=";
-        var dayQuery = "days=";
+        var categoryQuery = 'category=';
+        var dayQuery = 'days=';
         var nextUrl;
         //////////////////////////////////////////
         //activate()
@@ -108,8 +108,8 @@
             angular.forEach(object, function(value, key) {
                 if (value !== 0) {
                     activityToShow = true;
-                };
-            })
+                }
+            });
             return activityToShow;
         }
 
@@ -138,7 +138,7 @@
                 var url = FeedManager.parseGoToLink(item);
                 var scope = $scope;
                 if (url) {
-                   $window.location.href = url;
+                    $window.location.href = url;
                     // url = url + '&isiframe=true';
                     // scope.applyUrl = $sce.trustAsResourceUrl(url);
                     // $mdDialog.show({
@@ -170,7 +170,7 @@
                 return FeedModel;
             }).catch(function() {
                 $rootScope.$broadcast('hide-loading');
-                toastr.error("Unable to load feed data.");
+                toastr.error('Unable to load feed data.');
             });
         }
 
@@ -200,13 +200,13 @@
         }
 
         function sinceLastLogin(itemDate) {
-            var stakeholder = localStorageService.get("stakeholder");
+            var stakeholder = localStorageService.get('stakeholder');
             return itemDate > stakeholder.last_login;
         }
 
         function getFilteredFeed(displayDate) {
             var query = buildQuery();
-            $scope.$broadcast('show-loading');
+            this.$broadcast('show-loading');
             FeedManager.getFilteredFeed(query).then(function(response) {
                 FeedManager.parseFeedData(response.data.results);
                 var feed = [];
@@ -223,11 +223,11 @@
                     FeedModel.feed = response.data.results;
                     feedthis.feed = FeedModel.feed;
                 }
-                $scope.$broadcast('hide-loading');
+                this.$broadcast('hide-loading');
                 return response;
             })
                 .catch(function() {
-                    $scope.$broadcast('hide-loading');
+                    this.$broadcast('hide-loading');
                 });
         }
 
@@ -240,7 +240,7 @@
                 feedthis.selectedFilter.date = dayId;
                 feedthis.selectedFilter.displayDate = displayDate;
             }
-            Track.event("feed_filter_added");
+            Track.event('feed_filter_added');
             getFilteredFeed(feedthis.selectedFilter.displayDate);
             scrollToTop();
         }
@@ -248,7 +248,7 @@
         function removeFilter(categoryId) {
             var newFilter = feedthis.selectedFilter.category.filter(function(element) {
                 return element !== categoryId;
-            })
+            });
             feedthis.selectedFilter.category = newFilter;
             FeedModel.feed = [];
             if (newFilter.length === 0) {
@@ -257,7 +257,7 @@
             } else {
                 getFilteredFeed(feedthis.selectedFilter.displayDate);
             }
-            Track.event("feed_filter_removed");
+            Track.event('feed_filter_removed');
             scrollToTop();
         }
 
@@ -294,14 +294,14 @@
         }
 
         function buildQuery() {
-            var query = "";
+            var query = '';
             if (feedthis.selectedFilter.category.length > 0) {
                 for (var i = 0; i < feedthis.selectedFilter.category.length; i++) {
-                    query += (categoryQuery + feedthis.selectedFilter.category[i] + "&&");
+                    query += (categoryQuery + feedthis.selectedFilter.category[i] + '&&');
                 }
             }
             if (feedthis.selectedFilter.date || feedthis.selectedFilter.date === 0) {
-                query += (dayQuery + feedthis.selectedFilter.date)
+                query += (dayQuery + feedthis.selectedFilter.date);
             }
             return query;
         }

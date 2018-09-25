@@ -108,17 +108,17 @@ function ApiUrlService($rootScope, $location, UrlConstants, WebsocketManager) {
                 if (name) {
                     query += '&institution_name=' + institutionName;
                 } else {
-                    query += 'institution_name=' + institutionName
+                    query += 'institution_name=' + institutionName;
                 }
             }
-            return query
+            return query;
         }
     };
 
     ApiUrlService.clever = {
         getAccessToken: function() { return pathRoot + '/clever/login/';},
         //the following endpoints will not be needed once clever is fully integrated
-        exchangeCode: function() { return 'https://clever.com/oauth/tokens'}
+        exchangeCode: function() { return 'https://clever.com/oauth/tokens';}
     };
 
     ApiUrlService.login = function() {
@@ -127,7 +127,7 @@ function ApiUrlService($rootScope, $location, UrlConstants, WebsocketManager) {
 
     ApiUrlService.stakeholder = {
         updateAlternateContact: function(id) {
-            return pathRoot + '/stakeholder/alternate_contact/' + id + '/'
+            return pathRoot + '/stakeholder/alternate_contact/' + id + '/';
         },
         preferences: function() {
             return pathRoot + '/stakeholder/notification/preference/';
@@ -178,23 +178,23 @@ function ApiUrlService($rootScope, $location, UrlConstants, WebsocketManager) {
             return  pathRoot + '/stakeholder/forgot';
         },
         studentDetail: function() {
-            return pathRoot + '/student/'
+            return pathRoot + '/student/';
         },
         getTagsOnASchool: function(stakeholderId, institutionId) {
-            return pathRoot + '/stakeholder/' + stakeholderId + '/tag/institution/' + institutionId
+            return pathRoot + '/stakeholder/' + stakeholderId + '/tag/institution/' + institutionId;
         },
         institutionsByTag: function(tags) {
             var tagsString = tags.join('&');
             return pathRoot + '/institutions/?tag=' + tagsString;
         },
         institutionTags: function(stakeholderId) {
-            return pathRoot + '/stakeholder/' + stakeholderId + '/institution/tags/'
+            return pathRoot + '/stakeholder/' + stakeholderId + '/institution/tags/';
         },
         tagInstitution: function(stakeholderId) {
-            return pathRoot + '/stakeholder/' + stakeholderId + '/tag/institution/'
+            return pathRoot + '/stakeholder/' + stakeholderId + '/tag/institution/';
         },
         removeTagFromInstitution: function(stakeholderId, tagId, institutionId) {
-            return pathRoot + '/stakeholder/' + stakeholderId + '/tag/' + tagId+ '/institution/' + institutionId
+            return pathRoot + '/stakeholder/' + stakeholderId + '/tag/' + tagId+ '/institution/' + institutionId;
         },
         institutionTracker: function() {
             return pathRoot + '/institution_tracker';
@@ -221,7 +221,7 @@ function ApiUrlService($rootScope, $location, UrlConstants, WebsocketManager) {
             return pathRoot + '/stakeholder/register';
         },
         resendConfirmation: function() {
-            return pathRoot + '/stakeholder/resend/confirm/'
+            return pathRoot + '/stakeholder/resend/confirm/';
         },
         resetPassword: function(token) {
             return pathRoot + '/stakeholder/reset/' + token;
@@ -233,7 +233,7 @@ function ApiUrlService($rootScope, $location, UrlConstants, WebsocketManager) {
             return pathRoot + '/student/' + id + '/recommendation/' + recommendationId + '/';
         },
         systemLog: function(district_id) {
-            return pathRoot + '/district/' + district_id + '/systemlog/'
+            return pathRoot + '/district/' + district_id + '/systemlog/';
         },
         downloadSystemLog: function(districtId, systemLogId) {
             return pathRoot + '/district/' + districtId + '/systemlog/' + systemLogId;
@@ -248,26 +248,26 @@ function ApiUrlService($rootScope, $location, UrlConstants, WebsocketManager) {
             return pathRoot + '/stakeholder/';
         },
         groupsStudentBelongsTo: function(counselorId, studentId) {
-            return pathRoot + '/stakeholder/' + counselorId + '/tag/student/' + studentId
+            return pathRoot + '/stakeholder/' + counselorId + '/tag/student/' + studentId;
         },
         studentsByGroup: function(groups) {
             var groupsString = groups.join('&');
             return pathRoot + '/students/?tag=' + groupsString;
         },
         studentGroups: function(counselorId) {
-            return pathRoot + '/stakeholder/' + counselorId + '/student/tags/'
+            return pathRoot + '/stakeholder/' + counselorId + '/student/tags/';
         },
         groupStudent: function(counselorId) {
-            return pathRoot + '/stakeholder/' + counselorId + '/tag/student/'
+            return pathRoot + '/stakeholder/' + counselorId + '/tag/student/';
         },
         removeStudentFromGroup: function(counselorId, groupId, studentId) {
-            return pathRoot + '/stakeholder/' + counselorId + '/tag/' + groupId+ '/student/' + studentId
+            return pathRoot + '/stakeholder/' + counselorId + '/tag/' + groupId+ '/student/' + studentId;
         },
         metaData: function(studentId) {
-            return pathRoot + '/student/' + studentId
+            return pathRoot + '/student/' + studentId;
         },
         changePassword: function() {
-            return pathRoot + '/stakeholder/password/change/'
+            return pathRoot + '/stakeholder/password/change/';
         },
         deleteAccount: function() {
             return pathRoot + '/stakeholder/';
@@ -360,7 +360,7 @@ function ApiUrlService($rootScope, $location, UrlConstants, WebsocketManager) {
 
     ApiUrlService.maps = {
         google: function(address) {
-            return 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address
+            return 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address;
         }
     };
 
@@ -387,16 +387,16 @@ function ApiUrlService($rootScope, $location, UrlConstants, WebsocketManager) {
             return pathRoot + '/institution_tracker/';
         },
         application: function() {
-            return pathRoot + '/institution_application/'
+            return pathRoot + '/institution_application/';
         },
         applicationById: function(id) {
-            return pathRoot + '/institution_application/' + id
+            return pathRoot + '/institution_application/' + id;
         },
         applicationPayment: function(pk) {
-            return pathRoot + '/institution_application/' + pk + '/pay'
+            return pathRoot + '/institution_application/' + pk + '/pay';
         },
         application_schema: function(schemaId) {
-            return pathRoot + '/institution_application_schema/' + schemaId
+            return pathRoot + '/institution_application_schema/' + schemaId;
         },
         application_schemas: function(params) {
             var output = pathRoot + '/institution_application_schemas?';
@@ -407,16 +407,16 @@ function ApiUrlService($rootScope, $location, UrlConstants, WebsocketManager) {
             return output;
         },
         programs: function() {
-            return pathRoot + '/program_codes/'
+            return pathRoot + '/program_codes/';
         }
     };
 
     ApiUrlService.dashboard = {
         feed: function() {
-            return pathRoot + '/counselor/feed/'
+            return pathRoot + '/counselor/feed/';
         },
         feedData: function() {
-            return pathRoot + '/counselor/feed/data/'
+            return pathRoot + '/counselor/feed/data/';
         }
     };
 
@@ -434,10 +434,10 @@ function ApiUrlService($rootScope, $location, UrlConstants, WebsocketManager) {
             return pathRoot + '/tasks/tests/dates/';
         },
         attachment: function(taskId) {
-            return  pathRoot + '/task_list/' + taskId + '/attachment/'
+            return  pathRoot + '/task_list/' + taskId + '/attachment/';
         },
         verify: function(taskId) {
-            return pathRoot + '/task_list/' + taskId + '/verify/'
+            return pathRoot + '/task_list/' + taskId + '/verify/';
         }
     };
 

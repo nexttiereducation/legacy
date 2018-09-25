@@ -74,8 +74,8 @@
 
             var listOfSchools = this.DistrictModel.district.highschools;
             this.highSchools = listOfSchools;
-            console.log('Help me!')
-            console.log(this.DistrictModel)
+            console.log('Help me!');
+            console.log(this.DistrictModel);
             if(!this.DistrictModel.district.roles || this.DistrictModel.district.roles.length < 1) {
                 DistrictManager.getRoles()
                     .catch(function(ex){
@@ -84,7 +84,7 @@
                         } else {
                             toastr.error('Please choose a district before editing');
                         }
-                    })
+                    });
             }
         }
         function addAll(dash){
@@ -96,7 +96,7 @@
                 })
                 .catch(function (error) {
                     toastr.error('Error Adding Members to District', error);
-                })
+                });
         }
         function addMember(){
             this.DistrictModel.selectedStakeholder = {
@@ -132,7 +132,7 @@
         function toggleEntitlement(id){
             this.form.editForm.$setDirty();
             var idx = this.DistrictModel.selectedStakeholder.roles.indexOf(id);
-            if( idx > -1 ){ this.DistrictModel.selectedStakeholder.roles.splice(idx,1)}
+            if( idx > -1 ){ this.DistrictModel.selectedStakeholder.roles.splice(idx,1);}
             else this.DistrictModel.selectedStakeholder.roles.push(id);
         }
         function checkIfDoneEditing(){
@@ -171,7 +171,7 @@
                         })
                         .catch(function( error ){
                             toastr.error('Error Updating Member', error);
-                        })
+                        });
                 }
                 else {
                     updatedStakeholder.district = this.DistrictModel.district.id;
@@ -183,7 +183,7 @@
                         })
                         .catch(function (error) {
                             toastr.error('Error Adding Member to District', error);
-                        })
+                        });
                 }
             }
         }

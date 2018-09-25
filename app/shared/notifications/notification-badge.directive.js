@@ -3,7 +3,7 @@
 
     angular
         .module('notificationsModule')
-        .directive('notificationBadge', NotificationBadge)
+        .directive('notificationBadge', NotificationBadge);
 
     NotificationBadge.$inject = ['NotificationManager'];
 

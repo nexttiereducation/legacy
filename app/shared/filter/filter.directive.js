@@ -28,7 +28,7 @@
             var onSearch = scope.onSearch();
 
             scope.$on('nte-filter.toggle', function(event, arg) {
-               onChange();
+                onChange();
             });
 
             scope.$on('nte-filter.clear', function(event, arg) {
@@ -47,7 +47,7 @@
 
             scope.$on('showFilters', function() {
                 scope.showFilters = true;
-            })
+            });
 
             scope.toggleFilterDisplay = function() {
                 scope.showFilters = !scope.showFilters;
@@ -119,7 +119,7 @@
 
                 if (scope.searchTerm) {
                     params.query['search'] = [scope.searchTerm];
-                    params.display['Search'] = [scope.searchTerm]
+                    params.display['Search'] = [scope.searchTerm];
                 }
 
                 return params;
@@ -127,15 +127,15 @@
 
             function buildQueryString(params) {
                 if (!params) return null;
-                var queryString = "?";
+                var queryString = '?';
                 Object.keys(params).forEach(function(key) {
                     var vals = params[key];
                     for(var i = 0, val; val = vals[i]; ++i) {
-                        queryString += key + "=" + val + "&";
+                        queryString += key + '=' + val + '&';
                     }
                 });
 
-                queryString = queryString.replace( /\+/g, "%2B" );
+                queryString = queryString.replace( /\+/g, '%2B' );
                 return queryString.slice(0, -1); //because we always add an & after a value we will always have one extra
             }
 

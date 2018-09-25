@@ -37,7 +37,7 @@
                 } else if (Array.isArray(student[fields[field]])) {
                     if (student[fields[field]].length > 0) {
                         var string = '';
-                        var arrayObject = student[fields[field]]
+                        var arrayObject = student[fields[field]];
                         for (var k = 0; k < arrayObject.length; k++ ) {
                             if (k < 1) {
                                 string += arrayObject[k].name;
@@ -99,7 +99,7 @@
                         }
                         result += value;
                         if (i < array.length - 1) {
-                            result += ','
+                            result += ',';
                         }
                     }
                 } else if (typeof array == 'string') {

@@ -11,7 +11,7 @@
         this.sevenDaysAgo = moment().subtract(7, 'days');
         this.loadMore = true;
 
-        this.clear = function() {
+        function clear() {
             this.feed = [];
             this.feedSummary = {};
             this.today = moment();

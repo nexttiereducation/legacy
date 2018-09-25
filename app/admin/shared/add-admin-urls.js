@@ -210,10 +210,10 @@ function AddAdminUrls(ApiUrlService) {
             return ApiUrlService.getPathRoot() + '/tasks/custom/';
         },
         conditionalTasks: function() {
-            return ApiUrlService.getPathRoot() + '/conditional/tasks/'
+            return ApiUrlService.getPathRoot() + '/conditional/tasks/';
         },
         conditionalTask: function(id) {
-            return ApiUrlService.getPathRoot() + '/conditional/task/' + id
+            return ApiUrlService.getPathRoot() + '/conditional/task/' + id;
         }
     };
 

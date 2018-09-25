@@ -22,7 +22,7 @@ angular
             var obj = {};
             XLSXReader.utils.intializeFromFile(obj, file, readCells, toJSON, handler);
             return obj;
-        }
+        };
         // Export the XLSXReader object for **Node.js**, with
         // backwards-compatibility for the old `require()` ApiService. If we're in
         // the browser, add `XLSXReader` as a global object via a string identifier,
@@ -47,7 +47,7 @@ angular
                     });
                     obj.sheets = XLSXReader.utils.parseWorkbook(workbook, readCells, toJSON);
                     handler(obj);
-                }
+                };
                 reader.readAsBinaryString(file);
             },
             'parseWorkbook': function(workbook, readCells, toJSON) {
@@ -86,7 +86,7 @@ angular
                     'name': sheet.name,
                     'col_size': range.e.c + 1,
                     'row_size': range.e.r + 1
-                }
+                };
             },
             to_json: function(workbook) {
                 var result = {};
@@ -98,5 +98,5 @@ angular
                 });
                 return result;
             }
-        }
+        };
     }).call(this);

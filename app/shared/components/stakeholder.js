@@ -2,61 +2,61 @@
     'use strict';
 
     angular
-      .module('Stakeholder', [])
-      .service('Stakeholder', ['$rootScope',
-        'API', 'UrlHelper', '$q', 'localStorageService', 'Track',
+        .module('Stakeholder', [])
+        .service('Stakeholder', ['$rootScope',
+            'API', 'UrlHelper', '$q', 'localStorageService', 'Track',
 
-        function($rootScope, API, UrlHelper, $q,
-            localStorageService, Track) {
+            function($rootScope, API, UrlHelper, $q,
+                localStorageService, Track) {
 
-            var Stakeholder = function() {
-                this.reset();
-                this.deferred = $q.defer();
-                this.resolvePromise = this.deferred.promise;
-            };
+                var Stakeholder = function() {
+                    this.reset();
+                    this.deferred = $q.defer();
+                    this.resolvePromise = this.deferred.promise;
+                };
 
-            Stakeholder.prototype.reset = function() {
-                var keys = Object.keys(this);
-                for (var i = 0; i < keys.length; i++) {
-                    delete this[keys[i]];
-                }
-                this.firstName = 'Guest';
-                this.stakeholderType = 'anonymous';
-                this.calculateStakeholderTraits();
-                this.loggedIn = false;
-                this.anonymous = false;
-            };
+                Stakeholder.prototype.reset = function() {
+                    var keys = Object.keys(this);
+                    for (var i = 0; i < keys.length; i++) {
+                        delete this[keys[i]];
+                    }
+                    this.firstName = 'Guest';
+                    this.stakeholderType = 'anonymous';
+                    this.calculateStakeholderTraits();
+                    this.loggedIn = false;
+                    this.anonymous = false;
+                };
 
-            Stakeholder.prototype.establish = function() {
-                localStorageService.remove('stakeholder');
-                var stk = this;
-                stk.resolvePromise = stk.getStakeholderInformation()
-                    .then(function() {
-                        localStorageService.set(
-                            'stakeholder', stk);
-                        $rootScope.loggedIn = stk.loggedIn;
-                        $rootScope.anonStakeholder = stk.anonymous;
-                        $rootScope.$broadcast(
-                            'stakeholderEstablished');
-                    });
-                return stk.resolvePromise;
-            };
+                Stakeholder.prototype.establish = function() {
+                    localStorageService.remove('stakeholder');
+                    var stk = this;
+                    stk.resolvePromise = stk.getStakeholderInformation()
+                        .then(function() {
+                            localStorageService.set(
+                                'stakeholder', stk);
+                            $rootScope.loggedIn = stk.loggedIn;
+                            $rootScope.anonStakeholder = stk.anonymous;
+                            $rootScope.$broadcast(
+                                'stakeholderEstablished');
+                        });
+                    return stk.resolvePromise;
+                };
 
-            Stakeholder.prototype.destroy = function() {
-                $rootScope.loggedIn = false;
-                localStorageService.remove('stakeholder');
-                localStorage.removeItem('nextTierUser');
-                this.reset();
-                $rootScope.$broadcast('stakeholderDestroyed');
-            };
+                Stakeholder.prototype.destroy = function() {
+                    $rootScope.loggedIn = false;
+                    localStorageService.remove('stakeholder');
+                    localStorage.removeItem('nextTierUser');
+                    this.reset();
+                    $rootScope.$broadcast('stakeholderDestroyed');
+                };
 
-            Stakeholder.prototype.update = function(object) {
-                angular.extend(this, object);
-                this.calculateStakeholderTraits();
-                $rootScope.$broadcast('stakeholderUpdated');
-            };
+                Stakeholder.prototype.update = function(object) {
+                    angular.extend(this, object);
+                    this.calculateStakeholderTraits();
+                    $rootScope.$broadcast('stakeholderUpdated');
+                };
 
-            Stakeholder.prototype.getStakeholderInformation =
+                Stakeholder.prototype.getStakeholderInformation =
                 function() {
                     var stk = this;
                     return API.$get(UrlHelper.stakeholder.details())
@@ -100,7 +100,7 @@
                             return $q.reject(error);
                         });
                 };
-            Stakeholder.prototype.calculateStakeholderTraits =
+                Stakeholder.prototype.calculateStakeholderTraits =
                 function() {
                     var stk = this;
                     stk.name = stk.getName();
@@ -130,30 +130,30 @@
                     stk.trackType = (stk.isStudent) ? 'student' :
                         'mentor';
                 };
-            Stakeholder.prototype.parseStakeholderPhoto = function(
-                photo, stakeholderType) {
-                stakeholderType = stakeholderType || '';
-                if (!photo) {
-                    if (stakeholderType.toLowerCase() ===
+                Stakeholder.prototype.parseStakeholderPhoto = function(
+                    photo, stakeholderType) {
+                    stakeholderType = stakeholderType || '';
+                    if (!photo) {
+                        if (stakeholderType.toLowerCase() ===
                         'counselor') {
-                        photo =
+                            photo =
                             '/build/images/ic_counselor.png';
-                    } else if (stakeholderType.toLowerCase() ===
+                        } else if (stakeholderType.toLowerCase() ===
                         'parent') {
-                        photo = '/build/images/ic_teammate.png';
-                    } else {
-                        photo =
+                            photo = '/build/images/ic_teammate.png';
+                        } else {
+                            photo =
                             '/build/images/ic_student_badge.png';
+                        }
                     }
-                }
-                if (!/https?:\/\//.test(photo)) {
-                    photo =
+                    if (!/https?:\/\//.test(photo)) {
+                        photo =
                         'http://next-tier-cust-files.s3.amazonaws.com/' +
                         photo;
-                }
-                return photo;
-            };
-            Stakeholder.prototype.parseDisplayStakeholderType =
+                    }
+                    return photo;
+                };
+                Stakeholder.prototype.parseDisplayStakeholderType =
                 function(stakeholderType) {
                     if (stakeholderType.toLowerCase() === 'parent') {
                         return 'Team Member';
@@ -165,46 +165,46 @@
                         return stakeholderType;
                     }
                 };
-            Stakeholder.prototype.resetTransition = function() {
-                var stk = this;
-                return API.$patch(UrlHelper.stakeholder.details(), { has_transitioned: false })
-                    .then(function(response) {
-                        stk.hasTransitioned = false;
-                    }, function(error) {
-                        alert(
-                            'Could not update user information, please reload the page.'
-                        );
-                    });
-            };
-            Stakeholder.prototype.parseDisplayName = function(fn,
-                ln, email) {
-                return (fn || ln ? (fn || '') + ' ' + (ln || '') :
-                    (email).replace(/@.*/, '')).trim();
-            };
-            Stakeholder.prototype.parseTrackingType = function(
-                stakeholderType) {
-                return (/(student|anonymous)/i.test(
+                Stakeholder.prototype.resetTransition = function() {
+                    var stk = this;
+                    return API.$patch(UrlHelper.stakeholder.details(), { has_transitioned: false })
+                        .then(function(response) {
+                            stk.hasTransitioned = false;
+                        }, function(error) {
+                            alert(
+                                'Could not update user information, please reload the page.'
+                            );
+                        });
+                };
+                Stakeholder.prototype.parseDisplayName = function(fn,
+                    ln, email) {
+                    return (fn || ln ? (fn || '') + ' ' + (ln || '') :
+                        (email).replace(/@.*/, '')).trim();
+                };
+                Stakeholder.prototype.parseTrackingType = function(
+                    stakeholderType) {
+                    return (/(student|anonymous)/i.test(
                         stakeholderType)) ? 'Students' :
-                    'Mentors';
-            };
-            Stakeholder.prototype.getTrackingType = function() {
-                if (!this.loggedIn) {
-                    return 'anonymous';
-                }
-                return 'registered';
-            };
-            Stakeholder.prototype.getName = function() {
-                var stk = this;
-                var name = stk.firstName || stk.lastName || stk
-                    .email;
-                return name.replace(/@.*/, '');
-            };
-            Stakeholder.prototype.getFullName = function() {
-                var stk = this;
-                return stk.parseDisplayName(stk.firstName, stk.lastName,
-                    stk.email);
-            };
-            Stakeholder.prototype.hasCompletedAcademicInformation =
+                        'Mentors';
+                };
+                Stakeholder.prototype.getTrackingType = function() {
+                    if (!this.loggedIn) {
+                        return 'anonymous';
+                    }
+                    return 'registered';
+                };
+                Stakeholder.prototype.getName = function() {
+                    var stk = this;
+                    var name = stk.firstName || stk.lastName || stk
+                        .email;
+                    return name.replace(/@.*/, '');
+                };
+                Stakeholder.prototype.getFullName = function() {
+                    var stk = this;
+                    return stk.parseDisplayName(stk.firstName, stk.lastName,
+                        stk.email);
+                };
+                Stakeholder.prototype.hasCompletedAcademicInformation =
                 function() {
                     if (this.gpa && this.class_rank) {
                         if (this.act_composite && this.act_english &&
@@ -225,8 +225,8 @@
                             false;
                     }
                 };
-            var stakeholder = new Stakeholder();
-            return stakeholder;
-        }
-    ]);
+                var stakeholder = new Stakeholder();
+                return stakeholder;
+            }
+        ]);
 })();

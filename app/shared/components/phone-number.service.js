@@ -27,7 +27,7 @@
             return API.$post(UrlHelper.stakeholder.verifyNumber(), data).then(function(response) {
                 return response;
             });
-        };
+        }
 
         /*  Takes phone numbers in format of x-xxx-xxx-xxxx or xxx-xxx-xxxx
          *  and variations and returns in format of xxxxxxxxxx or +xxxxxxxxxxx

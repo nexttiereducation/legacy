@@ -2,7 +2,7 @@
 
 angular
     .module('apiModule')
-    .factory('ApiService', ApiService)
+    .factory('ApiService', ApiService);
 
 ApiService.$inject = [
     '$cookies',
@@ -31,7 +31,7 @@ function ApiService($http, $rootScope, $location, $q, localStorageService, $cook
         try {
             $cookies.put('authToken', token, {domain: $rootScope.webApp});
         } catch (Exception) {
-            console.warn('Failed to setup view of student dashboard.')
+            console.warn('Failed to setup view of student dashboard.');
         }
     }
 
@@ -45,12 +45,12 @@ function ApiService($http, $rootScope, $location, $q, localStorageService, $cook
             pathname: match[5],
             search: match[6],
             hash: match[7]
-        }
+        };
     }
 
     function apiRequest(method, path, requestData) {
         var authToken = getAuthToken();
-        var headers = (!!authToken)
+        var headers = (authToken)
             ? { 'AUTHORIZATION': 'Token ' + authToken }
             : {};
         if (path.substring(0, 11) == 'http://api/') {
@@ -84,7 +84,7 @@ function ApiService($http, $rootScope, $location, $q, localStorageService, $cook
                     return;
                 }
                 var elapsed = new Date() - start;
-                var partialAuth = (!!authToken)
+                var partialAuth = (authToken)
                     ? authToken.substring(0, 5)
                     : '';
                 var stakeholderEmail = JSON
@@ -96,7 +96,7 @@ function ApiService($http, $rootScope, $location, $q, localStorageService, $cook
                 //Don't really care about success or failure
                 $http.get(url);
             };
-        }
+        };
         var start = new Date();
         var logIt = track(start, method, authToken);
         var promise = $http(options);
@@ -112,20 +112,20 @@ function ApiService($http, $rootScope, $location, $q, localStorageService, $cook
             }
         });
         return promise;
-    };
+    }
 
     // Get all from a paginated endpoint
     function recursiveGet(url, requestData) {
         var promise = apiRequest('get', url, requestData).then(function (response) {
             return response.data.next
-            ? recursiveGet(response.data.next)
-                .then(function (results) {
-                    return response.data.results.concat(results);
-                })
-            : response.data.results;
+                ? recursiveGet(response.data.next)
+                    .then(function (results) {
+                        return response.data.results.concat(results);
+                    })
+                : response.data.results;
         });
         return promise;
-    };
+    }
 
     function getPaged(url, requestData) {
         var defer = $q.defer();
@@ -141,7 +141,7 @@ function ApiService($http, $rootScope, $location, $q, localStorageService, $cook
                 defer.reject(err);
             });
         return defer.promise;
-    };
+    }
 
     return {
         $get: function (path, params) {

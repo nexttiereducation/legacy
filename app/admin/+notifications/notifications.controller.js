@@ -1,35 +1,42 @@
-angular
-    .module('adminModule')
-    .controller('NotificationsCtrl', [
+(function() {
+    'use strict';
+
+    angular
+        .module('adminModule')
+        .controller('NotificationsCtrl', NotificationsCtrl);
+
+    NotificationsCtrl.$inject = [
         '$scope',
         '$rootScope',
         'infiniteScroll',
         'ApiUrlService',
         'ApiService',
         'ngDialog',
-        'AdminDialog',
-        function ($scope, $rootScope, infiniteScroll, ApiUrlService, ApiService, ngDialog, AdminDialog) {
-            $scope.items = [];
-            $scope.filterItems = {};
+        'AdminDialog'
+    ];
 
-            $scope.getListItems = function (reload) {
-                var url = ApiUrlService.notifications.getList();
-                url += (!!$scope.query)
-                    ? '?stakeholder_id=' + $scope.query
-                    : '';
-                // Pass true as reload argument to update list
-                $scope.items = new infiniteScroll('list', reload, url);
-            };
+    function NotificationsCtrl($scope, $rootScope, infiniteScroll, ApiUrlService, ApiService, ngDialog, AdminDialog) {
+        this.items = [];
+        this.filterItems = {};
 
-            $scope.openEditForm = function (item, index) {
-                AdminDialog.editDialog($scope, item.id, index, 'notifications');
-            };
-
-            // Run on Load
-            var init = function () {
-                $scope.getListItems();
-            };
-
-            init();
+        function getListItems(reload) {
+            var url = ApiUrlService.notifications.getList();
+            url += (this.query)
+                ? '?stakeholder_id=' + this.query
+                : '';
+            // Pass true as reload argument to update list
+            this.items = new infiniteScroll('list', reload, url);
         }
-    ]);
+
+        function openEditForm(item, index) {
+            AdminDialog.editDialog($scope, item.id, index, 'notifications');
+        }
+
+        // Run on Load
+        function init() {
+            this.getListItems();
+        }
+
+        this.init();
+    }
+})();

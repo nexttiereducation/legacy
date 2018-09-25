@@ -49,8 +49,8 @@
 
         function getBaseSocketUrl(pathRoot) {
             var socketUrl = pathRoot.indexOf('https') > -1 ?
-                        pathRoot.replace('https', 'wss') :
-                        pathRoot.replace('http', 'ws');
+                pathRoot.replace('https', 'wss') :
+                pathRoot.replace('http', 'ws');
             var authToken = localStorageService.get('authToken');
             return socketUrl + '?token=' + authToken;
         }

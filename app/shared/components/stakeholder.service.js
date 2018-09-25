@@ -2,16 +2,16 @@
     'use strict';
 
     angular
-      .module('stakeholder-svc', ['api-svc', 'api-urls-svc',
-          'LocalStorageModule', 'facebook', 'track-svc', 'ngCookies',
-          'notification-center', 'high-school'
-      ])
-      .config(['FacebookProvider',
-          function(FacebookProvider) {
-              FacebookProvider.init('297840853729962');
-          }
-      ])
-      .factory('StakeholderAuth', StakeholderAuth);
+        .module('stakeholder-svc', ['api-svc', 'api-urls-svc',
+            'LocalStorageModule', 'facebook', 'track-svc', 'ngCookies',
+            'notification-center', 'high-school'
+        ])
+        .config(['FacebookProvider',
+            function(FacebookProvider) {
+                FacebookProvider.init('297840853729962');
+            }
+        ])
+        .factory('StakeholderAuth', StakeholderAuth);
 
     StakeholderAuth.$inject = ['$rootScope', '$q', 'API', '$location',
         'UrlHelper', 'localStorageService', 'Facebook', 'Track',
@@ -50,7 +50,7 @@
             $rootScope.$broadcast('stakeholderUpdated', user);
             deferred.resolve(user);
             return deferred.promise;
-        };
+        }
         return {
             allowUnauthenticatedUsers: allowUnauthenticatedUsers,
             basicLogin: function(data) { return basicLogin(data); },
@@ -82,7 +82,7 @@
             isAllowed: function(action, resource) { return isAllowed(action,resource); },
             isAnonymous: isAnonymous,
             isCounselor: function() { return isCounselor(); },
-            isGhost: function() { return isGhost() },
+            isGhost: function() { return isGhost(); },
             isParent: function() { return isParent(); },
             isSenior: function() { return isSenior(); },
             isStudent: function() { return isStudent(); },
@@ -115,7 +115,7 @@
             }
         }
 
-        function getStakeholder() { return user; };
+        function getStakeholder() { return user; }
 
         function isAdmin() {
             return (user && user.email && user.email.indexOf('admin') !== -1 && user.email.indexOf('@nexttier') !== -1);
@@ -178,7 +178,7 @@
                 $rootScope.loggedIn = true;
                 $rootScope.$broadcast('stakeholderUpdated', user);
             });
-        };
+        }
         /*
      Retrieve stakeholder information from local storage
      and return whether the stakeholder is logged in or not
@@ -196,8 +196,8 @@
             } else if (localStorageService.get('authToken') !== null &&
                 localStorageService.get('user.roleId') !== null) {
                 deferred.resolve(
-                  setSession(localStorageService.get('authToken'),
-                             localStorageService.get('user.roleId'))
+                    setSession(localStorageService.get('authToken'),
+                        localStorageService.get('user.roleId'))
                 );
             } else {
                 deferred.reject();
@@ -305,7 +305,7 @@
                 Track.start(user);
                 return getEntitlements();
             }).catch(function(error) {
-                console.log(error)
+                console.log(error);
                 if (error.status == -1) {
                     return;
                 }
@@ -322,9 +322,9 @@
                     Track.setHighSchool(response.data.name, response.data.nces);
                 })
                 .catch(function(error) {
-                    toastr.error('Unable to load high school details.')
+                    toastr.error('Unable to load high school details.');
                     return error;
-                })
+                });
         }
         /* Determine if the user has the rights to the listed action and resource in the list of entitlements */
         function isAllowed(actionName, resource) {
@@ -528,7 +528,7 @@
                     user.anonymous = true;
                     user.uuid = uuid;
                     user.graduation_year = payload.graduation_year;
-                    return setSession(response.data.token)
+                    return setSession(response.data.token);
                 }, function(error) {
                     alert('Couldn\'t create a guest account. ' +
                         'Please Register to make use of this service at this time.'
@@ -557,7 +557,7 @@
                         .then(function(response) {
                             return setSession(response.data.token,
                                 response.data.id);
-                        })
+                        });
                 }
                 return 'NO_FB_CONNECTION';
             });
@@ -717,7 +717,7 @@
 
         function needsLogin() {
             //If either of these are true then we don't need to route to the login page
-            return !(user.allowAny || user.loggedIn)
+            return !(user.allowAny || user.loggedIn);
         }
     }
 })();

@@ -1,6 +1,6 @@
 (function () {
     angular.module('filter').
-    service('filterModel', filterModel);
+        service('filterModel', filterModel);
 
     filterModel.$inject = [];
 

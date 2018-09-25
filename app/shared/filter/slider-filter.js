@@ -19,7 +19,7 @@
         function link(scope, element, attr) {
             scope.toggleOption = toggleOption;
 
-            scope.$on("slideEnded", function() {
+            scope.$on('slideEnded', function() {
                 toggleOption();
             });
 

@@ -48,7 +48,7 @@
             });
 
             scope.$on('nte-filter.clear', function(event, arg) {
-               clear(null, true);
+                clear(null, true);
             });
 
 

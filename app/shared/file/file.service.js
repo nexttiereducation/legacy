@@ -47,13 +47,13 @@
                 link.setAttribute('download', '');
                 link.click();
                 link.remove();
-            })
+            });
         }
 
         function downloadUserFile(fileId) {
             getUserURL(fileId).then(function(url) {
                 updateLink(url);
-            })
+            });
         }
 
         function getSystemLog(district_id) {
@@ -77,9 +77,9 @@
                     'Content-Type': undefined //This is to ignore angular's default content type (application/json) this will allow the browser to set it as multipart/form-data
                 }
             })
-            .then(function(response) {
-                return response.data.attachments;
-            });
+                .then(function(response) {
+                    return response.data.attachments;
+                });
         }
 
         function uploadDistrictCSV(file, id) {
@@ -106,12 +106,12 @@
                         'Content-Type': undefined
                     }
                 })
-                .then(function(response) {
-                    return response.data;
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
+                    .then(function(response) {
+                        return response.data;
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
             }
         }
 
@@ -125,9 +125,9 @@
                         'Content-Type': undefined //This is to ignore angular's default content type (application/json) this will allow the browser to set it as multipart/form-data
                     }
                 })
-                .then(function(response) {
-                    return response.data;
-                });
+                    .then(function(response) {
+                        return response.data;
+                    });
             }
         }
 
@@ -148,9 +148,9 @@
                         'Content-Type': undefined //This is to ignore angular's default content type (application/json) this will allow the browser to set it as multipart/form-data
                     }
                 })
-                .then(function(response) {
-                    return response.data;
-                });
+                    .then(function(response) {
+                        return response.data;
+                    });
             }
         }
 

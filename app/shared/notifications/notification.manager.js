@@ -192,8 +192,8 @@
                 {
                     // var taskId = Number( link.match( /[^\d]*(\d*)/ )[ 1 ] );
                     var url = '/edu/#/studentTasks;action=tasks;stamp=' + new Date().getTime();
-                    if (taskId) { url += ';id=' + taskId }
-                    if (notification.category) { url += ';activity=' + notification.category };
+                    if (taskId) { url += ';id=' + taskId; }
+                    if (notification.category) { url += ';activity=' + notification.category; }
                     window.location.replace(url);
                 }
                 else if ( /achievements/gi.test( link ) )
@@ -214,7 +214,7 @@
                 else if (/recommendation\/institution/gi.test(link)) {
                     var url = '/edu/#/colleges;tab=1';
                     window.location.replace(url);
-                 } else if (/recommendation\/scholarship/gi.test(link)) {
+                } else if (/recommendation\/scholarship/gi.test(link)) {
                     var url = '/edu/#/scholarships;tab=3';
                     window.location.replace(url);
                 } else {

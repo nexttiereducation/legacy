@@ -12,7 +12,7 @@
                     // Certain minor words should be left lowercase unless
                     // they are the first or last words in the string
                     var lowers = ['A', 'An', 'The', 'And', 'But', 'Or', 'For', 'Nor', 'As', 'At',
-                                'By', 'For', 'From', 'Into', 'Near', 'Of', 'On', 'Onto', 'To', 'With'];
+                        'By', 'For', 'From', 'Into', 'Near', 'Of', 'On', 'Onto', 'To', 'With'];
                     angular.forEach(lowers, function(lower) {
                         output = output.replace(new RegExp('\\s' + lower + '\\s', 'g'),
                             function(txt) {
@@ -30,7 +30,7 @@
                     return output;
                 }
                 return;
-            }
+            };
         })
 
         .filter('sentenceCase', function() {
@@ -93,7 +93,7 @@
                     return JSON.stringify(input);
                 }
                 return;
-            }
+            };
         })
 
         .filter('urbanization', function() {
@@ -117,7 +117,7 @@
                     return urbanizationTable[input];
                 }
                 return;
-            }
+            };
         })
 
         .filter('removeParent', function() {
@@ -131,7 +131,7 @@
                     return output;
                 }
                 return;
-            }
+            };
         });
 
 })();

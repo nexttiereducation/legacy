@@ -2,7 +2,7 @@
 
 angular
     .module('institutionsModule', ['apiModule', 'mixpanelModule', 'stakeholderModule'])
-    .factory('InstitutionTrackerService', InstitutionTrackerService)
+    .factory('InstitutionTrackerService', InstitutionTrackerService);
 
 InstitutionTrackerService.$inject = [
     '$http',
@@ -35,7 +35,7 @@ function InstitutionTrackerService($http, $rootScope, ApiService, ApiUrlService,
     tracker.updateSchoolList = function () {
         tracker.refreshSchools();
         tracker.refreshRecommendations();
-    }
+    };
 
     $rootScope.$on('updateSchoolList', function (e, data) {
         tracker.updateSchoolList();
@@ -328,7 +328,7 @@ function InstitutionTrackerService($http, $rootScope, ApiService, ApiUrlService,
         return ApiService.$get(ApiUrlService.application.groupList())
             .then(function (response) {
                 return response.data;
-            })
+            });
     };
 
     return tracker;

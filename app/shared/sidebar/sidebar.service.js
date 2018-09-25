@@ -16,7 +16,7 @@
             icon: 'icon-dashboard',
             hasCustomIcon: true,
             order: 1
-        }
+        };
 
         var STUDENT_TASKS = {
             route: '/studentTasks/',
@@ -24,7 +24,7 @@
             title: 'Tasks',
             icon: 'content_paste',
             order: 2
-        }
+        };
 
         var COLLEGES = {
             route: '/colleges/',
@@ -32,7 +32,7 @@
             title: 'Colleges',
             icon: 'account_balance',
             order: 4
-        }
+        };
 
         var SCHOLARSHIPS = {
             route: '/scholarships/',
@@ -48,7 +48,7 @@
             title: 'Careers',
             icon: 'work',
             order: 6
-        }
+        };
 
         var APPLICATIONS = {
             route: '/applications/',
@@ -56,7 +56,7 @@
             title: 'Applications',
             icon: 'school',
             order: 7
-        }
+        };
 
         var APPLICATION_MANAGER = {
             route: '/application-manager/',
@@ -64,7 +64,7 @@
             title: 'Application Manager',
             icon: 'school',
             order: 7
-        }
+        };
 
         var COUNSELOR_DASHBOARD = {
             route: '/dashboard/',
@@ -73,7 +73,7 @@
             icon: 'icon-counselor_dashboard',
             hasCustomIcon: true,
             order: 1
-        }
+        };
 
         var STUDENTS = {
             route: '/students/',
@@ -81,7 +81,7 @@
             title: 'Students',
             icon: 'person',
             order: 2
-        }
+        };
 
         var COUNSELOR_TASKS = {
             route: '/counselor-tasks/',
@@ -89,7 +89,7 @@
             title: 'Tasks',
             icon: 'assignment_turned_in',
             order: 3
-        }
+        };
 
         var COMMUNITY = {
             route: '/counselor-community/',
@@ -97,7 +97,7 @@
             title: 'Community',
             icon: 'public',
             order: 8
-        }
+        };
 
         var DISTRICT = {
             route: '/district/',
@@ -105,7 +105,7 @@
             title: 'District',
             icon: 'location_city',
             order: 9
-        }
+        };
 
         return {getFeatures: getFeatures};
 
@@ -159,7 +159,7 @@
                 SCHOLARSHIPS,
                 COUNSELOR_TASKS,
                 COMMUNITY
-            ]
+            ];
 
             var entitlements = determineFeatures();
             for (var i = 0, feature; feature = entitlements[i]; ++i) {
@@ -188,7 +188,7 @@
             }
 
             if (StakeholderAuthService.isAllowed('view all', 'district') || StakeholderAuthService.isAdmin()) {
-                features.push(DISTRICT)
+                features.push(DISTRICT);
             }
 
             return features;

@@ -6,5 +6,5 @@
             'apiModule',
             'mixpanelModule',
             'stakeholderModule'
-        ])
+        ]);
 })();

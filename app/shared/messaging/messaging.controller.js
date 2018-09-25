@@ -93,7 +93,7 @@
                     });
                 } else {
                     showMessaging();
-                };
+                }
             }, 100);
         }
 
@@ -120,7 +120,7 @@
                     });
                 } else {
                     showSidebar();
-                };
+                }
             }, 100);
         }
 
@@ -163,13 +163,13 @@
                     } else {
                         currentMessage[0].count++;
                     }
-                    MessagingManager.updateUnreadCount()
+                    MessagingManager.updateUnreadCount();
                 } else {
                     MessagingManager.markRead(message.chatId);
                 }
             });
             $rootScope.$watch(
-                function() { return this.show },
+                function() { return this.show; },
                 function(newVal, oldVal) {
                     if (newVal) {
                         localStorageService.set('messaging-open', 'true');

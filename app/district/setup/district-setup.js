@@ -1,7 +1,7 @@
 (function() {
     angular
-      .module('dashboard')
-      .controller('DistrictSetup', DistrictSetup);
+        .module('dashboard')
+        .controller('DistrictSetup', DistrictSetup);
 
     DistrictSetup.$inject = ['DistrictManager', 'DistrictModel',
         '$routeParams', '$location', 'HighSchoolManager',
@@ -23,7 +23,7 @@
         this.removeHighSchool = removeHighSchool;
         ///////////////////////////////////////////////////////////////
         //vm properties
-        this.user = StakeholderAuth.getUser()
+        this.user = StakeholderAuth.getUser();
         this.DistrictModel = DistrictModel;
         this.showHighSchoolFinder = false;
         this.highSchools = [];
@@ -35,7 +35,7 @@
         //private vars
         this.districtid = -1;
         if (this.user.district) {
-            this.districtid = this.user.district.id
+            this.districtid = this.user.district.id;
         }
         // Show a basic modal from a controller
         //////////////////////////////////////////
@@ -70,19 +70,19 @@
             }
             if (this.highSchoolSearchObject.highSchoolSearchZipCode.length !== 5
                 && this.highSchoolSearchObject.highSchoolSearchName == '') {
-                  return
-            };
+                return;
+            }
             var query = HighSchoolManager.createSearchQuery(
-              {},
-              this.highSchoolSearchObject.highSchoolSearchName,
-              this.highSchoolSearchObject.highSchoolSearchZipCode
+                {},
+                this.highSchoolSearchObject.highSchoolSearchName,
+                this.highSchoolSearchObject.highSchoolSearchZipCode
             );
             HighSchoolManager.searchSchools(query)
                 .then(function(response) {
                     _.pullAllBy(response.data.results, this.districtHighSchools, 'id');
                     this.highSchools = response.data.results;
                 }).catch(function() {
-                    toastr.error('Error searching for school.')
+                    toastr.error('Error searching for school.');
                 });
         }
 
@@ -95,7 +95,7 @@
                     this.showHighSchoolFinder = false;
                 }).catch(function(ex) {
                     console.log(ex);
-                    toastr.error('Error adding high school.')
+                    toastr.error('Error adding high school.');
                 });
         }
 
@@ -105,7 +105,7 @@
                     _.pull(this.DistrictModel.district.highschools, highSchool);
                 }).catch(function(ex) {
                     console.log(ex);
-                    toastr.error('Error removing high school.')
+                    toastr.error('Error removing high school.');
                 });
         }
 

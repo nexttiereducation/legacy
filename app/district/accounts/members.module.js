@@ -8,5 +8,5 @@
         'mgcrea.ngStrap.tab',
         'mgcrea.ngStrap.modal',
         'high-school'
-    ])
+    ]);
 })();

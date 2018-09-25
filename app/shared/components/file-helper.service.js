@@ -43,13 +43,13 @@
                 link.setAttribute( 'download', '');
                 link.click();
                 link.remove();
-            })
+            });
         }
 
         function downloadUserFile(fileId) {
             getUserURL(fileId).then(function(url) {
                 updateLink(url);
-            })
+            });
         }
 
         function getSystemLog(district_id) {
@@ -60,15 +60,15 @@
 
         function downloadSystemLog(districtId, systemLogId) {
             return API.$get(UrlHelper.stakeholder.downloadSystemLog(districtId, systemLogId)).then(function (response) {
-               return response.data.notes;
+                return response.data.notes;
             });
         }
 
         function retrieveUserFiles() {
             return $http.get(UrlHelper.stakeholder.updateStakeholder(), {
                 headers: {
-                        'AUTHORIZATION': 'Token ' + StakeholderAuth.getAuthToken(),
-                        'Content-Type': undefined //This is to ignore angular's default content type (application/json) this will allow the browser to set it as multipart/form-data
+                    'AUTHORIZATION': 'Token ' + StakeholderAuth.getAuthToken(),
+                    'Content-Type': undefined //This is to ignore angular's default content type (application/json) this will allow the browser to set it as multipart/form-data
                 }
             }).then(function(response) {
                 return response.data.attachments;
@@ -100,11 +100,11 @@
                         'Content-Type': undefined
                     }
                 })
-                .then(function(response) {
-                    return response.data;
-                }).catch(function(error) {
-                    console.log(error);
-                });
+                    .then(function(response) {
+                        return response.data;
+                    }).catch(function(error) {
+                        console.log(error);
+                    });
             }
         }
 
@@ -168,7 +168,7 @@
 
         function getS3URL(taskId) {
             return API.$get(UrlHelper.tasks.attachment(taskId)).then(function(response) {
-               return response.data.url;
+                return response.data.url;
             });
         }
 

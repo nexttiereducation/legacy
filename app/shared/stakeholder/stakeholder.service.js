@@ -14,7 +14,7 @@ angular
                 this.reset();
                 this.deferred = $q.defer();
                 this.resolvePromise = this.deferred.promise;
-            }
+            };
 
             StakeholderService.prototype.reset = function() {
                 var keys = Object.keys(this);

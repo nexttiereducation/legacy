@@ -1,7 +1,7 @@
 (function() {
     angular
-      .module('district', ['api-svc', 'api-urls-svc'])
-      .service('DistrictModel', DistrictModel);
+        .module('district', ['api-svc', 'api-urls-svc'])
+        .service('DistrictModel', DistrictModel);
 
     DistrictModel.$inject = [];
 
@@ -19,8 +19,8 @@
         this.filters = [];
         this.url;
         this.pagedStakeholderList;
-        this.sourcePage = null
-        this.currentPage = null
+        this.sourcePage = null;
+        this.currentPage = null;
         this.totalResults = null;
         return;
 

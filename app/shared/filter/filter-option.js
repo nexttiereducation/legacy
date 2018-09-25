@@ -2,7 +2,7 @@
     angular.module('filter')
         .directive('filterOption', FilterOption);
 
-    FilterOption.$inject = ["Track"];
+    FilterOption.$inject = ['Track'];
 
     function FilterOption(Track) {
         var filterOption = {
@@ -34,9 +34,9 @@
             function toggleOption() {
                 scope.option.isActive = !scope.option.isActive;
                 if (scope.option.isActive) {
-                    Track.event("filter_activated", {
-                        "value": scope.option.value
-                    })
+                    Track.event('filter_activated', {
+                        'value': scope.option.value
+                    });
                 }
                 scope.$emit('nte-filter.toggle', {option: scope.option});
             }

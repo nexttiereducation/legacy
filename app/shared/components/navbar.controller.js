@@ -406,7 +406,7 @@
         }
         /* ======================= LISTENERS ======================= */
         function setupListeners() {
-            $scope.$watch(function watchStakeholder(scope) {
+            this.$watch(function watchStakeholder(scope) {
                 return (this.stakeholder);
             }, function handleStakeholderChange(newValue, oldValue) {
                 activate(true);

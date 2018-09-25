@@ -28,4 +28,4 @@ function EntitlementsService($q, ApiService, ApiUrlService, StakeholderAuthServi
         return ApiService.$get(ApiUrlService.stakeholder.isAllowed(action, resource, StakeholderAuthService.getStakeholder().id));
     }
 
-};
+}
