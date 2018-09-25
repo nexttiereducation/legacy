@@ -1,0 +1,17 @@
+<h2>Delete Role
+    <span>{{ role.name }}</span>
+</h2>
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <h2>Are you sure you want to delete this role?</h2>
+    <div class="form-controls clearfix">
+        <button type="button"
+                class="btn btn-default edit-item-cancel"
+                data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit"
+                type="submit"
+                class="btn btn-primary"
+                data-ng-click="deleteRole()">Delete</button>
+    </div>
+</form>

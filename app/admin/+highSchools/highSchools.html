@@ -1,0 +1,90 @@
+<div layout="row"
+     layout-align="space-between center"
+     layout-margin>
+    <div layout="row">
+        <md-icon class="material-icons">search</md-icon>
+        <input type="text"
+               placeholder="Search by name"
+               ng-model="hsName"
+               class="form-control"
+               ng-keyup="searchHighSchoolsByZipCodeOrName()" />
+    </div>
+    <div>
+        <button type="button"
+                class="btn btn-primary add-new-item"
+                data-ng-click="openNewItemForm()">Add New</button>
+        <span class="btn btn-primary"
+              id="csv-upload-btn">{{ uploadStatus }}
+            <input type="file"
+                   data-nv-file-select
+                   uploader="uploader">
+        </span>
+    </div>
+</div>
+<section class="table-fixed">
+    <div class="table-fixed-container">
+        <table class="table-hover table-bordered table-responsive"
+               infinite-scroll="items.nextPage()"
+               infinite-scroll-disabled="items.busy || items.url === null"
+               infinite-scroll-distance="10">
+            <thead>
+                <th>
+                    <div>NCES Id</div>
+                </th>
+                <th>
+                    <div data-sort-header="name">
+                        <span>Name</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='name'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th>
+                    <div data-sort-header="city">
+                        <span>City</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='city'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th>
+                    <div data-sort-header="state">
+                        <span>State</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='state'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th>
+                    <div>Zipcode</div>
+                </th>
+                <th class="text-center">
+                    <div class="text-center">Delete</div>
+                </th>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="item in items.items track by item.id"
+                    id="highschool-{{ item.id }}">
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.nces }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.name }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.city }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.state }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.zipcode }}</td>
+                    <td class="text-center">
+                        <md-button class="md-accent md-icon-button"
+                                   ng-click="openDeleteDialog( item, $index )">
+                            <md-icon class="material-icons">delete</md-icon>
+                        </md-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6"
+                        class="text-center">
+                        <div class="md-padding md-subhead text-blue">
+                            <span data-ng-show="items.busy">
+                                <i class="fa fa-refresh fa-spin"></i> Loading data . . .
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

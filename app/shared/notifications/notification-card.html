@@ -1,0 +1,25 @@
+<div class="clickable" ng-click="markRead()" ng-animate layout="row" layout-align="space-between start">
+    <md-card-content ng-class="{'no-padding': $mdMedia('xs')==true}">
+        <!-- <img alt="notification icon" ng-src="{{ item.read ? item.readImage : item.unreadImage }}" style="height:50px"> -->
+        <div layout="column" layout-align="center start" flex="noshrink">
+            <div layout="row" layout-align="space-between center" class="full-width">
+                <div layout="row" layout-align="start center" class="md-caption" flex="noshrink">
+                    <md-icon ng-class="item.read ? 'text-dark-grey' : 'text-accent'" class="material-icons inherit">event</md-icon>
+                    <span ng-class="item.read ? 'text-dark-grey' : 'text-accent'">{{ item.created_on | date : "MMM d, y h:mm a" }}</span>
+                </div>
+                <span flex></span>
+                <md-icon class="material-icons" ng-click="remove( $event )" ng-show="!removing" hide-gt-xs>clear</md-icon>
+            </div>
+            <div class="notification-title md-body-1">{{ item.body }}</div>
+        </div>
+        <div class="spinner-wrapper" ng-show="removing">
+            <div class="spinner"></div>
+        </div>
+    </md-card-content>
+    <md-button class="md-icon-button" ng-click="remove( $event )" ng-show="!removing" hide-xs>
+        <md-icon class="material-icons">clear</md-icon>
+    </md-button>
+</div>
+<div layout="row" layout-align="center center" ng-if="item.goto" class="clickable" ng-click="markRead()">
+    <md-button class="md-primary md-raised" ng-click="handleNotification(item.goto)">View</md-button>
+</div>

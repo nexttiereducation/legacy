@@ -1,0 +1,5 @@
+<div class="filter-option-wrapper">
+	<md-checkbox class="md-primary white" ng-checked="option.isActive" ng-click="toggleOption()" ng-class="{'filter-option-checked': option.isActive}">
+		{{option.display || option.value}}
+	</md-checkbox>
+</div>

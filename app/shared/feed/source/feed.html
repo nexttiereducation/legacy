@@ -1,0 +1,131 @@
+<div class="activity-feed-container" ng-class="{'height-100': !isTablet() && !isMobile()}"
+    layout="row" flex>
+    <md-sidenav md-is-locked-open="$mdMedia('gt-xs')" class="md-whiteframe-z2 md-sidenav-left"
+        ng-if="feedVM.feed.length > 0 && feedVM.feedSummary" md-component-id="left">
+        <div class="feed-summary">
+            <md-toolbar class="md-toolbar-small md-primary">
+                <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                    <div class="bold text-white" ng-click="feedVM.selectedFilter={ category: [], date: 'Today', displayDate: 'Today'}">TODAY</div>
+                    <div ng-show="showLoader" class="subheader-loading">
+                        <md-progress-circular class="md-hue-1" md-diameter="20px"></md-progress-circular>
+                    </div>
+                    <div class="md-caption">{{feedVM.today | date:"EEEE, MMMM dd"}}</div>
+                </div>
+            </md-toolbar>
+            <md-list class="md-list-clickable" ng-if="feedVM.activityToShow(feedVM.feedSummary.today)">
+                <md-list-item class="summary-item" ng-repeat="(key, value) in feedVM.feedSummary.today"
+                              ng-if="key !='null' && key !='day' && value > 0">
+                    <div layout="row" layout-align="start center" flex
+                         ng-click="feedVM.addFilter(feedVM.feedConstants.categories[key], 0, 'Today')">
+                        <img class="summary-icon" ng-src="{{feedVM.feedConstants.icons[key] || feedVM.getActivityIcon(key)}}">
+                        <span ng-class="{ 'selected-item': feedVM.isSelected(key, 'Today')}" flex>{{value}} {{key | underscoresToSpaces}}</span>
+                    </div>
+                    <button class="clear-button brand-blue" ng-if="feedVM.isFiltered() && feedVM.selectedFilter.date === 0 && feedVM.isSelected(key, 'Today')"
+                        ng-click="feedVM.removeFilter(feedVM.feedConstants.categories[key])">Clear</button>
+                </md-list-item>
+            </md-list>
+            <div ng-if="!feedVM.activityToShow(feedVM.feedSummary.today)"
+                 class="md-padding">You have had no student activity today</div>
+            <md-toolbar class="md-toolbar-small md-accent">
+                <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                    <div class="bold text-white" ng-click="feedVM.selectedFilter={ category: [], date: 'Yesterday', displayDate: 'Yesterday'}">YESTERDAY</div>
+                </div>
+            </md-toolbar>
+            <md-list class="md-list-clickable" ng-if="feedVM.activityToShow(feedVM.feedSummary.yesterday)">
+                <md-list-item class="summary-item" ng-repeat="(key, value) in feedVM.feedSummary.yesterday"
+                              ng-if="key !='null' && key !='day' && value > 0">
+                    <div layout="row" layout-align="start center" flex
+                         ng-click="feedVM.addFilter(feedVM.feedConstants.categories[key], 1, 'Yesterday')">
+                        <img class="summary-icon" ng-src="{{feedVM.feedConstants.icons[key] || feedVM.getActivityIcon(key)}}">
+                        <span ng-class="{ 'selected-item': feedVM.isSelected(key, 'Yesterday')}" flex>{{value}} {{key | underscoresToSpaces}}</span>
+                    </div>
+                    <button class="clear-button brand-blue" ng-if="feedVM.isFiltered() && feedVM.selectedFilter.date === 1 && feedVM.isSelected(key, 'Yesterday')"
+                        ng-click="feedVM.removeFilter(feedVM.feedConstants.categories[key])">Clear</button>
+                </md-list-item>
+            </md-list>
+            <div ng-if="!feedVM.activityToShow(feedVM.feedSummary.yesterday)"
+                 class="md-padding">You had no student activity yesterday</div>
+            <md-toolbar class="md-toolbar-small md-accent">
+                <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                    <div class="bold text-white" ng-click="feedVM.selectedFilter={ category: [], date: 6, displayDate: 'Within The Past Week'}">THIS WEEK</div>
+                </div>
+            </md-toolbar>
+            <md-list class="md-list-clickable" ng-if="feedVM.activityToShow(feedVM.weeklySummary)">
+                <md-list-item class="summary-item" ng-repeat="(key, value) in feedVM.weeklySummary"
+                              ng-if="key !='null' && key !='day' && value > 0">
+                    <div layout="row" layout-align="start center" flex
+                         ng-click="feedVM.addFilter(feedVM.feedConstants.categories[key], 6, 'Within The Past Week')">
+                        <img class="summary-icon" ng-src="{{feedVM.feedConstants.icons[key] || feedVM.getActivityIcon(key)}}">
+                        <span ng-class="{ 'selected-item': feedVM.isSelected(key, 'Within The Past Week')}" flex>{{value}} {{key | underscoresToSpaces}}</span>
+                    </div>
+                    <button class="clear-button brand-blue" ng-if="feedVM.isFiltered() && feedVM.selectedFilter.date === 6 && feedVM.isSelected(key, 'Within The Past Week')"
+                        ng-click="feedVM.removeFilter(feedVM.feedConstants.categories[key])">Clear</button>
+                </md-list-item>
+            </md-list>
+            <div ng-if="!feedVM.activityToShow(feedVM.weeklySummary)"
+                 class="md-padding">You had no student activity this week</div>
+        </div>
+    </md-sidenav>
+    <div ng-class="{ 'student-dash': feedVM.isStudent || feedVM.isParent }" ng-if="feedVM.feed.length > 0"
+        layout="column" flex class="bg-grey">
+        <md-toolbar class="md-accent md-whiteframe-z2" ng-hide="isMobile() || feedVM.isCounselor">
+            <div class="md-toolbar-tools">
+                <div class="text-white">Activity Feed</div>
+                <span flex></span>
+                <div layout="row" layout-align="space-around center" ng-show="showLoader" class="subheader-loading">
+                    <md-progress-circular class="md-hue-1" md-diameter="20px"></md-progress-circular>
+                    <span class="md-caption">&ensp;Loading . . .</span>
+                </div>
+            </div>
+        </md-toolbar>
+        <md-content id="top" class="card-list no-grow bg-grey scroll-container" flex layout="column">
+            <md-card class="brand-border-left" ng-class="{ 'no-pointer': !feedVM.isCounselor }"
+                ng-repeat="item in feedVM.feed" ng-click="feedVM.followGoToLink(item)"
+                ng-disabled="feedVM.isStudent || feedVM.isParent" layout="row" layout-align="space-between center">
+                <md-card-content flex layout="row" layout-align="space-between center">
+                    <img class="feed-image" md-avatar style="height:40px;width:40px;"
+                         ng-src="{{item.imageURL || 'http://next-tier.s3.amazonaws.com/images/deadline_icon.svg'}}">
+                    <div class="md-body-1 line-height-1" flex>{{item.body}}</div>
+                    <div class="activity-date md-caption text-dark-grey" layout="row" layout-align="end center" hide-xs>
+                        <md-icon class="material-icons inherit">event</md-icon> <span>{{item.created_on | amCalendar}}</span>
+                    </div>
+                </md-card-content>
+            </md-card>
+             <div infinite-scroll="feedVM.getFeed(feedVM.nextUrl)"
+                  infinite-scroll-container="'.scroll-container'"
+                  infinite-scroll-immediate-check="false">
+            </div>
+        </md-content>
+    </div>
+    <md-content class="empty-feed bg-grey md-padding" ng-if="feedVM.showCarousel" layout="row" flex>
+        <md-card class="carousel-wrapper" ng-if="!isMobile() && feedVM.stakeholder.isStudent">
+            <slick class="slider single-item">
+                <div ng-repeat="image in feedVM.feedConstants.web track by $index">
+                    <img ng-src="{{image}}" class="layer no-margin" /> </div>
+            </slick>
+        </md-card>
+        <md-card class="carousel-wrapper" ng-if="isMobile() && feedVM.stakeholder.isStudent">
+            <slick class="slider single-item">
+                <div ng-repeat="image in feedVM.feedConstants.mobile track by $index">
+                    <img ng-src="{{image}}" class="layer no-margin" /> </div>
+            </slick>
+        </md-card>
+        <md-card class="carousel-wrapper" ng-if="!isMobile() && !feedVM.stakeholder.isStudent">
+            <slick class="slider single-item">
+                <div ng-if="!feedVM.stakeholder.isCounselor" ng-repeat="image in feedVM.feedConstants.parentWeb track by $index">
+                    <img ng-src="{{image}}" class="layer no-margin" /> </div>
+                <div ng-if="feedVM.stakeholder.isCounselor" ng-repeat="image in feedVM.feedConstants.counselorWeb track by $index">
+                    <img ng-src="{{image}}" class="layer no-margin" /> </div>
+            </slick>
+        </md-card>
+        <md-card class="carousel-wrapper" ng-if="isMobile() && !feedVM.stakeholder.isStudent">
+            <slick class="slider single-item">
+                <div ng-if="feedVM.stakeholder.isCounselor" ng-repeat="image in feedVM.feedConstants.counselorMobile track by $index">
+                    <img ng-src="{{image}}" class="layer no-margin" /> </div>
+                <div ng-if="!feedVM.stakeholder.isCounselor" ng-repeat="image in feedVM.feedConstants.parentMobile track by $index">
+                    <img ng-src="{{image}}" class="layer no-margin" /> </div>
+            </slick>
+        </md-card>
+    </md-content>
+</div>
+

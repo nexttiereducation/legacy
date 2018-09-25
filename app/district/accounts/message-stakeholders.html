@@ -1,0 +1,26 @@
+<md-dialog aria-label="Message Users" ng-cloak ng-controller="MessageStakeholders as vm">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Send Welcome Email</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="vm.cancel()"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="row" layout-align="space-between center">
+            <span><i class="fa fa-envelope fa-5x"></i></span>
+            <div class="md-subhead md-margin" style="max-width:300px">Send a <strong>Welcome to NextTier</strong> email to your district. The email includes instructions for signing in to NextTier.</div>
+        </div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <span class="md-caption">*Messages sent to {{ vm.districtModel.district.size }} users based on selected filters</span>
+        <span flex></span>
+        <md-button class="md-primary" data-ng-click="vm.sendWelcomeMessage()">Send</md-button>
+    </md-dialog-actions>
+    </form>
+</md-dialog>

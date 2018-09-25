@@ -1,0 +1,137 @@
+<md-toolbar class="md-menu-toolbar md-whiteframe-z2">
+    <div class="md-toolbar-tools"
+         layout="row"
+         layout-align="space-between center">
+        <div>
+            <button type="button"
+                    class="btn tos-button"
+                    data-ng-class="{ 'btn-primary': actionsDiv, 'btn-default': !actionsDiv }"
+                    data-ng-click="viewRoles()">View Roles </button>
+            <button type="button"
+                    class="btn pp-button"
+                    data-ng-class="{ 'btn-primary': !actionsDiv, 'btn-default': actionsDiv }"
+                    data-ng-click="viewActions()">View Actions </button>
+        </div>
+        <div layout="row"
+             ng-show="actionsDiv">
+            <md-icon class="material-icons">search</md-icon>
+            <input ng-model="query.name"
+                   class="form-control"
+                   placeholder="Search by Role Name">
+        </div>
+        <div layout="row"
+             ng-hide="actionsDiv">
+            <md-icon class="material-icons">search</md-icon>
+            <input ng-model="search.name"
+                   class="form-control"
+                   placeholder="Search by Action Name">
+        </div>
+        <div>
+            <button type="button"
+                    class="btn btn-primary add-new-item"
+                    data-ng-click="openNewRoleForm()">Add New Role </button>
+            <button type="button"
+                    class="btn btn-primary add-new-item"
+                    data-ng-click="openNewActionForm()">Add New Action </button>
+        </div>
+    </div>
+</md-toolbar>
+<md-content class="bg-grey"
+            layout="column"
+            flex>
+    <div ng-hide="actionsDiv">
+        <form id="edit-item"
+              name="detailForm"
+              data-ng-submit="confirm();">
+            <section class="table-fixed">
+                <div class="table-fixed-container">
+                    <table class="table-hover">
+                        <thead>
+                            <th>
+                                <div>Action Name</div>
+                            </th>
+                            <th>
+                                <div>Action Resource</div>
+                            </th>
+                            <th>
+                                <div>Enterprise</div>
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="action in actions | filter:search.name:strict track by $index">
+                                <td>{{ action.name }}</td>
+                                <td>{{action.resource}}</td>
+                                <td>{{action.enterprise}}</td>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-primary add-new-item"
+                                            data-ng-click="openEditActionForm(action )">Edit Action </button>
+                                </td>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-primary add-new-item"
+                                            data-ng-click="openDeleteActionForm(action )">Delete </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </form>
+    </div>
+    <div ng-show="actionsDiv"
+         layout="row"
+         layout-wrap>
+        <md-card data-ng-repeat="role in roles | orderBy:'name' | filter:query.name:strict track by $index"
+                 flex
+                 style="min-width:400px">
+            <md-card-content>
+                <div layout="row"
+                     layout-align="space-between start">
+                    <div flex>
+                        <h2 class="md-title">{{role.name}}</h2>
+                        <p class="md-caption text-dark-grey">{{role.description}}</p>
+                    </div>
+                    <div>
+                        <md-button class="md-icon-button"
+                                   data-ng-click="openEditForm( $index )">
+                            <md-tooltip>Edit Role</md-tooltip>
+                            <md-icon class="material-icons">edit</md-icon>
+                        </md-button>
+                        <md-button class="md-icon-button"
+                                   data-ng-click="openDeleteForm( role )">
+                            <md-tooltip>Delete Role</md-tooltip>
+                            <md-icon class="material-icons">delete</md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </md-card-content>
+            <md-divider></md-divider>
+            <div layout="row"
+                 layout-align="space-between center"
+                 class="md-padding">
+                <div class="md-subhead text-dark-blue">Role Entitlements</div>
+                <md-button class="md-icon-button"
+                           data-ng-click="openEntitleForm( $index, role )">
+                    <md-tooltip>Edit Role Entitlements</md-tooltip>
+                    <md-icon class="material-icons">settings</md-icon>
+                </md-button>
+            </div>
+            <md-list>
+                <md-list-item data-ng-repeat="actionGroup in role.groups | orderBy"
+                              ng-class="{'md-1-line': role.groupedActions[actionGroup].length==1,
+                                         'md-2-line': role.groupedActions[actionGroup].length==2,
+                                         'md-3-line': role.groupedActions[actionGroup].length==3}">
+                    <div class="md-list-item-text">
+                        <div>
+                            <strong>{{actionGroup}}</strong>
+                        </div>
+                        <div ng-repeat="action in role.groupedActions[actionGroup] | orderBy:'resource'">{{action.resource}}</div>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-card>
+    </div>
+</md-content>
+<md-list-item class="md-2-line"
+              ng-repeat=""> </md-list-item>

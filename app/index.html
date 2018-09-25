@@ -1,43 +1,107 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
-  <link rel="stylesheet" href="app.css">
-  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-</head>
-<body>
-  <ul class="menu">
-    <li><a href="#!/view1">view1</a></li>
-    <li><a href="#!/view2">view2</a></li>
-  </ul>
+<!--[if lt IE 7]>      <html lang="en" ng-app="nteLegacy" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="nteLegacy" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="nteLegacy" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en"
+      ng-app="nteLegacy"
+      class="no-js">
+<!--<![endif]-->
 
-  <!--[if lt IE 7]>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+    <title>My AngularJS App</title>
+    <meta name="description"
+          content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="node_modules/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet"
+          href="node_modules/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet"
+          href="app.css">
+    <script src="node_modules/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>
+    <ul class="menu">
+        <li>
+            <a href="/#/admin">admin</a>
+        </li>
+        <li>
+            <a href="/#/district">district</a>
+        </li>
+    </ul>
+    <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
+    <div ng-view></div>
+    <div>Angular seed app: v
+        <span app-version></span>
+    </div>
+    <div class="site-loading"
+         ng-if="showLoader">
+        <div style="display: table; width: 100%; height: 100%">
+            <div style="display: table-cell; text-align: center; vertical-align:middle;">
+                <img src="https://next-tier.s3.amazonaws.com/build/images/animations/loader.svg"
+                     style="background-color:white;border-radius:50%" />
+            </div>
+        </div>
+    </div>
+    <messaging></messaging>
+    <!-- In production use:
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+        -->
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
+    <script src="node_modules/angular-cookies/angular-cookies.js"></script>
+    <script src="shared/api/api.module.js"></script>
+    <script src="shared/api/api-intercept.service.js"></script>
+    <script src="shared/api/api-url.constants.js"></script>
+    <script src="shared/api/api-url.service.js"></script>
+    <script src="shared/api/api.service.js"></script>
+    <script src="shared/file/file.module.js"></script>
+    <script src="shared/file/csv-export.service.js"></script>
+    <script src="shared/file/file.service.js"></script>
+    <script src="shared/navbar/navbar.module.js"></script>
+    <script src="shared/navbar/navbar.controller.js"></script>
+    <script src="shared/navbar/translator.directive.js"></script>
+    <script src="shared/sidebar/sidebar.module.js"></script>
+    <script src="shared/sidebar/sidebar.directive.js"></script>
+    <script src="shared/sidebar/sidebar.manager.js"></script>
+    <script src="shared/stakeholder/stakeholder.module.js"></script>
+    <script src="shared/stakeholder/stakeholder-auth.service.js"></script>
+    <script src="shared/stakeholder/stakeholder.service.js"></script>
+    <script src="shared/stakeholder/target-stakeholder.service.js"></script>
+    <script src="shared/filters.module.js"></script>
+    <script src="shared/institution-tracker.service.js"></script>
+    <script src="shared/material-theme.config.js"></script>
+    <script src="shared/mixpanel.service.js"></script>
+    <script src="shared/utils.service.js"></script>
+    <script src="app.js"></script>
+    <script src="admin/admin.js"></script>
+    <script src="admin/shared/add-admin-urls.js"></script>
+    <script src="admin/shared/admin-dialog.service.js"></script>
+    <script src="admin/shared/confirm-delete.html"></script>
+    <script src="admin/shared/editable-list.service.js"></script>
+    <script src="admin/shared/infinite-scroll.service.js"></script>
+    <script src="admin/shared/query-builder.service.js"></script>
+    <script src="admin/shared/sort-header.directive.js"></script>
+    <script src="admin/shared/utilities.js"></script>
+    <script src="admin/shared/xlsx-reader.js"></script>
+    <script src="admin/shared/xlsx-reader.service.js"></script>
+    <script src="admin/+stakeholders/stakeholders.controller.js"></script>
+    <script src="admin/+institutions/institutions.controller.js"></script>
+    <script src="admin/+tasks/tasks.controller.js"></script>
+    <script src="admin/+achievements/achievements.controller.js"></script>
+    <script src="admin/+notifications/notifications.controller.js"></script>
+    <script src="admin/+highSchools/highSchools.controller.js"></script>
+    <script src="admin/+policy/policy.controller.js"></script>
+    <script src="admin/+entitlements/entitlements.controller.js"></script>
+    <script src="admin/+sponsor/sponsor.controller.js"></script>
+    <script src="district/district.js"></script> </body>
 
-  <div ng-view></div>
-
-  <div>Angular seed app: v<span app-version></span></div>
-
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="app.js"></script>
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
-</body>
 </html>

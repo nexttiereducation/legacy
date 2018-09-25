@@ -1,0 +1,45 @@
+<div class="lightbox">
+    <div class="lightbox-background" data-ng-click="dismiss()"></div>
+    <div id="messages-view" class="lightbox-foreground boxed"
+        data-ng-repeat="item in messages.list"
+        data-ng-if="$first"
+        data-ng-class="{ 'achievement': item.achievement }">
+        <span class="close-icon" data-ng-click="dismiss()">
+            <img data-ng-src="https://next-tier.s3.amazonaws.com/build/images/ic_control_close.png" alt="Close">
+        </span>
+        <div class="wrapper">
+
+            <div data-ng-if="item.achievement">
+                <h2 class="notice">
+                    <span data-ng-if="stakeholder.isStudent || stakeholder.anonymous">
+                        Achievement Earned
+                    </span>
+                    <span data-ng-if="!( stakeholder.isStudent || stakeholder.anonymous )" class="name">
+                        Your Student has Earned an Achievement
+                    </span>
+                </h2>
+
+                <div data-achievement="item"></div>
+            </div>
+
+            <div data-ng-if="!(item.achievement)">
+                <h2 class="notice">
+                    Notification
+                </h2>
+
+                {{ item.body }}
+
+                <!-- TODO: Need to implement, but for now the reference assumes iOS app
+                <div data-ng-if="item.goto">
+                    <br>
+                    <br>
+                    <button class="view-button" data-ng-click="view( item.goto )">
+                        View
+                    </button>
+                </div>
+                -->
+            </div>
+
+        </div>
+    </div>
+</div>

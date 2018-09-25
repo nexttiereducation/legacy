@@ -1,0 +1,24 @@
+<div class="category-wrapper">
+    <div layout="row" layout-align="space-between center" ng-click="toggleIsExpanded()">
+        <span class="filter-heading" flex>{{category.name}}</span>
+        <md-button class="md-primary" ng-class="{ 'hidden': !category.isActive }" ng-if="category.isActive" ng-click="clear($event)">Clear</md-button>
+        <span class="collapse-button-wrapper" ng-class="{'collapsed': !isExpanded }">
+            <md-icon class="material-icons text-white">keyboard_arrow_right</md-icon>
+        </span>
+    </div>
+    <div ng-if="category.subCategories" class="animate-in-out" ng-class="{'collapsed': !isExpanded }">
+        <sub-category-filter ng-if="isExpanded"  ng-repeat="category in category.subCategories"
+                             sub-category="category"></sub-category-filter>
+    </div>
+    <div ng-if="category.options && isExpanded" class="options-list" ng-class="{'options-list-shadow': (subCategory.options.length + filteredOptions.length) > 7}">
+        <filter-option ng-if="category.type === 'default'"
+                       ng-repeat="option in category.options"
+                       option="option"></filter-option>
+        <filter-option ng-if="category.type === 'search'"
+                       ng-repeat="option in filteredOptions"
+                       option="option"></filter-option>
+        <filter-slider ng-if="category.type === 'range'"
+                       ng-repeat="option in category.options"
+                       option="option"></filter-slider>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+<div layout="row" layout-align="space-between center" layout-margin>
+    <div class="table-controls form-inline clearfix" layout="row" layout-align="space-between center" layout-wrap>
+        <label>
+        <md-icon class="material-icons">filter_list</md-icon>
+            <input type="text" class="form-control" placeholder="Filter by Task name"
+                data-ng-model="name"
+                data-ng-model-options="{ updateOn: 'default blur submit', debounce: {'default': 500, 'blur': 0} }"
+                data-ng-change="getListItems();items.nextPage();">
+        </label>
+        <label>
+            <md-icon class="material-icons">filter_list</md-icon>
+            <input type="text" class="form-control" placeholder="Filter by Institution name"
+                   data-ng-model="institution"
+                   data-ng-model-options="{ updateOn: 'default blur submit', debounce: {'default': 500, 'blur': 0} }"
+                   data-ng-change="getListItems();items.nextPage();">
+        </label>
+        <label>
+            <md-icon class="material-icons">filter_list</md-icon>
+            <input type="text" class="form-control" placeholder="Filter by phase name"
+                   data-ng-model="phase"
+                   data-ng-model-options="{ updateOn: 'default blur submit', debounce: {'default': 500, 'blur': 0} }"
+                   data-ng-change="getListItems();items.nextPage();">
+        </label>
+        <label>
+            <md-icon class="material-icons">filter_list</md-icon>
+            <input type="text" class="form-control" placeholder="Filter by task type"
+                data-ng-model="task_type"
+                data-ng-model-options="{ updateOn: 'default blur submit', debounce: {'default': 500, 'blur': 0} }"
+                data-ng-change="getListItems();items.nextPage();">
+        </label>
+        <label>
+            <input type="checkbox" class="form-control" data-ng-model="is_template"
+                   data-ng-change="getListItems();items.nextPage();">
+            <span>Only Templates</span>
+        </label>
+    </div>
+    <button type="button" class="btn btn-primary add-new-item" data-ng-click="openNewItemForm()">Add New</button>
+</div>
+<section class="table-fixed">
+    <div class="table-fixed-container">
+        <table class="table-hover table-bordered table-responsive"
+                infinite-scroll="items.nextPage()"
+                infinite-scroll-disabled="items.busy || items.url === null"
+                infinite-scroll-distance="10">
+            <thead>
+                <th style="width:5%">
+                    <div>ID</div>
+                </th>
+                <th style="width:30%">
+                    <div data-sort-header="institution_name">
+                        <span>Institution</span>
+                        <md-icon class="material-icons" ng-show="sorting.field=='institution_name'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:45%">
+                    <div data-sort-header="name">
+                        <span>Name</span>
+                        <md-icon class="material-icons" ng-show="sorting.field=='name'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:10%">
+                    <div data-sort-header="phase">
+                        <span>Phase</span>
+                        <md-icon class="material-icons" ng-show="sorting.field=='phase'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:5%">
+                    <div data-sort-header="Template">
+                        <span>Template?</span>
+                        <md-icon class="material-icons" ng-show="sorting.field=='Template'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:10%">
+                    <div data-sort-header="task_type">
+                        <span>Task Type</span>
+                        <md-icon class="material-icons" ng-show="sorting.field=='task_type'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:5%">
+                    <div>Disable</div>
+                </th>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="item in items.items track by $id( item )" id="task{{ item.id }}"
+                    data-ng-class="{ disabled: !item.is_visible }">
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.id }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.institution_name }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.name }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ phaseList(item.phases) }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.is_template ? 'Yes' : '' }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.task_type }}</td>
+                    <!-- <td data-ng-click="openEditForm( item, $index )">{{ item.categories }}</td> -->
+                    <td class="text-center">
+                        <md-button class="md-accent" ng-click="toggleDisable( item, $index )"
+                                   ng-class="{'md-icon-button': item.is_visible, 'no-italics no-margin btn-sm': !item.is_visible}">
+                            <md-icon class="material-icons" ng-class="{ 'text-grey': item.is_visible }"
+                                     ng-if="item.is_visible">cancel</md-icon>
+                            <span ng-if="!item.is_visible">Enable</span>
+                        </md-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="7" class="text-center">
+                        <div class="md-padding md-subhead text-blue">
+                            <span data-ng-show="items.busy"><i class="fa fa-refresh fa-spin"></i> Loading data . . .</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

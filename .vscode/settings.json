@@ -1,0 +1,7 @@
+{
+  "editor.tabSize": 4,
+  "prettier.tabWidth": 4,
+  "html.format.wrapLineLength": 250,
+  "prettier.printWidth": 250,
+  "typescriptHero.imports.multiLineWrapThreshold": 250
+}

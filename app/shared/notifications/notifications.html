@@ -1,0 +1,95 @@
+<md-dialog class="md-complex-dialog notifications" ng-controller="NotificationsCtrl as vm" ng-class="{'mobile': vm.isMobile}">
+    <md-toolbar class="md-accent">
+        <div class="md-toolbar-tools">
+            <span>Notifications</span>
+            <span flex></span>
+            <md-button ng-show="!vm.onProfilePage()" href="/profile/?panel=3" class="md-icon-button" data-ng-class="{ 'active': location == '#/profile' }">
+                <md-icon class="material-icons">settings</md-icon>
+            </md-button>
+            <md-button ng-show="vm.onProfilePage()"
+            class="md-icon-button" data-ng-class="{ 'active': location ==
+            '#/profile' }" ng-click="vm.closeNotificationDialog()">
+                <md-icon class="material-icons">settings</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" data-ng-click="vm.closeNotificationDialog()">
+                <md-icon class="material-icons">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content style="height:100%" class="border-bottom">
+        <md-tabs md-selected="selectedTabIndex" md-center-tabs="true" style="height:100%;" class="no-scroll">
+            <md-tab>
+                <md-tab-label>Communications</md-tab-label>
+                <md-tab-body>
+                    <md-toolbar class="md-menu-toolbar border-bottom" layout="row" layout-align="end center">
+                        <md-button class="md-primary" ng-click="vm.removeAll( 2 )">Clear all</md-button>
+                    </md-toolbar>
+                    <md-content class="bg-grey" flex layout="column">
+                        <div data-ng-show="vm.counts.communications.total > 0" layout="column" layout-align="start stretch" flex="noshrink">
+                            <md-card data-ng-repeat="notification in vm.notifications | filter:{ category: 2 } track by notification.id"
+                                     notification-card="notification"
+                                     rm="vm.removeNotification( notification, event )"
+                                     close="vm.closeNotificationDialog()"
+                                     ng-class="notification.read ? 'read' : 'brand-left-border bg-light-blue'"></md-card>
+                        </div>
+                        <div data-ng-show="vm.counts.communications.total == 0" class="empty-notice md-padding"
+                             layout="column" layout-align="space-around center">
+                            <img data-ng-src="https://next-tier.s3.amazonaws.com/build/images/notifications/ic_pane_noti_empty.svg"
+                                 style="height:80px" alt="Empty Notifications Icon">
+                            <div class="md-title text-center">No communications notifications</div>
+                            <div class="divider"></div>
+                        </div>
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>Tasks</md-tab-label>
+                <md-tab-body>
+                    <md-toolbar class="md-menu-toolbar border-bottom" layout="row" layout-align="end center">
+                        <md-button class="md-primary" ng-click="vm.removeAll( 1 )">Clear all</md-button>
+                    </md-toolbar>
+                    <md-content class="bg-grey" flex>
+                        <div data-ng-show="vm.counts.tasks.total > 0" layout="column" layout-align="start stretch" flex="noshrink">
+                            <md-card data-ng-repeat="notification in vm.notifications | filter:{ category: 1 } track by notification.id"
+                                     notification-card="notification"
+                                     rm="vm.removeNotification( notification, event )"
+                                     close="vm.closeNotificationDialog()"
+                                     ng-class="notification.read ? 'read' : 'brand-left-border bg-light-blue'"></md-card>
+                        </div>
+                        <div data-ng-show="vm.counts.tasks.total == 0" class="empty-notice md-padding"
+                             layout="column" layout-align="space-around center">
+                            <img data-ng-src="https://next-tier.s3.amazonaws.com/build/images/notifications/ic_pane_noti_empty.svg"
+                                 style="height:80px" alt="Empty Notifications Icon">
+                            <div class="md-title text-center">No tasks notifications</div>
+                            <div class="divider"></div>
+                        </div>
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>Achievements</md-tab-label>
+                <md-tab-body>
+                    <md-toolbar class="md-menu-toolbar border-bottom" layout="row" layout-align="end center">
+                        <md-button class="md-primary" ng-click="vm.removeAll( 3 )">Clear all</md-button>
+                    </md-toolbar>
+                    <md-content class="bg-grey" flex>
+                        <div data-ng-show="vm.counts.achievements.total > 0" layout="column" layout-align="start stretch" flex="noshrink">
+                            <md-card data-ng-repeat="notification in vm.notifications | filter:{ category: 3 } track by notification.id"
+                                     notification-card="notification"
+                                     rm="vm.removeNotification( notification, event )"
+                                     close="vm.closeNotificationDialog()"
+                                     ng-class="notification.read ? 'read' : 'brand-left-border bg-light-blue'"></md-card>
+                        </div>
+                        <div data-ng-show="vm.counts.achievements.total == 0" class="empty-notice md-padding"
+                             layout="column" layout-align="space-around center">
+                            <img data-ng-src="https://next-tier.s3.amazonaws.com/build/images/notifications/ic_pane_noti_empty.svg"
+                                 style="height:80px" alt="Empty Notifications Icon">
+                            <div class="md-title text-center">No achievements notifications</div>
+                            <div class="divider"></div>
+                        </div>
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+</md-dialog>

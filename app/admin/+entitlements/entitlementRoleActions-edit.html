@@ -1,0 +1,25 @@
+<h2>Edit Entitlements
+    <span>{{ role.name }}</span>
+</h2>
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <h2>Actions</h2>
+    <ul>
+        <li data-ng-repeat="action in displayActions track by $index">
+            <label>
+                <input data-ng-click=c
+                       hangeActionState(action,$index)
+                       type="checkbox"
+                       ng-model="action.isEntitled">
+                {{action.name}}: {{action.resource}}
+            </label>
+        </li>
+    </ul>
+    <div class="form-controls clearfix">
+        <button id="edit-item-submit"
+                type="submit"
+                class="btn btn-primary"
+                data-ng-disabled="detailForm.$invalid">Save and exit</button>
+    </div>
+</form>

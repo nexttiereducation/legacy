@@ -1,0 +1,36 @@
+<div class="sub-category">
+    <div class="subcategory-title" ng-click="isExpanded = !isExpanded" layout="row" layout-align="space-between center">
+        <span class="filter-heading" flex>{{subCategory.displayName}}</span>
+        <md-button class="md-primary" ng-class="{ 'hidden': !subCategory.isActive }"
+                   ng-click="clear($event)">CLEAR</md-button>
+        <span ng-if="!isValue" class="collapse-button-wrapper"
+              ng-class="{'collapsed': !isExpanded }">
+            <md-icon class="material-icons text-white">keyboard_arrow_right</md-icon>
+        </span>
+    </div>
+    <div class="subcategory-body" ng-if="isExpanded">
+        <div ng-if="subCategory.type === 'search'" layout="row" layout-align="space-between center">
+          <md-input-container md-no-float="true" class="no-margin" flex>
+            <md-icon class="material-icons text-white">search</md-icon>
+            <input class="search-input text-white" flex
+                ng-model="subCategory.searchTerm" ng-model-options="{debounce: 750}"
+                ng-change="triggerFilter()" placeholder="Search {{subCategory.displayName}}" />
+          </md-input-container>
+          <md-icon ng-if="subCategory.searchTerm" ng-click="subCategory.searchTerm=undefined;triggerFilter()"
+                class="material-icons text-white">close</md-icon>
+        </div>
+        <div class="options-list" ng-show="(subCategory.options && subCategory.type !== 'search') || (filteredOptions && subCategory.searchTerm)"
+             ng-class="{'options-list-shadow': (subCategory.options.length + filteredOptions.length) > 7}">
+            <filter-option ng-if="subCategory.type === 'default'"
+                ng-repeat="option in subCategory.options"
+                option="option"></filter-option>
+            <filter-option ng-if="subCategory.type === 'search'"
+                ng-repeat="option in filteredOptions"
+                option="option"></filter-option>
+            <filter-slider ng-if="subCategory.type === 'range'"
+                ng-repeat="option in subCategory.options"
+                option="option"></filter-slider>
+        </div>
+    </div>
+</div>
+

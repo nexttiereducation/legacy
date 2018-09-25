@@ -1,0 +1,25 @@
+<md-dialog aria-label="Prompt" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{ vm.promptContent.title }}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="vm.closeDialog()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="vm.cancel()"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div class="form-group" ng-if="vm.promptContent.optionLabel">
+            <label><input type="checkbox" name="detailed"
+                   ng-model="vm.promptContent.option" >{{ vm.promptContent.optionLabel }}</label>
+        </div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button class="md-accent" ng-click="vm.promptContent.confirmFunction()">{{ vm.promptContent.confirmLabel }}</md-button>
+        <md-button class="md-accent" ng-click="vm.closeDialog()">{{vm.promptContent.rejectLabel}}</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

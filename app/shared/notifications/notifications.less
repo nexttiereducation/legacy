@@ -1,0 +1,296 @@
+@import "../styles/_variables";
+@import "../styles/mixins";
+
+md-dialog.notifications {
+	md-card-content {
+		width:100%;
+	}
+}
+.notifications-dialog {
+	@vs1: @global-margin-sm;
+	@vs2: @global-margin-lg;
+	@vs3: @global-margin-xsm;
+	@hs1: @global-margin-sm;
+	@hs2: @global-margin-xlg;
+	@hs3: @global-margin-xsm;
+	@c1: @item-thmbnail-image;
+
+	@gap-height: @header-height + 30px;
+
+	text-align: left;
+	color: #000000;
+	overflow: visible;
+	top: auto;
+	right: auto;
+	bottom: auto;
+	left: auto;
+
+	.ngdialog-content {
+		.max-height-calc( "100vh - ( @{gap-height} + 5px )" );
+		min-height: 200px;
+		width: 750px;
+		background-color: @tab-selected;
+		padding: 20px;
+		border-radius: 5px;
+		height: auto;
+
+		&::before {
+			content: " ";
+			display: inline-block;
+			width: 36px;
+			height: 20px;
+			position: absolute;
+			top: -20px;
+			left: 49%;
+			border-bottom: 20px solid @tab-selected;
+			border-left: 18px solid transparent;
+			border-right: 18px solid transparent;
+		}
+		.notification-title-bar {
+			text-align: center;
+			height: 45px;
+
+			h2 {
+				display: inline-block;
+
+				font-size: 22px;
+				padding-top: 3px;
+			}
+		}
+		.settings-button {
+			height: 35px;
+			position: absolute;
+			right: 20px;
+			top: 17px;
+
+			img {
+				height: 100%;
+			}
+			&:focus {
+				outline: 0;
+			}
+		}
+		.tasks-list {
+			.max-height-calc( "100vh - ( @{gap-height} + 5px + 80px )" );
+			overflow: auto;
+			border-top: 1px solid @grey;
+			border-bottom: 1px solid @grey;
+			margin-top: 5px;
+			padding: 5px;
+
+			.task-group-bar {
+				position: relative;
+				font-size: 14px;
+				font-weight: bold;
+				color: @menu-grey;
+				padding: 12px 10px 8px;
+
+				.remove-all {
+					.background-image( "https://next-tier.s3.amazonaws.com/build/images/notifications/ic_divider_cntrl_clearall.svg" );
+					position: absolute;
+					right: 5px;
+					top: 3px;
+					width: 25px;
+					height: 25px;
+				}
+			}
+		}
+		.empty-notice {
+			text-align: center;
+			margin-top: 15px;
+			font-size: 20px;
+			padding-bottom: 15px;
+
+			img {
+				width: 200px;
+			}
+			p {
+
+				margin-top: 15px;
+			}
+		}
+		.notification-card {
+			padding: @global-margin-md;
+			background-color: @bkg-color;
+			.box-shadow( 0, 2px, 2px, 0, 0, 0, 0, 0.3 );
+			position: relative;
+
+			& + .notification-card {
+				margin-top: @vs3 + @vs3;
+			}
+			.notification-icon-block {
+				width: @c1;
+				margin-right: @hs1;
+
+				img {
+					width: 100%;
+				}
+			}
+			.notification-text-block {
+				.width-calc( "100% - ( @{c1} + @{hs1} )" );
+				position: relative;
+			}
+			.notification-title {
+				margin-top: @vs1;
+				font-size: 18pt;
+				word-wrap: break-word;
+				min-height:2em;
+			}
+			.notification-details {
+				margin-top: @vs2;
+				word-wrap: break-word;
+			}
+			.notification-controls {
+				margin-top: @vs2;
+				padding: 0 10px 7px;
+				display: flex;
+				justify-content: space-around;
+
+				.share button {
+					width: 117px;
+				}
+			}
+			.open-circle-close {
+				width: 25px;
+				height: 25px;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+			.spinner-wrapper {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+
+				.spinner {
+					position: absolute;
+					top: 0;
+					right: 0;
+					margin: 0;
+				}
+			}
+		}
+	}
+	.divider::after {
+		background-color: @tab-selected;
+	}
+	.close-icon-bar {
+		height: 35px;
+		position: relative;
+		display: none;
+	}
+	.close-icon {
+		top: 2px;
+		right: 0px;
+	}
+}
+
+.ngdialog-close {
+  top: -7px;
+  position: absolute;
+  font-size: 32px;
+  left: 10px;
+}
+
+[notification-badge] {
+  position: relative;
+	.notification-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        text-align: center;
+        background-color: red;
+        color: white;
+        width: 13px;
+        height: 13px;
+        font-size: 8.25px;
+        line-height: 12px;
+        font-weight: 600 !important;
+        letter-spacing: -1px;
+        border-radius: 50%;
+        padding: 1px;
+	  &[data-count="0"] {
+	  	background-color:transparent;
+	  	color:transparent;
+	  }
+	}
+}
+
+// iframe styling from counselor
+.apply{
+	position: absolute !important;
+	top: 0;
+	left: 0;
+	margin: 0 !important;
+	height: 100%;
+	z-index: 999;
+	&.notification-origin{
+		height: 95vh;
+	}
+}
+
+.apply-iframe{
+	width: 100%;
+	height: 100%;
+}
+
+@media all and ( max-width: 1024px ) {
+	.notifications-dialog {
+		text-align: center;
+		top: 50px;
+		.ngdialog-content {
+			left: auto;
+		}
+	}
+
+	.notifications-dialog .ngdialog-content::before {
+		left: 2%;
+	}
+
+	.tablet {
+		display: block;
+	}
+	.notifications-dialog {
+		.close-icon-bar {
+			display: none;
+		}
+	}
+}
+
+@media all and ( max-width: 650px ) {
+	.notifications-dialog {
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		.ngdialog-overlay {
+			opacity: 0;
+		}
+		.ngdialog-content {
+			left: 0;
+			top: @header-height;
+			.max-height-calc( "100vh - ( @{header-height} )" );
+			height: 100%;
+			width: 100%;
+			padding-top: 0;
+
+			&::before {
+				content: none;
+			}
+			.tasks-list {
+				.max-height-calc( "100vh - ( @{header-height} + 55px )" );
+				margin-top: 0;
+			}
+
+			.notification-title-bar,
+			.settings-button {
+				display: none;
+			}
+		}
+		.close-icon-bar {
+			display: block;
+		}
+	}
+}

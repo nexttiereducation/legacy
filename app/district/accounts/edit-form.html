@@ -1,0 +1,119 @@
+<form name="vm.form.editForm" class="form-horizontal"
+      ng-submit="vm.applyChanges(dash)">
+    <div layout="row" layout-align="space-between start">
+        <div layout="column" layout-align="start start">
+          <div class="md-headline" flex>Team Member Details</div>
+          <div class="md-caption hidden-xs">Last login: {{ vm.DistrictModel.selectedStakeholder.lastLogin }}</div>
+        </div>
+        <div class="radio-group">
+            <label class="radio-inline">
+              <input type="radio" name="type"
+                     ng-model="vm.DistrictModel.selectedStakeholder.stakeholder_type"
+                     ng-value="'Counselor'">Faculty
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="type"
+                     ng-model="vm.DistrictModel.selectedStakeholder.stakeholder_type"
+                     ng-value="'Student'">Student
+            </label>
+        </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <label class="col-xs-2 control-label text-right">Name*</label>
+        <div class="col-xs-5">
+            <input class="form-control" type="text" name="firstName"
+                   data-ng-model="vm.DistrictModel.selectedStakeholder.first_name" required
+                   placeholder="First Name">
+        </div>
+        <div class="col-xs-5">
+            <input class="form-control" type="text" name="lastName"
+                   data-ng-model="vm.DistrictModel.selectedStakeholder.last_name"
+                   required placeholder="Last Name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label text-right">Email*</label>
+        <div class="col-xs-10">
+            <div ng-if="!vm.DistrictModel.selectedStakeholder.cannotChangeEmail" class="input-group">
+                <input class="form-control" type="text" name="email"
+                       data-ng-model="vm.DistrictModel.selectedStakeholder.emailSplice"
+                       required>
+                <div class="input-group-addon"> {{ "@" + vm.DistrictModel.district.domain }}</div>
+            </div>
+            <input class="form-control" type="text" name="email"
+                   data-ng-model="vm.DistrictModel.selectedStakeholder.email"
+                   required readonly disabled
+                   ng-if="vm.DistrictModel.selectedStakeholder.cannotChangeEmail">
+        </div>
+    </div>
+    <div ng-if="vm.DistrictModel.selectedStakeholder.id != null" class="form-group">
+        <div class="col-xs-1">
+            <input id="updatePwd" class="form-control" type="checkbox" ng-model="vm.changePassword" style="margin-top: 0">
+        </div>
+        <label for="updatePwd" class="text-left control-label">Change Password</label>
+    </div>
+    <div ng-if="vm.DistrictModel.selectedStakeholder.id == null || vm.changePassword" class="form-group">
+        <label class="col-xs-2 control-label text-right">Password*</label>
+        <div class="col-xs-4">
+            <input ng-minlength="8" class="form-control" type="text" name="password"
+                   data-ng-model="vm.DistrictModel.selectedStakeholder.password"
+                   required>
+        </div>
+    </div>
+    <div ng-if="false" class="form-group">
+        <label for="photoUrl" class="col-xs-2 control-label text-right">Photo URL</label>
+        <div class="col-xs-10">
+            <input id="photoUrl" class="form-control" type="text" name="photoUrl"
+                   data-ng-model="vm.DistrictModel.selectedStakeholder.photo_url">
+        </div>
+    </div>
+    <div id="highschool" ng-if="!vm.DistrictModel.selectedStakeholder.highschool">
+        <div class="form-group">
+            <label class="col-xs-2 control-label text-right">High School</label>
+            <div class="col-xs-10">
+                <select ng-model="vm.DistrictModel.selectedStakeholder.highschool"
+                        ng-options="school.name for school in vm.highSchools"
+                        class="form-control">
+                    <option value="">Select a High School</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div ng-if="vm.DistrictModel.selectedStakeholder.stakeholder_type=='Student'">
+        <div class="form-group">
+            <label class="col-xs-2 control-label text-right">Grad. Year*</label>
+            <div class="col-xs-4">
+                <input class="form-control" type="text" name="graduation_year"
+                       data-ng-model="vm.DistrictModel.selectedStakeholder.graduation_year" required>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" layout="row" id="highschool" ng-if="vm.DistrictModel.selectedStakeholder.highschool">
+        <div class="col-xs-2 control-label text-right">High School</div>
+        <div class="col-xs-10" layout="row" layout-align="start center">
+          <div layout="column" flex>
+            <div>{{vm.DistrictModel.selectedStakeholder.highschool.name}}</div>
+            <div>{{vm.DistrictModel.selectedStakeholder.highschool.city}}, {{vm.DistrictModel.selectedStakeholder.highschool.zipcode}}</div>
+          </div>
+          <button type="button" class="btn btn-danger" data-ng-click="vm.removeHighSchool()">Remove High School</button>
+        </div>
+    </div>
+    <div class="form-group" ng-if="vm.DistrictModel.selectedStakeholder.meta" >
+        <h3 class="col-xs-12">Custom Data for {{ vm.DistrictModel.district.name }}</h3>
+        <div class="col-xs-4 line-item" ng-repeat="(key,value) in vm.DistrictModel.selectedStakeholder.meta">
+            <label>{{ key }} : {{ value }} </label>
+        </div>
+    </div>
+    <div class="button-wrapper pull-right">
+        <button class="btn btn-default"
+                ng-click="vm.cancelEdit(dash)">Cancel</button>
+        <button ng-if="vm.DistrictModel.selectedStakeholder.id == undefined" class="btn btn-primary"
+                ng-disabled="vm.form.editForm.$pristine" type="submit">Create
+        </button>
+        <button ng-if="vm.DistrictModel.selectedStakeholder.id != undefined"
+                class="btn btn-primary"
+                ng-disabled="vm.form.editForm.$pristine" type="submit">Update
+        </button>
+    </div>
+</form>

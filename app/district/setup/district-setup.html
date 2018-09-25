@@ -1,0 +1,66 @@
+<div id="district-setup" ng-controller="DistrictSetup as vm" layout="row" flex class="bg-grey">
+    <md-sidenav md-component-id="left" class="md-sidenav-left bg-dark-blue"
+                md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
+        <div layout-padding="" layout="column" flex>
+            <div class="large-square center hidden-xs">
+                <img class="width-100" src="https://next-tier.s3.amazonaws.com/images/ic_school_large.png">
+            </div>
+            <h2 class="text-center">Districts</h2>
+            <div id="known-districts" layout="column">
+                <md-button class="text-white"
+                    ng-class="{ 'selected': vm.districtid == -1 }"
+                    ng-click="vm.newDistrict()">
+                    <md-icon class="material-icons text-white">add_circle</md-icon>
+                    Create New District</md-button>
+                <md-list class="md-dense">
+                    <md-list-item ng-class="{ 'selected': vm.districtid == district.id }"
+                        ng-repeat="district in vm.DistrictModel.allDistricts track by district.id"
+                        ng-click="vm.selectDistrict(district)">{{ district.name }}
+                    </md-list-item>
+                </md-list>
+                <button class="btn btn-primary" ng-if="vm.DistrictModel.allDistrictsNextPage" ng-click="vm.loadMoreDistricts()"> Load More </button>
+            </div>
+        </div>
+    </md-sidenav>
+    <md-content class="bg-grey scroll-container" layout="column" flex
+                id="district-high-school-scroll">
+        <div>
+            <md-card>
+                <md-card-content layout="column">
+                    <h4>District Settings</h4>
+                    <md-input-container>
+                        <label for="dist_name">Name</label>
+                        <input type="text" id="dist_name" ng-model="vm.DistrictModel.district.name"/>
+                    </md-input-container>
+                    <md-input-container>
+                        <label for="domain">Domain</label>
+                        <input type="text" id="domain" ng-model="vm.DistrictModel.district.domain"/>
+                    </md-input-container>
+                    <md-checkbox ng-model="vm.DistrictModel.district.enterprise"
+                                 id="enterprise">Enterprise</md-checkbox>
+                </md-card-content>
+                <div class="md-actions" layout="row" layout-align="end center">
+                    <md-button ng-if="vm.districtid != -1" class="md-primary" data-ng-click="vm.update()">Update</md-button>
+                    <md-button ng-if="vm.districtid === -1" class="md-primary" data-ng-click="vm.update()">Create</md-button>
+                 </div>
+            </md-card>
+            <md-card ng-if="vm.districtid != -1">
+                <md-card-content>
+                    <div layout="row" layout-align="space-between start">
+                        <h4>District High Schools</h4>
+                        <md-button class="md-primary" ng-click="vm.showHighSchool()">Add High School</md-button>
+                    </div>
+                    <div ng-if="vm.showHighSchoolFinder" ng-include="'components/highschool-finder.html'"></div>
+                </md-card-content>
+                <md-list>
+                    <md-list-item ng-repeat="highschool in vm.DistrictModel.district.highschools track by $index">
+                      <p>{{ highschool.name }}</p>
+                       <md-button class="md-secondary" ng-click="vm.removeHighSchool(highschool)">
+                           <md-icon class="material-icons">close</md-icon>
+                       </md-button>
+                    </md-list-item>
+                </md-list>
+            </md-card>
+        </div>
+    </md-content>
+</div>

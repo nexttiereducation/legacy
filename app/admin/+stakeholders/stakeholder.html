@@ -1,0 +1,380 @@
+<h2>Edit Item: <span>{{ item.name }}</span></h2>
+
+<form id="edit-item" name="detailForm" data-ng-submit="confirm();">
+
+    <h3>Individual Fields</h3>
+    <div>
+        <label>
+            <span>*Email</span>
+            <input type="text" class="form-control" name="email" data-ng-model="item.email" required>
+        </label>
+
+        <label data-ng-if="item.isNew">
+            <span>*Password</span>
+            <input type="text" class="form-control" name="password" data-ng-model="item.password" required>
+        </label>
+
+        <label>
+            <span>*First Name</span>
+            <input type="text" class="form-control" name="firstName" data-ng-model="item.first_name" required>
+        </label>
+
+        <label>
+            <span>*Last Name</span>
+            <input type="text" class="form-control" name="lastName" data-ng-model="item.last_name" required>
+        </label>
+
+        <label>
+            <span>*Stakeholder Type</span>
+            <select class="form-control" name="stakeholderType" data-ng-model="item.stakeholder_type"
+                data-ng-change="item.connectionType = getConnectionType( item.stakeholder_type )" required>
+                <option value="Student">Student</option>
+                <option value="Parent">Parent</option>
+                <option value="Counselor">Counselor</option>
+                <option value="Anonymous">Anonymous</option>
+            </select>
+        </label>
+
+        <label>
+            <span>*Phase:</span>
+            <select class="form-control" name="phase" data-ng-model="item.phase"
+                data-ng-options="phase.name as phase.name for phase in officialPhases"
+                required>
+            </select>
+        </label>
+
+        <div class="radio-group">
+            <span>Has Transitioned:</span>
+
+                <label>
+                    <input type="radio" name="transitioned" id=""
+                        data-ng-model="item.has_transitioned"
+                        data-ng-value="true">
+                    <b>Yes</b>
+                </label>
+
+                <label>
+                    <input type="radio" name="transitioned" id=""
+                        data-ng-model="item.has_transitioned"
+                        data-ng-value="false">
+                    <b>No</b>
+                </label>
+        </div>
+
+        <label>
+            <span>High School Id</span>
+            <input type="text" class="form-control" name="highschool" data-ng-model="item.highschool">
+        </label>
+
+        <label>
+            <span>City</span>
+            <input type="text" class="form-control" name="city" data-ng-model="item.city">
+        </label>
+
+        <label>
+            <span>State</span>
+            <input type="text" class="form-control" name="state" data-ng-model="item.state">
+        </label>
+
+        <label>
+            <span>Gender</span>
+            <select class="form-control" name="gender" data-ng-model="item.gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+        </label>
+
+        <label>
+            <span>Verified?</span>
+            <input type="checkbox" name="verified" data-ng-model="item.verified">
+        </label>
+
+        <label>
+            <span>Photo URL</span>
+            <input type="text" class="form-control" name="photoUrl" data-ng-model="item.photo_url">
+        </label>
+
+        <label>
+            <strong>Associated Roles </strong>
+            <div ng-repeat = "role in myRoles track by $index">
+                <label for="{{role.id}}">
+                    <input type="checkbox" name="aRole" ng-model="item.roles[$index].checked" ng-click="queueForChange(role)" id="{{role.id}}" /> {{role.name}}</label>
+            </div>
+
+        </label>
+    </div>
+    <div class="preferences">
+        <h3 class="title">Notifications</h3>
+        <section class="boxed notification-settings">
+            <h2 class="title">Notification Settings</h2>
+
+            <div class="spinner" data-ng-show="notifications.loading"></div>
+            <div class="checklist-header clearfix">
+                <span class="checklist-title">Tasks</span>
+
+                <div class="check-list-controls">
+
+                    <ul>
+                        <li>Email</li><li>App Push</li>
+                    </ul>
+                </div>
+            </div>
+            <ul class="checkbox-list">
+                <li>
+                    <div class="notification-type-title">When a Task Changes</div>
+                    <div class="checkboxes">
+                        <label data-ng-class="{ 'on': notifications.email.taskChange }">
+                            <input type="checkbox" ng-model="notifications.email.taskChange">
+                            <span class="check"></span>
+                        </label>
+                        <label data-ng-class="{ 'on': notifications.push.taskChange }">
+                            <input type="checkbox" ng-model="notifications.push.taskChange">
+                            <span class="check"></span>
+                        </label>
+                    </div>
+                </li>
+                <li>
+                    <div class="notification-type-title">When a Task is Added or Removed</div>
+                    <div class="checkboxes">
+                        <label data-ng-class="{ 'on': notifications.email.taskAddRemove }">
+                            <input type="checkbox" ng-model="notifications.email.taskAddRemove">
+                            <span class="check"></span>
+                        </label>
+                        <label data-ng-class="{ 'on': notifications.push.taskAddRemove }">
+                            <input type="checkbox" ng-model="notifications.push.taskAddRemove">
+                            <span class="check"></span>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+            <div class="checklist-header clearfix">
+                <span class="checklist-title">Communications</span>
+
+                <div class="check-list-controls">
+
+                    <ul>
+                        <li>Email</li><li>App Push</li>
+                    </ul>
+                </div>
+            </div>
+            <ul class="checkbox-list">
+                <li>
+                    <div class="notification-type-title">When a Note is Added to a Task</div>
+                    <div class="checkboxes">
+                        <label data-ng-class="{ 'on': notifications.email.noteAdded }">
+                            <input type="checkbox" ng-model="notifications.email.noteAdded">
+                            <span class="check"></span>
+                        </label>
+                        <label data-ng-class="{ 'on': notifications.push.noteAdded }">
+                            <input type="checkbox" ng-model="notifications.push.noteAdded">
+                            <span class="check"></span>
+                        </label>
+                    </div>
+                </li>
+                <li>
+                    <div class="notification-type-title">When an Invitation is Received or Accepted</div>
+                    <div class="checkboxes">
+                        <label data-ng-class="{ 'on': notifications.email.invitation }">
+                            <input type="checkbox" ng-model="notifications.email.invitation">
+                            <span class="check"></span>
+                        </label>
+                        <label data-ng-class="{ 'on': notifications.push.invitation }">
+                            <input type="checkbox" ng-model="notifications.push.invitation">
+                            <span class="check"></span>
+                        </label>
+                    </div>
+                </li>
+                <li>
+                    <div class="notification-type-title">When a School is Recommended</div>
+                    <div class="checkboxes">
+                        <label data-ng-class="{ 'on': notifications.email.recommended }">
+                            <input type="checkbox" ng-model="notifications.email.recommended">
+                            <span class="check"></span>
+                        </label>
+                        <label data-ng-class="{ 'on': notifications.push.recommended }">
+                            <input type="checkbox" ng-model="notifications.push.recommended">
+                            <span class="check"></span>
+                        </label>
+                    </div>
+                </li>
+                <li data-ng-if="!stakeholder.isStudent">
+                    <div class="notification-type-title">When a Recommended School is Accepted</div>
+                    <div class="checkboxes">
+                        <label data-ng-class="{ 'on': notifications.email.recommendAccept }">
+                            <input type="checkbox" ng-model="notifications.email.recommendAccept">
+                            <span class="check"></span>
+                        </label>
+                        <label data-ng-class="{ 'on': notifications.push.recommendAccept }">
+                            <input type="checkbox" ng-model="notifications.push.recommendAccept">
+                            <span class="check"></span>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+            <div class="checklist-header clearfix">
+                <span class="checklist-title">Achievements</span>
+
+                <div class="check-list-controls">
+
+                    <ul>
+                        <li>Email</li><li>App Push</li>
+                    </ul>
+                </div>
+            </div>
+            <ul class="checkbox-list">
+                <li>
+                    <div class="notification-type-title">When an Achievement is Earned</div>
+                    <div class="checkboxes">
+                        <label data-ng-class="{ 'on': notifications.email.achievement }">
+                            <input type="checkbox" ng-model="notifications.email.achievement">
+                            <span class="check"></span>
+                        </label>
+                        <label data-ng-class="{ 'on': notifications.push.achievement }">
+                            <input type="checkbox" ng-model="notifications.push.achievement">
+                            <span class="check"></span>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <div data-ng-if="!!item.displayConnectionType">
+        <div>
+            <h3>Connections</h3>
+            <div data-ng-repeat="connection in connections">
+                <span data-ng-bind="connection[ item.displayConnectionType ]"></span>
+                <button type="button" class="btn btn-danger"
+                    data-ng-click="deleteConnection( $index )">&times;</button>
+            </div>
+            <label>
+                <span>Team Member ID: {{ userLookup.email || '-' }}</span>
+                <input type="text" class="form-control" data-ng-model="newConnection"
+                    data-ng-model-options="{ updateOn: 'default blur submit', debounce: {'default': 500, 'blur': 0} }"
+                    data-ng-change="lookupConnection( newConnection )">
+                <button type="button" class="btn btn-primary"
+                    data-ng-click="newConnection = pushConnection()"
+                    data-ng-disabled="!userLookup.email">Add</button>
+            </label>
+        </div>
+    </div>
+
+    <div data-ng-show="item.stakeholder_type === 'Counselor' && item.id !== undefined">
+        <label>
+            <span>Bulk Invite Students</span>
+        </label>
+        <div id="invite-uploader">
+            <p>Upload an excel file with a list of emails. The first row of the excel file must be column headers. The bulk invite function will look for the column labeled "email". Any additional data in the file will be ignored.</p>
+            <input data-ng-if="item.stakeholder_type === 'Counselor'" type="file" name="excel_file" data-ng-model="excelFile" accept=".xlsx,.xls" onchange="angular.element(this).scope().fileChanged(this.files);">
+        </div>
+        <div id="preview-invites" data-ng-show="previewSpreadsheet">
+            <p>Please confirm that the following data is accurate:</p>
+            <table class="table table-bordered">
+                <tr data-ng-if="$first" ng-repeat="row in sheets">
+                    <th class="bulk-invite-headers" ng-repeat="column in row" ng-bind="column"></th>
+                    <th class="bulk-invite-headers" >status</th>
+                </tr>
+                <tr data-ng-if="!$first" ng-repeat="row in sheets">
+                    <td ng-style="statusColor(column)" ng-repeat="column in row" ng-bind="column"></td>
+                    <td data-ng-if="hasStatus(row) === false"></td>
+                </tr>
+            </table>
+        </div>
+        <button id="send-invites" class="btn btn-primary" type="button" data-ng-click="invite()" data-ng-disabled="(!sheets || invitesSent)">Send Invites</button>
+
+        <div id="export-student-data">
+            <label>Export Student Data</label>
+            <table>
+                <tr>
+                    <th>
+                        <p>Analytic Report</p>
+                    </th>
+                    <th>
+                        <p>Summary Report</p>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-ng-click="exportDetailedReportOfStudents(connections)"><i class="fa fa-cloud-download"></i></button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-ng-click="exportSummaryReportOfStudents(connections)"><i class="fa fa-cloud-download"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span data-ng-show="downloadingAnalytic" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                    </td>
+                    <td>
+                        <span data-ng-show="downloadingSummary" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <label>
+            <span>Is Ambassador?</span>
+            <input type="checkbox" data-ng-model="item.is_ambassador">
+        </label>
+        <label>
+            <button type="button" class="btn btn-primary" data-ng-click="exportAmbassadorReferences( item )"
+                data-ng-disabled="loadingCsv"
+                data-ng-show="item.is_ambassador && item.ambassador_uid">Export Ambassador References</button>
+        </label>
+        <label data-ng-show="item.is_ambassador">
+            <span>Ambassador URL:</span>
+            <p>
+                <span data-ng-show="!item.ambassador_uid">URL will be genereated when changes are saved</span>
+                <span data-ng-show="item.ambassador_uid">{{ host }}/join?aid={{ item.ambassador_uid }}</span>
+            </p>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span>Disabled?</span>
+            <input  type="checkbox" name="disabled"
+                data-ng-init="item.is_disabled = !item.is_active"
+                data-ng-model="item.is_disabled"
+                data-ng-change="item.is_active = !item.is_disabled"/>
+        </label>
+    </div>
+
+    <div class="form-controls clearfix">
+        <button type="button" class="btn btn-default edit-item-cancel" data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit" type="submit" class="btn btn-primary" data-ng-disabled="detailForm.$invalid">Save and exit</button>
+    </div>
+</form>
+
+<section class="boxed">
+    <h2>Change Password</h2>
+    <form name="changePasswordForm" ng-submit="changePassword()">
+
+        <p class="notification" ng-if="changePasswordStatus.show" ng-class="{ success: changePasswordStatus.success, failure: !changePasswordStatus.success }">
+            {{ changePasswordStatus.message }}
+        </p>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" ng-model="passwordChange.email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label>New Password</label>
+            <input type="password" class="form-control" ng-model="passwordChange.newPassword" name="newPassword" required>
+        </div>
+
+        <div class="form-group">
+            <label>Confirm New Password</label>
+            <input type="password" class="form-control" data-ng-model="passwordChange.confirmPassword" required>
+        </div>
+        <button type="submit" class="nl resetSubmit btn btn-default" ng-disabled="changePasswordForm.$invalid || !changePasswordForm.$dirty">Update</button>
+    </form>
+</section>
+
+
+
+
+

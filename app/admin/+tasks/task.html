@@ -1,0 +1,196 @@
+<h2>Edit Item: <span>{{ item.name }}</span></h2>
+
+<form id="edit-item" name="detailForm" data-ng-submit="confirm();">
+
+    <h3>Individual Fields</h3>
+
+    <div>
+        <label class="wrapper">
+            <span>Name</span>
+            <input type="text" class="form-control" name="title" data-ng-model="item.name">
+        </label>
+
+        <label>
+            <span>Institution ID: {{ item.institution_name }}</span>
+            <input type="text" class="form-control" name="institutionId" data-ng-model="item.institution"
+                   data-ng-model-options="{ updateOn: 'default blur submit', debounce: {'default': 700, 'blur': 0} }"
+                   data-ng-change="lookupInstitution( item.institution );">
+        </label>
+
+        <label>
+            <span>Associated Achievement ID:</span>
+            <input type="text" class="form-control" name="achievementId" data-ng-model="item.achievement">
+        </label>
+
+        <label>
+            <span>Point Value:</span>
+            <input type="number" class="form-control" name="points" data-ng-model="item.points">
+        </label>
+
+    </div>
+    <div>
+
+        <label class="wrapper floatLeft">
+            <span>Phase:</span>
+            <table>
+                <tr>
+                    <td>
+                        <label ng-repeat="phase in officialPhases">
+                            <input type="checkbox"
+                                   ng-checked="item.phases.indexOf(phase.id) !== -1" ng-click="setPhase(phase.id)"> {{phase.name}}</input>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+
+        </label>
+
+        <label class="wrapper floatLeft">
+            <span>Category:</span>
+            <table>
+                <tr>
+                    <td>
+                        <label ng-repeat="category in taskCategories">
+                            <input type="checkbox" data-checklist-model="categories" data-checklist-value="category">{{category}}</input>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </label>
+
+        <label class="wrapper">
+            <span>Description</span>
+            <textarea name="description" class="form-control" data-ng-model="item.description"></textarea>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Task Type</span>
+
+            <select class="form-control" name="phase" data-ng-model="item.task_type" data-ng-options="taskType.abbv as taskType.name for taskType in ctaOptions.taskTypes">
+                <option value="" >Select a Task Type</option>
+            </select>
+        </label>
+
+        <label>
+            <span>Pin to Top?</span>
+            <input type="checkbox" name="highPriority" data-ng-model="item.high_priority">
+        </label>
+
+        <label>
+            <span>Disabled?</span>
+            <input type="checkbox" name="disabled"
+                   data-ng-init="item.isDisabled = !item.is_visible"
+                   data-ng-model="item.isDisabled"
+                   data-ng-change="item.is_visible = !item.isDisabled"/>
+        </label>
+
+    </div>
+    <p />
+    <div>
+        <label>
+            <label>
+                <span>Event Name:</span>
+                <select class="form-control" data-ng-model="item.event_name" data-ng-options="eventName for eventName in ctaOptions.eventNames">
+                    <option value="">Select an Event</option>
+                </select>
+            </label>
+            <label ng-if="!createNewGuard">
+                <span>Guard:</span>
+                <select class="form-control" class="width-100" data-ng-model="item.guard" data-ng-options="guard for guard in ctaOptions.guards">
+                    <option value="">Select a Guard</option>
+                </select>
+            </label>
+            <label ng-if="createNewGuard">
+                <span>New Guard</span>
+                <input type="text" class="form-control" ng-model="item.guard"/>
+            </label>
+            <label>
+                <span>New Guard?</span>
+                <input type="checkbox" name="createNewGuard" data-ng-model="createNewGuard">
+            </label>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Is Template?</span>
+            <input type="checkbox" name="isTemplate" data-ng-model="item.is_template">
+        </label>
+    </div>
+
+    <section ng-if="item.is_template" class="box">
+        <h3>Task Rule</h3>
+        <label>
+            <span>Description Tokens ("institution.name,institution.details.all().first().number_of_essays"):</span>
+            <input type="text" class="form-control" ng-model="item.description_token"/>
+        </label>
+
+
+    </section>
+    <div class="editable-list">
+        <h3>Deadlines</h3>
+        <label class="floatLeft">
+            <span>Offset Anchor</span>
+            <select class="form-control" name="anchor" data-ng-model="item.offset_anchor" data-ng-options="anchor.abbv as anchor.name for anchor in ctaOptions.anchors">>
+                <option value="" >Select an Anchor Type</option>
+            </select>
+        </label>
+
+        <h4 class="text-danger" ng-show="deadlineError.length > 0">{{deadlineError}}</h4>
+        <label ng-if="dates.items.length < 1">Default deadlines embedded in code or not yet set</label>
+        <label data-ng-repeat="date in dates.items" data-ng-class="{ 'deleted': date.deleteStatus }">
+            <span>Start Date:</span>
+            <input type="date" class="form-control" data-ng-model="date.start_date"
+                   data-ng-model-options="{ 'timezone': 'UTC' }" data-ng-change="deadlineChanged(date)">
+            <span>Start Date Offset:</span>
+            <input type="text" pattern="[-]{0,1}[0-9]*" class="form-control" data-ng-model="date.start_date_offset" data-ng-change="deadlineChanged(date)">
+            <span>Deadline:</span>
+            <input type="date" class="form-control" data-ng-model="date.deadline"
+                   data-ng-model-options="{ 'timezone': 'UTC' }" data-ng-change="deadlineChanged(date)">
+            <span>Deadline Offset:</span>
+            <input type="text" pattern="[-]{0,1}[0-9]*" class="form-control" data-ng-model="date.deadline_offset" data-ng-change="deadlineChanged(date)">
+            <button type="button" class="btn btn-danger remove-deadline"
+                    data-ng-click="date.deleteStatus = true" data-ng-show="!date.deleteStatus">&times;</button>
+            <button type="button" class="btn btn-info undo-remove-deadline glyphicon glyphicon-arrow-left"
+                    data-ng-click="date.deleteStatus = false" data-ng-show="date.deleteStatus"></button>
+        </label>
+    </div>
+    <button type="button" class="btn btn-info" data-ng-click="showNewDate = !showNewDate">Add New Deadline</button>
+
+    <div data-ng-if="showNewDate">
+        <h4 class="text-danger" ng-show="newDeadlineError.length > 0">{{newDeadlineError}}</h4>
+        <label>
+            <span>Start Date:</span>
+            <input type="date" class="form-control" data-ng-model="newDeadline.start_date"
+                   data-ng-model-options="{ 'timezone': 'UTC' }" data-ng-change="newDeadline.status = 'changed'">
+
+            <h5>OR</h5>
+
+            <span>Start Offset:</span>
+            <input type="text" class="form-control" data-ng-model="newDeadline.start_date_offset"
+                   data-ng-change="newDeadline.status = 'changed'">
+        </label>
+        <label>
+            <span>Deadline:</span>
+            <input type="date" class="form-control" data-ng-model="newDeadline.deadline"
+                   data-ng-model-options="{ 'timezone': 'UTC' }" data-ng-change="newDeadline.status = 'changed'">
+
+            <h5>OR</h5>
+
+            <span>Deadline Offset:</span>
+            <input type="text" class="form-control" data-ng-model="newDeadline.deadline_offset"
+                   data-ng-change="newDeadline.status = 'changed'">
+        </label>
+        <button type="button" class="btn btn-info add-deadline-btn"
+                data-ng-click="addNewDeadline(newDeadline)">Save
+        </button>
+    </div>
+
+    <p></p>
+    <div class="form-controls clearfix">
+        <button type="button" class="btn btn-default edit-item-cancel" data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit" type="submit" class="btn btn-primary" data-ng-disabled="detailForm.$invalid">Save
+            and exit
+        </button>
+    </div>
+</form>

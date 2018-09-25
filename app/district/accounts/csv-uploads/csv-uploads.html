@@ -1,0 +1,194 @@
+<md-content class="bg-grey" ng-controller='CSVUploads as vm' layout="column" flex>
+    <div ng-if="!vm.csvResponse" layout-gt-xs="row" layout="column">
+        <div flex-gt-xs="50" flex-xs="100">
+            <md-card>
+                <md-card-content>
+                    <div class="md-headline">System Log</div>
+                    <br>
+                    <p>View previously loaded batch logs and reconcile any differences.</p>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Date Created</th>
+                                <th>Time Created</th>
+                                <th>System Log</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="log in vm.systemLog">
+                                <td>{{log.created | date:'yyyy-MM-dd'}}</td>
+                                <td>{{log.created | date:'hh:mm a'}}</td>
+                    <td><button ng-click="vm.selectSystemLog(log)" class="btn btn-primary">View system
+                                    log</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div flex-gt-xs="50" flex-xs="100">
+            <md-card>
+                <md-card-content>
+                    <div class="md-headline">Bulk Student Upload</div>
+                    <br>
+                    <p>Provide NextTier Education with a csv file with a list of emails. The
+                    first row of the excel file must be column headers and the bulk upload
+                    function will look for the column labeled "email".
+                    You will be able to view a list of accounts that didn't match and
+                    have the option to assign them to stakeholders in the district.</p>
+                    <div ngf-drop ngf-select class="drop-box"
+                         ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
+                         accept=".csv"
+                         ngf-pattern="'.csv'"
+                         ngf-change="vm.uploadCSV($file)">
+                        <h4 class="no-top-margin">Drop a CSV File Here or Click To Upload!</h4>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+    <div ng-if="vm.csvResponse">
+        <div class="csv-results tabbable tabs-left">
+            <ul class="nav nav-tabs">
+                <li ng-class="{active: vm.activeTab === 'summary'}">
+                    <a class="active" ng-click="vm.activeTab = 'summary'">Summary</a>
+                </li>
+                <li ng-class="{active: vm.activeTab === 'edit'}">
+                    <a ng-click="vm.activeTab = 'edit'">Edit</a>
+                </li>
+                <li ng-class="{active: vm.activeTab === 'errors'}">
+                    <a ng-click="vm.activeTab = 'errors'">Error Details</a>
+                </li>
+                <li class="pull-right">
+                    <button class="btn btn-danger"
+                    ng-click="vm.closeResultsPanel()">
+                        Close Results
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div ng-switch='vm.activeTab'>
+                    <div ng-switch-when='summary'>
+                        <div
+                        ng-if="vm.counts.ids_updated >
+                        0">
+                            Count: {{vm.counts.ids_updated}}
+                        </div>
+                        <div class="scroll summary-table allow-scrollbar"
+                            infinite-scroll="vm.nextPage(vm.updatedStakeholders)"
+                            infinite-scroll-distance="0">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th ng-repeat="(key, value) in
+                                        vm.updatedStakeholders.stakeholderArray[0]">{{key}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="stakeholder in
+                                    vm.updatedStakeholders.stakeholderArray"
+                                    ng-click="vm.setSelectedUpdatedId(stakeholder.id)"
+                                    ng-class="{'selected': (stakeholder.id === vm.selectedUpdatedId)}">
+                                        <td ng-repeat="(key, value) in stakeholder">{{ value }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div ng-switch-when='edit'>
+                        <div>
+                            <button class="btn btn-primary"
+                            ng-disabled="(vm.selectedUnusedRowId === -1 ||
+                            (vm.selectedUnusedRowIf !== -1 &&
+                            vm.selectedNotUpdatedId !== -1) ||
+                            !vm.rowValidForCreation)"
+                            ng-click="vm.createUser()">Create New User</button>
+                            <i ng-show='!vm.rowValidForCreation' bs-tooltip="vm.tooltip" data-container="body" data-placement="right" class="fa fa-question-circle"></i>
+                            <!-- TODO Disable until we have the user experience worked out. <button class="btn btn-primary"
+                            ng-disabled="!(vm.selectedUnusedRowId !== -1 && vm.selectedNotUpdatedId !== -1)"
+                            ng-click="vm.assignRow()">Assign Row to User</button> -->
+                        </div>
+
+                        <div class="row" ng-if="vm.csvResponse.rows_not_used.length !==
+                        0">
+                            <div class="col-sm-6">
+                                <div ng-if="vm.counts.rows_not_used
+                                > 0">
+                                    Count :
+                                    {{vm.counts.rows_not_used}}
+                                </div>
+                                <div class="scroll results-table
+                                table-responsive allow-scrollbar">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th ng-repeat="(key, value) in
+                                            vm.csvResponse.rows_not_used[0]">{{key}}</th>
+                                        </tr>
+                                        <tr ng-repeat="row in vm.csvResponse.rows_not_used"
+                                        ng-click="vm.setSelectedUnusedRowId($index)"
+                                        ng-class="{'selected': ($index === vm.selectedUnusedRowId)}">
+                                            <td ng-repeat="(key, value) in row">{{
+                                            value }}</td>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div
+                                ng-if="vm.counts.ids_not_updated
+                                > 0">
+                                    Count:
+                                    {{vm.counts.ids_not_updated}}
+                                </div>
+                                <div class="results-table scroll
+                                table-responsive allow-scrollbar"
+                                infinite-scroll="vm.nextPage(vm.notUpdatedStakeholders)"
+                                infinite-scroll-distance="0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th ng-repeat="(key, value) in
+                                                vm.notUpdatedStakeholders.stakeholderArray[0]">{{key}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="stakeholder in
+                                        vm.notUpdatedStakeholders.stakeholderArray"
+                                            ng-click="vm.setSelectedNotUpdatedId(stakeholder.id)"
+                                            ng-class="{'selected': (stakeholder.id === vm.selectedNotUpdatedId)}">
+                                                <td ng-repeat="(key,value) in
+                                                stakeholder">{{ value }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-switch-when='errors'>
+                        <div ng-if="vm.counts.error_messages > 0">
+                            Count: {{ vm.counts.error_messages }}
+                        </div>
+                        <div class="scroll summary-table allow-scrollbar">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Row</th>
+                                        <th>Error Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="(key,value) in
+                                    vm.csvResponse.error_messages">
+                                        <td>{{key}}</td>
+                                        <td>{{value}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</md-content>

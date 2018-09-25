@@ -1,0 +1,45 @@
+<h2>Update Phase Transition Dates</h2>
+
+<form id="edit-phases" name="phaseForm" data-ng-submit="confirm();">
+
+    <div>
+        <label>
+            <span>Name</span>
+            <input class="form-control" type="text" name="firstName" data-ng-model="dates[ 0 ].name" required>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span>Start Date</span>
+            <input class="form-control first-date" type="date" name="firstStartDate"
+                data-ng-init="dates[ 0 ].start_date = toDate ( dates[ 0 ].start_date )"
+                data-ng-model="dates[ 0 ].start_date"
+                data-ng-pattern="dd/MM/YYYY"
+                required>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span>Name</span>
+            <input class="form-control" type="text" name="secondName" data-ng-model="dates[ 1 ].name" required>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <span>Start Date</span>
+            <input class="form-control second-date" type="date" name="secondStartDate"
+                data-ng-init="dates[ 1 ].start_date = toDate ( dates[ 1 ].start_date )"
+                data-ng-model="dates[ 1 ].start_date"
+                data-ng-pattern="dd/MM/YYYY"
+                required>
+        </label>
+    </div>
+
+    <div class="form-controls clearfix">
+        <button type="button" class="btn btn-default edit-item-cancel" data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit" type="submit" class="btn btn-primary" data-ng-disabled="phaseForm.$invalid">Save and exit</button>
+    </div>
+</form>

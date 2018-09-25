@@ -1,0 +1,30 @@
+<div layout="column" flex>
+	<md-toolbar class="md-menu-toolbar md-accent md-hue-2">
+		<div class="md-toolbar-tools" ng-transclude>
+		</div>
+	</md-toolbar>
+	<div layout="column" flex>
+		<md-toolbar class="md-menu-toolbar md-accent md-hue-2">
+			<md-grid-list md-cols="{{columns.length}}" md-row-height="80px">
+				<md-grid-tile ng-repeat="columns in columns"
+						      style="height:80px;min-height:80px;">
+					<div data-sort-header="{{column.id}}">
+						{{column.name}}
+					</div>
+				</md-grid-tile>
+			</md-grid-list>
+		</md-toolbar>
+    <md-content layout="column" class="scroll"
+                infinite-scroll="items.nextPage()"
+                infinite-scroll-disabled="items.busy || items.url === null"
+                infinite-scroll-distance="0">
+			<md-grid-list ng-repeat="item in items.items track by item.id" md-cols="{{columns.length}}"
+						  md-row-height="80px">
+				<md-grid-tile ng-repeat="column in columns" data-ng-click="openEditForm( item, $index )"
+							  style="height:80px;min-height:80px;">
+					{{item[column.id]}}
+				</md-grid-tile>
+			</md-grid-list>
+		</md-content>
+	</div>
+</div>

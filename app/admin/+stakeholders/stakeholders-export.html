@@ -1,0 +1,32 @@
+<h2>Export Stakeholders Report</h2>
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <button type="button"
+            class="btn btn-success btn-block"
+            data-ng-click="filterByRegistrationDate()">Filter by Registration Date</button>
+    <div id="registration-date-filter"
+         data-ng-if="registrationFilter">
+        <label>
+            <span>Start Date</span>
+            <input type="date"
+                   name="registrationDateLowerBound"
+                   data-ng-model="item.registrationDateLowerBound"
+                   data-ng-model-options="{ 'timezone': 'UTC' }"
+                   required />
+        </label>
+        <label>
+            <span>End Date</span>
+            <input type="date"
+                   name="registrationDateUpperBound"
+                   data-ng-model="item.registrationDateUpperBound"
+                   data-ng-model-options="{ 'timezone': 'UTC' }"
+                   data-ng-min="item.registrationDateLowerBound"
+                   required />
+        </label>
+    </div>
+    <button id="edit-item-submit"
+            type="submit"
+            class="btn btn-primary btn-block"
+            data-ng-disabled="detailForm.$invalid">Export Stakeholders Report</button>
+</form>

@@ -1,0 +1,863 @@
+<h2>Edit Item:
+    <span>{{ item.name }}</span>
+</h2>
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <div class="form-controls clearfix">
+        <button type="button"
+                class="btn btn-default edit-item-cancel"
+                data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit2"
+                type="submit"
+                class="btn btn-primary"
+                data-ng-disabled="detailForm.$invalid">Save and exit</button>
+    </div>
+    <div>
+        <label for="photoUrl">
+            <span>Photo Url</span>
+            <input class="form-control"
+                   type="text"
+                   id="photoUrl"
+                   name="photoUrl"
+                   data-ng-model="item.photo_url">
+            <img data-ng-src="{{ item.photo_url }}">
+        </label>
+        <label for="backgroundUrl">
+            <span>Background Url</span>
+            <input class="form-control"
+                   type="text"
+                   id="backgroundUrl"
+                   name="backgroundUrl"
+                   data-ng-model="details.background_url">
+            <img data-ng-src="{{ item.background_url }}">
+        </label>
+    </div>
+    <div>
+        <label for="name">
+            <span>Name</span>
+            <input class="form-control"
+                   type="text"
+                   id="name"
+                   name="name"
+                   data-ng-model="item.name"
+                   required>
+        </label>
+        <label ng-if="!item.hasNCES"
+               for="unitId">
+            <span>NCES ID</span>
+            <input class="form-control"
+                   type="text"
+                   id="unitId"
+                   name="unitId"
+                   data-ng-model="item.unit_id"
+                   pattern="[a-zA-Z0-9]{9,12}">
+        </label>
+        <label for="accountName">
+            <span>Account Name</span>
+            <input class="form-control"
+                   type="text"
+                   id="accountName"
+                   name="accountName"
+                   data-ng-model="item.account_name">
+        </label>
+        <label for="admissionsAddress">
+            <span>Admissions Address</span>
+            <input class="form-control"
+                   type="text"
+                   id="admissionsAddress"
+                   name="admissionsAddress"
+                   data-ng-model="item.admissions_address">
+        </label>
+        <label for="city">
+            <span>City</span>
+            <input class="form-control"
+                   type="text"
+                   id="city"
+                   name="city"
+                   data-ng-model="item.city">
+        </label>
+        <label for="state">
+            <span>State</span>
+            <input class="form-control"
+                   type="text"
+                   id="state"
+                   name="state"
+                   data-ng-model="item.state">
+        </label>
+        <label for="zipcode">
+            <span>Zipcode</span>
+            <input class="form-control"
+                   type="text"
+                   id="zipcode"
+                   name="zipcode"
+                   data-ng-model="item.zipcode">
+        </label>
+        <label for="region">
+            <span>Region</span>
+            <select class="form-control"
+                    id="region"
+                    name="region"
+                    data-ng-model="item.region">
+                <option value=""></option>
+                <option value="0">US Service Schools</option>
+                <option value="1">New England</option>
+                <option value="2">Mid East</option>
+                <option value="3">Great Lakes</option>
+                <option value="4">Plains</option>
+                <option value="5">Southeast</option>
+                <option value="6">Southwest</option>
+                <option value="7">Rocky Mountains</option>
+                <option value="8">Far West</option>
+            </select>
+        </label>
+        <label for="homeUrl">
+            <span>Home URL</span>
+            <input class="form-control"
+                   type="text"
+                   id="homeUrl"
+                   name="homeUrl"
+                   data-ng-model="item.home_url">
+        </label>
+        <label for="admissionsUrl">
+            <span>Admissions URL</span>
+            <input class="form-control"
+                   type="text"
+                   id="admissionsUrl"
+                   name="admissionsUrl"
+                   data-ng-model="item.admissions_url">
+        </label>
+    </div>
+    <div>
+        <h3>School Stats</h3>
+        <label for="sector">
+            <span>Sector</span>
+            <select class="form-control"
+                    id="sector"
+                    name="sector"
+                    data-ng-model="item.sector">
+                <option value=""></option>
+                <option value="0">Administrative Unit</option>
+                <option value="1">Public: 4-Year</option>
+                <option value="2">Private: not-for-profit, 4-Year</option>
+                <option value="3">Private: for profit, 4-Year</option>
+                <option value="4">Public, 2-Year</option>
+                <option value="5">Private: not-for-profit, 2-Year</option>
+                <option value="6">Private: for-profit, 2-Year</option>
+                <option value="7">Public: less-than 2-Year</option>
+                <option value="8">Private not-for-profit, less than 2-Year</option>
+                <option value="9">Private for-profit, less-than 2-year</option>
+                <option value="99">None</option>
+            </select>
+        </label>
+        <div id="public-non-profit">
+            <label for="public">
+                <span>Type: Public?</span>
+                <input type="checkbox"
+                       id="public"
+                       name="public"
+                       data-ng-checked="(item.sector === '1' || item.sector === '4' || item.sector === '7')"
+                       data-ng-disabled="true">
+            </label>
+            <label>
+                <span>Type: Non-Profit?</span>
+                <input type="checkbox"
+                       name="nonProfit"
+                       data-ng-model="details.non_profit">
+            </label>
+        </div>
+        <label for="population">
+            <span>Student Population</span>
+            <input class="form-control"
+                   type="text"
+                   id="population"
+                   name="population"
+                   data-ng-model="item.population">
+        </label>
+        <label>
+            <span>Undergrad</span>
+            <input class="form-control"
+                   type="text"
+                   name="undergradPopulation"
+                   data-ng-model="details.undergrad_population">
+        </label>
+        <label>
+            <span>Graduate</span>
+            <input class="form-control"
+                   type="text"
+                   name="gradPopulation"
+                   data-ng-model="details.grad_population">
+        </label>
+        <label for="urbanization">
+            <span>Setting</span>
+            <select class="form-control"
+                    id="urbanization"
+                    name="urbanization"
+                    data-ng-model="item.urbanization">
+                <option value=""></option>
+                <option value="11">City: Large</option>
+                <option value="12">City: Midsize</option>
+                <option value="13">City: Small</option>
+                <option value="21">Suburb: Large</option>
+                <option value="22">Suburb: Midsize</option>
+                <option value="23">Suburb: Small</option>
+                <option value="31">Town: Fringe</option>
+                <option value="32">Town: Distant</option>
+                <option value="33">Town: Remote</option>
+                <option value="41">Rural: Fringe</option>
+                <option value="42">Rural: Distant</option>
+                <option value="43">Rural: Remote</option>
+            </select>
+        </label>
+        <label for="maleEnrollment">
+            <span>Gender Split - Male(%)</span>
+            <input class="form-control"
+                   type="text"
+                   id="maleEnrollment"
+                   name="maleEnrollment"
+                   data-ng-model="details.male_enrollment"
+                   data-ng-change="details.female_enrollment = 100 - details.male_enrollment">
+        </label>
+        <label for="femaleEnrollment">
+            <span>Gender Split - Female(%)</span>
+            <input class="form-control"
+                   type="text"
+                   id="femaleEnrollment"
+                   name="femaleEnrollment"
+                   data-ng-model="details.female_enrollment"
+                   data-ng-change="details.male_enrollment = 100 - details.female_enrollment">
+        </label>
+        <label for="religiousAffil">
+            <span>Religious Affiliation</span>
+            <input class="form-control"
+                   type="text"
+                   id="religiousAffil"
+                   name="religiousAffil"
+                   data-ng-model="item.religious_affil">
+        </label>
+    </div>
+    <div>
+        <h3>Diversity</h3>
+        <label for="undergradAsian">
+            <span>Undergrad Asian (%)</span>
+            <input class="form-control"
+                   type="text"
+                   id="undergradAsian"
+                   name="undergradAsian"
+                   data-ng-model="details.undergrad_asian">
+        </label>
+        <label for="undergradWhite">
+            <span>Undergrad White (%)</span>
+            <input class="form-control"
+                   type="text"
+                   id="undergradWhite"
+                   name="undergradWhite"
+                   data-ng-model="details.undergrad_white">
+        </label>
+        <label for="undergradHispanic">
+            <span>Undergrad Hispanic (%)</span>
+            <input class="form-control"
+                   type="text"
+                   id="undergradHispanic"
+                   name="undergradHispanic"
+                   data-ng-model="details.admission_hispanic">
+        </label>
+        <label for="undergradBlack">
+            <span>Undergrad Black (%)</span>
+            <input class="form-control"
+                   type="text"
+                   id="undergradBlack"
+                   name="undergradBlack"
+                   data-ng-model="details.undergrad_black">
+        </label>
+    </div>
+    <div>
+        <h3>Admission Statistics</h3>
+        <label for="admissionRate">
+            <span>Admission Rate (%)</span>
+            <input class="form-control"
+                   type="text"
+                   id="admissionRate"
+                   name="admissionRate"
+                   data-ng-model="details.admission_rate">
+        </label>
+        <label for="retentionPcf">
+            <span>Retention Rate (%)</span>
+            <input class="form-control"
+                   type="text"
+                   id="retentionPcf"
+                   name="retentionPcf"
+                   data-ng-model="details.retention_pcf">
+        </label>
+        <label for="fourYearGradPcf">
+            <span>Four Year Grad Percentage (%)</span>
+            <input class="form-control"
+                   type="text"
+                   id="fourYearGradPcf"
+                   name="fourYearGradPcf"
+                   data-ng-model="details.four_year_grad_pcf">
+        </label>
+        <label for="sixYearGradPcf">
+            <span>Six Year Grad Percentage (%)</span>
+            <input class="form-control"
+                   type="text"
+                   id="sixYearGradPcf"
+                   name="sixYearGradPcf"
+                   data-ng-model="item.six_year_grad_pcf">
+        </label>
+        <label>
+            <span>Average incoming freshman GPA</span>
+            <input class="form-control"
+                   type="text"
+                   name="avgGpa"
+                   data-ng-model="details.avg_gpa">
+        </label>
+        <label for="act25">
+            <span>ACT 25th Percentile</span>
+            <input class="form-control"
+                   type="text"
+                   id="act25"
+                   name="act25"
+                   data-ng-model="details.act_25">
+        </label>
+        <label for="act75">
+            <span>ACT 75th Percentile</span>
+            <input class="form-control"
+                   type="text"
+                   id="act75"
+                   name="act75"
+                   data-ng-model="details.act_75">
+         </label>
+        <label for="satMath25">
+            <span>SAT Math 25th Percentile</span>
+            <input class="form-control"
+                   type="text"
+                   id="satMath25"
+                   name="satMath25"
+                   data-ng-model="details.sat_math_25">
+         </label>
+        <label for="satMath75">
+            <span>SAT Math 75th Percentile</span>
+            <input class="form-control"
+                   type="text"
+                   id="satMath75"
+                   name="satMath75"
+                   data-ng-model="details.sat_math_75">
+        </label>
+        <label for="satReading25">
+            <span>SAT Reading 25th Percentile</span>
+            <input class="form-control"
+                   type="text"
+                   id="satReading25"
+                   name="satReading25"
+                   data-ng-model="details.sat_reading_25">
+        </label>
+        <label for="satReading75">
+            <span>SAT Reading 75th Percentile</span>
+            <input class="form-control"
+                   type="text"
+                   id="satReading75"
+                   name="satReading75"
+                   data-ng-model="details.sat_reading_75">
+        </label>
+        <label for="satWriting25">
+            <span>SAT Writing 25th Percentile</span>
+            <input class="form-control"
+                   type="text"
+                   id="satWriting25"
+                   name="satWriting25"
+                   data-ng-model="details.sat_writing_25">
+        </label>
+        <label for="satWriting75">
+            <span>SAT Writing 75th Percentile</span>
+            <input class="form-control"
+                   type="text"
+                   id="satWriting75"
+                   name="satWriting75"
+                   data-ng-model="details.sat_writing_75">
+       </label>
+    </div>
+    <div>
+        <h3>Tuition Statistics</h3>
+        <label for="inStateTuition">
+            <span>Average In State Tuition ($)</span>
+            <input class="form-control"
+                   type="text"
+                   id="inStateTuition"
+                   name="inStateTuition"
+                   data-ng-model="details.in_state_tuition">
+        </label>
+        <label for="outOfStateTuition">
+            <span>Average Out of State Tuition ($)</span>
+            <input class="form-control"
+                   type="text"
+                   id="outOfStateTuition"
+                   name="outOfStateTuition"
+                   data-ng-model="details.out_of_state_tuition">
+        </label>
+        <label for="totalCostInState">
+            <span>Total Cost In State ($)</span>
+            <input class="form-control"
+                   type="text"
+                   id="totalCostInState"
+                   name="totalCostInState"
+                   data-ng-model="item.total_costs_in_state">
+        </label>
+        <label for="totalCostOutOfState">
+            <span>Total Cost Out of State ($)</span>
+            <input class="form-control"
+                   type="text"
+                   id="totalCostOutOfState"
+                   name="totalCostOutOfState"
+                   data-ng-model="item.total_costs_out_of_state">
+        </label>
+        <label for="netPrice">
+            <span>Net Price ($)</span>
+            <input class="form-control"
+                   type="text"
+                   id="netPrice"
+                   name="netPrice"
+                   data-ng-model="item.net_price">
+        </label>
+        <label for="initialFinancialAid">
+            <span>% of Undergrads Receiving Financial Aid</span>
+            <input class="form-control"
+                   type="text"
+                   id="initialFinancialAid"
+                   name="initialFinancialAid"
+                   data-ng-model="details.initial_financial_aid">
+        </label>
+        <label>
+            <span>Financial Aid URL</span>
+            <input class="form-control"
+                   type="text"
+                   name="financialAidUrl"
+                   data-ng-model="details.financial_aid_url">
+        </label>
+        <label>
+            <span>Financial Aid Deadline</span>
+            <input class="form-control"
+                   type="date"
+                   name="financialAidDeadline"
+                   data-ng-model="details.financial_aid_deadline"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+    </div>
+    <div>
+        <h3>Application Information</h3>
+        <label>
+            <span>Has Application Fee?</span>
+            <input type="checkbox"
+                   data-ng-model="details.has_application_fee">
+        </label>
+        <label>
+            <span>Application Fee</span>
+            <input class="form-control"
+                   type="text"
+                   name="applicationFee"
+                   data-ng-model="details.application_fee"
+                   data-ng-disabled="!details.has_application_fee">
+        </label>
+        <label>
+            <span>Admissions telephone</span>
+            <input class="form-control"
+                   type="text"
+                   data-ng-model="details.admissions_telephone">
+        </label>
+        <label>
+            <span>Form Application?</span>
+            <input type="checkbox"
+                   name="isForm"
+                   data-ng-model="item.is_form">
+        </label>
+        <label>
+            <span>Account Application?</span>
+            <input type="checkbox"
+                   name="isAccount"
+                   data-ng-model="item.is_account">
+        </label>
+        <label>
+            <span>Group Application?</span>
+            <input type="checkbox"
+                   name="isGroup"
+                   data-ng-model="item.is_group">
+        </label>
+        <div class="editable-list add-groups">
+            <h3>Groups</h3>
+            <div data-ng-repeat="group in itemGroups.items"
+                 data-ng-class="{ 'deleted': group.deleteStatus }">
+                <label>
+                    <span data-value="{{ group.id }}">{{ group.name }}</span>
+                </label>
+                <button type="button"
+                        class="btn btn-danger remove-group"
+                        data-ng-click="group.deleteStatus = true"
+                        data-ng-show="!group.deleteStatus">&times;</button>
+                <button type="button"
+                        class="btn btn-info undo-remove-group glyphicon glyphicon-arrow-left"
+                        data-ng-click="group.deleteStatus = false"
+                        data-ng-show="group.deleteStatus"></button>
+            </div>
+            <button type="button"
+                    class="btn btn-info"
+                    data-ng-click="showNewGroupMenu = !showNewGroupMenu">Add New Group</button>
+            <div data-ng-if="showNewGroupMenu">
+                <label>
+                    <select class="form-control"
+                            data-ng-model="newGroup.str">
+                        <option data-ng-repeat="groupOption in groupList"
+                                value="{{ groupOption.id }}|{{ groupOption.name }}">{{ groupOption.name }}</option>
+                    </select>
+                </label>
+                <button type="button"
+                        class="btn btn-info"
+                        data-ng-click="newGroup = addNewGroup( newGroup )">Save</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>Mission Statement</h3>
+        <label>
+            <span>Mission Statement</span>
+            <textarea name="missionStatement"
+                      data-ng-model="details.mission_statement"></textarea>
+        </label>
+        <label>
+            <span>Mission Statement URL</span>
+            <input class="form-control"
+                   type="text"
+                   name="missionStatementUrl"
+                   data-ng-model="details.mission_statement_url">
+        </label>
+    </div>
+    <div>
+        <h3>Programs</h3>
+        <div data-ng-repeat="program in programs"
+             class="active-program"
+             data-ng-hide="isHiddenProgram( program.name )">
+            <span>{{ program.name }}</span>
+            <button type="button"
+                    class="btn btn-danger remove-program"
+                    data-ng-click="deleteProgram( $index )">&times;</button>
+        </div>
+        <select class="form-control"
+                data-ng-model="newProgram"
+                class="program-options">
+            <option data-ng-repeat="option in programsOptions"
+                    value="{{ $index }}">{{ option.display_name }}</option>
+        </select>
+        <button type="button"
+                class="btn btn-primary add-program"
+                data-ng-click="newProgram=pushProgram( newProgram )">Add</button>
+    </div>
+    <div class="editable-list application-dates">
+        <h3>Application Dates (New)</h3>
+        <p>(At least one date is required for school to be visible)</p>
+        <div data-ng-repeat="date in dates.items"
+             data-ng-class="{ 'deleted': date.deleteStatus }">
+            <label>
+                <span>Label:</span>
+                <input class="form-control"
+                       type="text"
+                       data-ng-model="date.application_type"
+                       data-ng-change="date.patchStatus = true">
+            </label>
+            <label>
+                <span>Deadline:</span>
+                <input class="form-control"
+                       type="date"
+                       data-ng-model="date.deadline"
+                       data-ng-model-options="{ 'timezone': 'UTC' }"
+                       data-ng-change="date.patchStatus = true">
+            </label>
+            <button type="button"
+                    class="btn btn-danger remove-deadline"
+                    data-ng-click="date.deleteStatus = true"
+                    data-ng-show="!date.deleteStatus">&times;</button>
+            <button type="button"
+                    class="btn btn-info undo-remove-deadline glyphicon glyphicon-arrow-left"
+                    data-ng-click="date.deleteStatus = false"
+                    data-ng-show="date.deleteStatus"></button>
+        </div>
+        <button type="button"
+                class="btn btn-info add-new-btn"
+                data-ng-click="showNewDate = !showNewDate">Add New Deadline</button>
+        <div class="add-new-section"
+             data-ng-if="showNewDate">
+            <label>
+                <span>Label:</span>
+                <input class="form-control"
+                       type="text"
+                       data-ng-model="newDeadline.application_type"
+                       data-ng-change="newDeadline.newStatus = true">
+            </label>
+            <label>
+                <span>Deadline:</span>
+                <input class="form-control"
+                       type="date"
+                       data-ng-model="newDeadline.deadline"
+                       data-ng-model-options="{ 'timezone': 'UTC' }"
+                       data-ng-change="newDeadline.newStatus = true">
+            </label>
+            <button type="button"
+                    class="btn btn-info save"
+                    data-ng-click="newDeadline = dates.addItem( newDeadline )"
+                    data-ng-disabled="!newDeadline.application_type && !newDeadline.deadline">Save</button>
+        </div>
+    </div>
+    <div>
+        <h3>Application Dates (Old)</h3>
+        <p>(At least one date is required for school to be visible)</p>
+        <label>
+            <span>Early Decision</span>
+            <input class="form-control"
+                   type="date"
+                   name="earlyDecision"
+                   data-ng-model="deprecatedDates.early_decision"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+        <label>
+            <span>Early Decision 2</span>
+            <input class="form-control"
+                   type="date"
+                   name="earlyDecision2"
+                   data-ng-model="deprecatedDates.early_decision_2"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+        <label>
+            <span>Early Action</span>
+            <input class="form-control"
+                   type="date"
+                   name="earlyAction"
+                   data-ng-model="deprecatedDates.early_action"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+        <label>
+            <span>Early Action 2</span>
+            <input class="form-control"
+                   type="date"
+                   name="earlyAction2"
+                   data-ng-model="deprecatedDates.early_action_2"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+        <label>
+            <span>Regular Decision</span>
+            <input class="form-control"
+                   type="date"
+                   name="regularDecision"
+                   data-ng-model="deprecatedDates.regular_decision"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+        <label>
+            <span>Regular Decision 2</span>
+            <input class="form-control"
+                   type="date"
+                   name="regularDecision2"
+                   data-ng-model="deprecatedDates.regular_decision_2"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+        <label>
+            <span>Priority</span>
+            <input class="form-control"
+                   type="date"
+                   name="priority"
+                   data-ng-model="deprecatedDates.priority"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+        <label>
+            <span>Priority 2</span>
+            <input class="form-control"
+                   type="date"
+                   name="priority2"
+                   data-ng-model="deprecatedDates.priority_2"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+        <label>
+            <span>Rolling</span>
+            <input class="form-control"
+                   type="date"
+                   name="rolling"
+                   data-ng-model="deprecatedDates.rolling"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+    </div>
+    <div>
+        <h3>Other</h3>
+        <label>
+            <span>Accepts Common App?</span>
+            <input type="checkbox"
+                   name="acceptsCommonApp"
+                   data-ng-model="item.accepts_common_app">
+        </label>
+        <label for="undergraduate">
+            <span>Undergraduate?</span>
+            <input type="checkbox"
+                   id="undergraduate"
+                   name="undergraduate"
+                   data-ng-model="item.is_undergraduate">
+        </label>
+        <label>
+            <span>CSS Deadline</span>
+            <input class="form-control"
+                   type="text"
+                   name="cssDeadline"
+                   data-ng-model="item.css_deadline">
+        </label>
+        <label for="onlineApplicationUrl">
+            <span>Online Application URL</span>
+            <input class="form-control"
+                   type="text"
+                   id="onlineApplicationUrl"
+                   name="onlineApplicationUrl"
+                   data-ng-model="item.online_application_url">
+        </label>
+        <label>
+            <span>Scholarship URL</span>
+            <input class="form-control"
+                   type="text"
+                   name="scholarshipUrl"
+                   data-ng-model="details.scholarship_url">
+        </label>
+        <label>
+            <span>Scholarship Deadline</span>
+            <input class="form-control"
+                   type="date"
+                   name="scholarshipDeadline"
+                   data-ng-model="details.scholarship_deadline"
+                   data-ng-model-options="{ 'timezone': 'UTC' }">
+        </label>
+        <label>
+            <span>Has Group App Supplement?</span>
+            <input type="checkbox"
+                   name="hasGroupAppSupplement"
+                   data-ng-model="details.has_group_app_supplement">
+        </label>
+        <label>
+            <span>Test Required?</span>
+            <input type="checkbox"
+                   name="testRequired"
+                   data-ng-model="details.test_required">
+        </label>
+        <label>
+            <span>Test</span>
+            <select class="form-control"
+                    data-ng-model="details.test_accepted"
+                    data-ng-options="item.value as item.display_name for item in testAcceptedChoices">
+                <option value=""></option>
+            </select>
+        </label>
+        <div id="two-year-fields">
+            <label>
+                <span>Placement Required?</span>
+                <input type="checkbox"
+                       name="placementRequired"
+                       data-ng-model="details.placement_required">
+            </label>
+            <label>
+                <span>Placement Test Name</span>
+                <input class="form-control"
+                       type="text"
+                       name="placementTestName"
+                       data-ng-model="details.placement_test_name">
+            </label>
+            <label>
+                <span>Vaccination Required?</span>
+                <input type="checkbox"
+                       name="vaccinationRequired"
+                       data-ng-model="details.vaccination_required">
+            </label>
+            <label>
+                <span>Orientation Required?</span>
+                <input type="checkbox"
+                       name="orientationRequired"
+                       data-ng-model="details.orientation_required">
+            </label>
+            <label>
+                <span>Residency Required?</span>
+                <input type="checkbox"
+                       name="residencyRequired"
+                       data-ng-model="details.residency_required">
+            </label>
+        </div>
+        <label>
+            <span>Requires SAT2?</span>
+            <input type="checkbox"
+                   name="sat2"
+                   data-ng-model="details.sat2">
+        </label>
+        <label>
+            <span>Letters of Recommendation?</span>
+            <select class="form-control"
+                    data-ng-model="details.letters_of_recommendation">
+                <option data-ng-repeat="choice in lettersOfRecommendationChoices"
+                        value="{{ choice.value }}"
+                        ng-selected="details.letters_of_recommendation === choice.value">{{ choice.display_name}}</option>
+            </select>
+        </label>
+        <label>
+            <span>Number of Letters</span>
+            <input class="form-control"
+                   type="text"
+                   name="numberOfLetters"
+                   data-ng-model="details.number_of_letters">
+        </label>
+        <label>
+            <span>Essay Required?</span>
+            <select class="form-control"
+                    data-ng-model="details.essay_required">
+                <option data-ng-repeat="choice in essayRequiredChoices"
+                        value="{{ choice.value }}"
+                        ng-selected="details.essay_required === choice.value">{{ choice.display_name }}</option>
+            </select>
+        </label>
+        <label>
+            <span>Number of Essays</span>
+            <input class="form-control"
+                   type="text"
+                   name="numberOfEssays"
+                   data-ng-model="details.number_of_essays">
+        </label>
+        <label>
+            <span>Transcript or Self-Report</span>
+            <select class="form-control"
+                    data-ng-model="details.transcripts_or_report">
+                <option data-ng-repeat="choice in transcriptsOrReportChoices"
+                        value="{{ choice.value }}"
+                        ng-selected="details.transcripts_or_report === choice.value">{{ choice.display_name }}</option>
+            </select>
+        </label>
+        <label>
+            <span>Offers Interview?</span>
+            <input type="checkbox"
+                   name="offersInterviews"
+                   data-ng-model="details.offers_interviews">
+        </label>
+        <label>
+            <span>Interview Importance</span>
+            <select class="form-control"
+                    data-ng-model="details.interview_importance">
+                <option data-ng-repeat="choice in interviewImportanceChoices"
+                        value="{{ choice.value }}"
+                        ng-selected="details.interview_importance === choice.value">{{ choice.display_name }}</option>
+            </select>
+        </label>
+        <label>
+            <span>Disabled?</span>
+            <input class="form-control"
+                   type="checkbox"
+                   name="disabled"
+                   data-ng-init="item.is_disabled = !item.is_displayed"
+                   data-ng-model="item.is_disabled"
+                   data-ng-change="item.is_displayed = !item.is_disabled" />
+        </label>
+    </div>
+    <div class="form-controls clearfix">
+        <button type="button"
+                class="btn btn-default edit-item-cancel"
+                data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit"
+                type="submit"
+                class="btn btn-primary"
+                data-ng-disabled="detailForm.$invalid">Save and exit</button>
+    </div>
+</form>

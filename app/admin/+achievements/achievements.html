@@ -1,0 +1,59 @@
+<md-toolbar class="md-menu-toolbar md-whiteframe-z2">
+    <div class="md-toolbar-tools"
+         layout="row"
+         layout-align="space-between center">
+        <div class="table-controls form-inline clearfix">
+            <label>
+                <md-icon class="material-icons">filter_list</md-icon>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Filter Achievements"
+                       data-ng-model="query" />
+            </label>
+        </div>
+        <div>
+            <button type="button"
+                    class="btn btn-primary add-new-item"
+                    data-ng-click="openNewItemForm()">Add New</button>
+        </div>
+    </div>
+</md-toolbar>
+<md-content class="bg-grey"
+            layout="column"
+            flex>
+    <div infinite-scroll="items.nextPage()"
+         infinite-scroll-disabled="items.busy || items.url === null"
+         infinite-scroll-distance="10">
+        <div layout="row"
+             layout-wrap>
+            <div data-ng-repeat="item in items.items | filter:query track by item.id"
+                 id="achievement{{ item.id }}"
+                 data-ng-class="{ 'disabled': !item.is_visible }"
+                 flex-gt-md="20"
+                 flex-md="25"
+                 flex-sm="33"
+                 flex="100">
+                <md-card style="height:calc(100% - 16px)">
+                    <img class="md-card-image"
+                         data-ng-src="{{ item.is_visible ? item.photo_url : item.bw_photo_url }}">
+                    <md-card-content flex>
+                        <h2 class="md-title">{{ item.title }}</h2>
+                        <br>
+                        <p class="md-body-1">{{ item.description }}</p>
+                    </md-card-content>
+                    <div class="md-actions"
+                         layout="row"
+                         layout-align="end center">
+                        <md-button class="md-accent"
+                                   ng-click="toggleDisable( item, $index )">
+                            {{item.is_visible ? 'Disable' : 'Enable'}}
+                        </md-button>
+                        <md-button class="md-accent"
+                                    ng-click="openEditForm( item, $index )">Edit</md-button>
+                    </div>
+                </md-card>
+            </div>
+        </div>
+        <div data-ng-show="items.busy">Loading data...</div>
+    </div>
+</md-content>

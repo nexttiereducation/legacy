@@ -1,0 +1,63 @@
+<div id="graph-page" ng-controller="EditMembers as vm" layout="column" flex>
+    <md-toolbar class="md-menu-toolbar md-whiteframe-z2 md-accent" layout="row">
+        <md-tabs md-selected="vm.selectedTabIndex">
+          <md-tab ng-click="vm.editType='create';vm.routeTo('/edit')">Create</md-tab>
+          <md-tab ng-click="vm.editType='load';vm.routeTo('/edit/load')">Load File</md-tab>
+          <md-tab ng-click="vm.editType='find';vm.routeTo('/edit/find')">Find Matching</md-tab>
+          <md-tab ng-click="vm.editType='roles';vm.routeTo('/edit/roles')">Edit Permissions</md-tab>
+          <md-tab ng-click="vm.editType='metadata';vm.routeTo('/edit/metadata')">Edit Configuration</md-tab>
+        </md-tabs>
+        <div ng-show="showLoader" class="subheader-loading" layout="row" layout-align="space-around center">
+            <md-progress-circular class="md-hue-1" md-diameter="20px"></md-progress-circular>
+            <span class="md-caption text-white">&ensp;Loading . . .</span>
+        </div>
+    </md-toolbar>
+    <md-content class="bg-grey" layout="column" flex>
+        <md-list ng-if="vm.editType == 'create'" layout-gt-xs="row" layout="column">
+            <md-card flex-gt-xs="50" flex="100">
+                <md-card-content ng-include="'accounts/edit-form.html'"> </md-card-content>
+            </md-card>
+            <md-card flex-gt-xs="50" flex="100">
+                <md-card-content ng-if="vm.DistrictModel.selectedStakeholder.stakeholder_type == 'Counselor'">
+                    <div ng-include="'accounts/entitlement-list.html'"> </div>
+                </md-card-content>
+                <md-card-content ng-if="vm.DistrictModel.selectedStakeholder.stakeholder_type != 'Counselor'"
+                                 style="max-height: 100%; overflow: scroll;">
+                    <div class="md-headline">Recent Activity Log</div>
+                    <md-list>
+                        <md-list-item ng-repeat="action in vm.DistrictModel.selectedStakeholder.activity track by $index">
+                            <div mdLine class="col-md-4 md-caption hidden-sm"> {{ action.eventDate }}</div>
+                            <div mdLine class="col-md-8 col-xs-12" > {{ action.body }}</md-list-item>
+                        </md-list-item>
+                    </md-list>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div ng-if="vm.editType == 'load'" layout="column" flex ng-include="'accounts/csv-uploads/csv-uploads.html'"></div>
+        <div ng-if="vm.editType == 'find'" layout="column" flex>
+            <div ng-if="vm.DistrictModel.potential.length == 0">
+                <h2>There are no NextTier accounts ending in domain '{{ vm.DistrictModel.district.domain }}' that are not already
+                    in this district.</h2>
+            </div>
+            <div ng-if="vm.DistrictModel.potential.length > 0">
+                <md-toolbar class="md-menu-toolbar md-whiteframe-z1">
+                    <div class="md-toolbar-tools">
+                        <md-button class="md-primary" ng-click="vm.addAll(dash)">Add All</md-button>
+                    </div>
+                </md-toolbar>
+                <md-content class="bg-grey" layout="column" flex>
+                    <div layout="row" layout-wrap>
+                        <md-card id="{{stake.id}}"
+                              ng-repeat="stake in vm.DistrictModel.potential">
+                              <md-card-content>
+                                <div class="text-center">{{ stake.email }}</div>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                </md-content>
+            </div>
+        </div>
+        <div ng-if="vm.editType == 'roles'" layout="column" flex ng-include="'accounts/entitlements.html'"></div>
+        <div ng-if="vm.editType == 'metadata'" layout="column" flex ng-include="'accounts/metadata/metadata.html'"></div>
+    </md-content>
+</div>

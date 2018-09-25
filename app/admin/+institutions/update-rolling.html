@@ -1,0 +1,18 @@
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <h3>Confirm Deletion</h3>
+    <label>
+        <span>Rolling Date</span>
+        <input type="date"
+               class="form-control"
+               name="rollingDate"
+               data-ng-model="item.rollingDate"
+               required>
+    </label>
+    <button type="submit"
+            class="btn btn-primary"
+            data-ng-click="confirm();">Confirm</button>
+    <button type="button"
+            class="btn btn-default"
+            data-ng-click="closeThisDialog()">Cancel</button>

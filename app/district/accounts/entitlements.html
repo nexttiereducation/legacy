@@ -1,0 +1,65 @@
+<md-content class="bg-grey" ng-controller="Entitlements as vm">
+    <div layout-gt-xs="row" layout="column">
+        <md-card flex-gt-xs="50">
+            <md-list>
+                <md-list-item
+                     ng-click="vm.createRole()"
+                     layout="row" layout-align="space-between center">
+                    <img class="left-image" src="https://next-tier.s3.amazonaws.com/build/images/ic_list_add_school.png" style="height:40px;width:40px;">
+                    <span class="image-text-spacer"></span>
+                    <div class="md-title" flex>Add Role</div>
+                    <md-divider></md-divider>
+               </md-list-item>
+                <md-list-item ng-class="{ selected: role == vm.selectedRole}"
+                     ng-repeat="role in vm.editableRoles track by role.id"
+                     ng-click="vm.selectRole(role)"
+                     layout="row" layout-align="space-between center">
+                    <img class="left-image" src="https://next-tier.s3.amazonaws.com/build/images/ic_teammate.png" style="height:40px;width:40px;">
+                    <span class="image-text-spacer"></span>
+                    <div class="content line-height-1"
+                         layout="row" layout-align="space-between center"
+                         flex>
+                        <div ng-if="!role.edit">
+                            <div class="md-title">{{ role.name }} </div>
+                            <div class="md-caption">{{ role.description }} </div>
+                        </div>
+                        <div ng-if="role.edit" style='z-index: 0'>
+                            <input class="form-control" type="text" ng-model="role.name">
+                            <input class="form-control text" type="text" ng-model="role.description">
+                        </div>
+                        <div layout="row" layout-align="end center">
+                            <md-button class="md-icon-button" ng-if="!role.edit" ng-click="vm.editRole(role)">
+                                <md-icon class="material-icons">edit_mode</md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" ng-if="!role.edit" ng-click="vm.deleteRole(role)">
+                                <md-icon class="material-icons">delete</md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" ng-if="role.edit" ng-click="vm.updateRole(role)">
+                                <md-icon class="material-icons">save</md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-card>
+        <md-card flex-gt-xs="50">
+            <table class="table">
+                <thead class="header">
+                <th>Action Name</th>
+                <th>Scope</th>
+                <th>Enabled?</th>
+                </thead>
+                <tbody>
+                <tr ng-class="{ 'selectable': vm.selectedRole } "
+                    ng-click="vm.toggleEntitlement(action)"
+                    ng-repeat="action in vm.actions track by action.id">
+                    <td>{{ action.name }}</td>
+                    <td>{{ action.resource }}</td>
+                    <td><i ng-if="vm.roleHasAction(action)" class="fa fa-check"></i></td>
+                </tr>
+                </tbody>
+            </table>
+        </md-card>
+    </div>
+</md-content>

@@ -1,0 +1,39 @@
+<div class="chat-window" layout="column" layout-align="space-between stretch" layout-fill flex>
+    <md-toolbar class="to-wrapper" layout-padding>
+        <div ng-if="studentsInTag.length > 0" layout="row" layout-align="start start">
+            <div class="md-body-2">To: </div>
+            <div layout="row" layout-align="start center" layout-wrap>
+                <div ng-repeat="student in studentsInTag | limitTo:3" class="pill-btn">
+                    <span class="md-margin md-caption">{{student.first_name + ' ' + student.last_name}}</span>
+                </div>
+                <div ng-if="studentsInTag.length > 3">
+                    <md-tooltip md-autohide="false"><span ng-repeat="student in studentsInTag" ng-hide="$index < 3">{{student.first_name + ' ' + student.last_name}}<span ng-hide="($index + 1) === studentsInTag.length">,&ensp;</span></span></md-tooltip>
+                    <strong class="md-caption pointer">&ensp;+ {{studentsInTag.length - 3}} other<strong ng-hide="(studentsInTag.length - 3)===1">s</strong></strong>
+                </div>
+            </div>
+        </div>
+    </md-toolbar>
+    <md-content flex layout="column" layout-align="start center" class="bg-grey">
+        <div ng-if="studentsInTag.length === 0" class="md-padding text-center">
+            <md-icon class="material-icons">warning</md-icon> <span class="md-subhead">This group is empty!</span>
+        </div>
+        <div flex layout="column" layout-align="start center" ng-if="studentsInTag.length > 0">
+            <span flex></span>
+            <img src="https://s3.amazonaws.com/next-tier/build/images/messaging/megaphone.svg" style="height:200px" />
+            <h2 class="md-headline text-center">Group Message Blast</h2>
+            <p class="text-center md-margin">Send a blast message to this group! Each student in the group will receive any message you type here. Students cannot see who else is in the group and can only reply to you individually. </p>
+            <span flex></span>
+        </div>
+    </md-content>
+    <div class="chat-box bg-white md-whiteframe-z1" layout="row" layout-align="space-between center">
+        <md-input-container class="md-block" md-no-float flex>
+            <textarea placeholder="New Message" ng-if="studentsInTag.length > 0"
+                   ng-model="groupChat.newMessage"
+                   ng-keyup="$event.keyCode == 13 && sendMessage()"
+                   rows="2" md-select-on-focus></textarea>
+        </md-input-container>
+        <md-button class="md-icon-button" hide-gt-sm ng-click="sendMessage()">
+            <md-icon class="material-icons">send</md-icon>
+        </md-button>
+    </div>
+</div>

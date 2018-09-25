@@ -1,0 +1,82 @@
+.notification-settings .checklist-header {
+  margin-top: 10px;
+  padding: 5px;
+}
+.notification-settings .checklist-header img {
+  width: 40px;
+  vertical-align: middle;
+}
+.notification-settings .checklist-header .checklist-title {
+  font-size: 18pt;
+  margin-left: 2px;
+  position: relative;
+  top: 3px;
+}
+.notification-settings .checklist-header:first-child {
+  margin-top: 0;
+}
+.notification-settings .checklist-header .check-list-controls {
+  float: right;
+}
+.notification-settings .checklist-header .check-list-controls button {
+  float: right;
+  min-width: 0;
+  background-color: transparent;
+  border: 2px solid blue;
+  border-radius: 18px;
+  font-weight: bold;
+  min-height: 0;
+  padding-left: 9%;
+  padding-right: 9%;
+  color: blue;
+  font-size: 14px;
+  padding: 5px 15px;
+  margin: 0 29px 10px 0;
+}
+.notification-settings .checklist-header .check-list-controls button::after {
+  content: "All On";
+}
+.notification-settings .checklist-header .check-list-controls button.depressed {
+  color: white;
+  background-color: blue;
+}
+.notification-settings .checklist-header .check-list-controls button.depressed::after {
+  content: "All Off";
+}
+.notification-settings .checklist-header .check-list-controls ul {
+  display: block;
+}
+.notification-settings .checklist-header .check-list-controls ul li {
+  display: inline-block;
+  font-size: 12px;
+  border-right: 2px solid gray;
+  padding: 0 20px;
+}
+.notification-settings .checklist-header .check-list-controls ul li:last-child {
+  border: 0;
+  padding: 0 3px 0 12px;
+}
+.notification-settings .checkbox-list li {
+  padding: 7px 0;
+  border-bottom: 1px solid gray;
+}
+.notification-settings .checkbox-list .checkboxes {
+  float: right;
+  width: 102px;
+  display: inline-block;
+  position: relative;
+}
+.notification-settings .checkbox-list .notification-type-title {
+  display: inline-block;
+  max-width: 228px;
+}
+.notification-settings .checkbox-list label {
+  margin: auto !important;
+  width: auto !important;
+  float: none;
+  position: static;
+  display: inline-block;
+}
+.notification-settings .checkbox-list label:first-child {
+  margin-right: 32px !important;
+}

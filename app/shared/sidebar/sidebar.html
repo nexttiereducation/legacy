@@ -1,0 +1,95 @@
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            gaTrack: true,
+            gaId: 'UA-50680810-1'}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<div id="sidebar" layout="column" layout-align="space-between" ng-class="{ open: isOpen }" ng-if="stakeholder">
+    <div layout="column" flex ng-click="toggleSidebar()" class="clickable">
+        <div id="title-bar" class="clickable" ng-click="toggleSidebar()" layout="row" layout-align="start center">
+            <img id="logo" src="https://s3.amazonaws.com/next-tier/images/logo-white-cropped.svg"/>
+            <span class="active-indicator" hide-gt-sm ng-if="stakeholderUser.isStudent && (messagingModel.unreadCount || notificationManager.count.unread) && !isOpen">{{messagingModel.unreadCount + notificationManager.count.unread}}</span>
+            <img id="logo-text" src="https://s3.amazonaws.com/next-tier/images/logo-white-text.svg">
+            <span flex></span>
+        </div>
+        <div layout="column" flex class="scrollable">
+            <md-list>
+                <md-list-item ng-repeat="permission in permissions"
+                              class="sidebar-row clickable less-padding"
+                              ng-click="routeToFeature(permission)"
+                              ng-class="{ 'active': permission.active }"
+                              title="{{permission.title}}">
+                    <md-icon ng-if="!permission.hasCustomIcon" class="icon material-icons notranslate"
+                             ng-click="routeToFeature(permission)">{{permission.icon}}</md-icon>
+                    <span ng-if="permission.hasCustomIcon" class="icomoon icon {{permission.icon}}"
+                          ng-click="routeToFeature(permission)"></span>
+                    <span flex class="permission-title">{{permission.title | uppercase}}</span>
+                </md-list-item>
+                <md-list-item ng-if="!StakeholderAuth.isGhost() && StakeholderAuth.isAdmin()"
+                    ng-click="routeToSecondaryPage('/app/#/ghost-login')"
+                    class="sidebar-row clickable less-padding"
+                    layout="row"
+                    layout-align="start center">
+                    <md-icon class="icon material-icons notranslate" title="GHOST LOGIN">supervisor_account</md-icon>
+                    <span class="permission-title">GHOST LOGIN</span>
+                </md-list-item>
+                <md-list-item ng-if="StakeholderAuth.isGhost()"
+                    ng-click="routeToSecondaryPage('/app/#/ghost-logout')"
+                    class="sidebar-row clickable less-padding"
+                    layout="row"
+                    layout-align="start center">
+                    <md-icon class="icon material-icons notranslate" title="GHOST LOGOUT">supervisor_account</md-icon>
+                    <span class="permission-title">GHOST LOGOUT</span>
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item ng-if="stakeholderUser.isStudent"
+                              class="sidebar-row clickable less-padding"
+                              ng-click="openNotifications($event)"
+                              title="Notifications">
+                    <md-icon class="icon material-icons notranslate" ng-click="openNotifications($event)">notifications</md-icon>
+                    <span ng-if="notificationManager.count.unread" class="active-indicator" ng-click="openNotifications($event)">
+                        {{notificationManager.count.unread}}
+                    </span>
+                    <span flex class="permission-title">NOTIFICATIONS</span>
+                </md-list-item>
+                <md-list-item ng-click="toggleMessaging()"
+                              class="sidebar-row clickable less-padding"
+                              title="Messaging">
+                    <md-icon class="icon material-icons notranslate" ng-click="toggleMessaging()">forum</md-icon>
+                    <span ng-if="messagingModel.unreadCount" class="active-indicator" ng-click="toggleMessaging()">
+                        {{messagingModel.unreadCount}}
+                    </span>
+                    <span flex class="permission-title">MESSAGING</span>
+                </md-list-item>
+            </md-list>
+        </div>
+    </div>
+    <div layout="row" layout-align="space-between center" class="bottom-links">
+        <md-button class="md-icon-button" ng-click="routeToSecondaryPage('/profile/')" title="Profile">
+            <div layout="column" layout-align="center center">
+                <img class="icon profile-icon" alt="icon"
+                     ng-src="{{stakeholderUser.photoUrl ? stakeholderUser.photoUrl : ('https://next-tier.s3.amazonaws.com/build/images/avatars' + stakeholderUser.stakeholder_type + '.svg')}}" />
+            </div>
+        </md-button>
+        <div layout="row" layout-align="start center" flex>
+            <md-button class="md-icon-button"
+                       title="Help"
+                       ng-click="stakeholderUser.isCounselor ?
+                                 routeToSecondaryPage('/counselor-knowledge-base/') :
+                                 routeToSecondaryPage('/student-knowledge-base/')">
+                <md-icon class="icon material-icons notranslate">help</md-icon>
+            </md-button>
+            <md-button class="md-icon-button" title="Translate" ng-click="setupTranslator()">
+                <md-icon class="icon material-icons notranslate" translator>g_translate</md-icon>
+            </md-button>
+            <div id="google_translate_element"></div>
+        </div>
+        <md-button class="md-icon-button" title="Logout" ng-click="logout()">
+            <md-icon class="icon material-icons notranslate">exit_to_app</md-icon>
+        </md-button>
+    </div>
+</div>

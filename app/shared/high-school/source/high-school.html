@@ -1,0 +1,53 @@
+<div class="highschool" data-ng-if="vm.user.highschool" layout="row" layout-align="space-between center">
+    <div flex>
+        <h3 class="md-subhead">{{vm.highSchoolDetails.name}}</h3>
+        <p class="md-body-1">{{vm.highSchoolDetails.city}}, {{vm.highSchoolDetails.state}} {{vm.highSchoolDetails.zipcode}}</p>
+    </div>
+    <md-button class="md-accent md-icon-button" data-ng-click="vm.removeHighSchool()">
+        <md-tooltip>Remove High School</md-tooltip>
+        <md-icon class="material-icons">close</md-icon>
+    </md-button>
+</div>
+<div class="search-high-school" data-ng-if="!vm.user.highschool">
+    <div class="search-high-school-description" ng-class="{ 'hidden': vm.hideDescription }" data-ng-if="!vm.selectedHighSchool">
+        <p class="md-body-1">Search for your high school by entering its 5-digit zip code and/or name. Select the school from available options in the drop-down menu and add it to your profile. If no matches are found, email <a href="mailto:info@nexttiereducation.com">info@nexttiereducation.com</a> for assistance.</p>
+        <br>
+    </div>
+    <md-autocomplete md-selected-item="vm.selectedHighSchool"
+                     md-search-text="vm.highSchoolSearchObject.highSchoolSearchZipCode"
+                     md-items="highSchool in vm.searchHighSchoolsByZipCodeOrName()"
+                     placeholder="Enter your high school's Zip Code"
+                     md-item-text="highSchool.zipcode">
+      <md-item-template>
+            <span class="item-title">{{ highSchool.name }}</span>
+            <span class="item-metadata block"><small>{{highSchool.city + ", " + highSchool.state + " " + highSchool.zipcode}}</small></span>
+      </md-item-template>
+      <md-not-found>
+          No Matches Found.
+      </md-not-found>
+    </md-autocomplete>
+    <div layout="row" layout-align="center center" class="md-padding">
+      <div class="md-padding"> &mdash; or &mdash; </div>
+    </div>
+    <md-autocomplete md-selected-item="vm.selectedHighSchool"
+                     md-search-text="vm.highSchoolSearchObject.highSchoolSearchName"
+                     md-items="highSchool in vm.searchHighSchoolsByZipCodeOrName()"
+                     placeholder="Enter your high school's Name"
+                     md-item-text="highSchool.name">
+      <md-item-template>
+            <span class="item-title">{{ highSchool.name }}</span>
+            <span class="item-metadata block"><small>{{highSchool.city + ", " + highSchool.state + " " + highSchool.zipcode}}</small></span>
+      </md-item-template>
+      <md-not-found>
+          No Matches Found.
+      </md-not-found>
+    </md-autocomplete>
+    <div layout="row" layout-align="end center" data-ng-if="vm.selectedHighSchool && !vm.forRegistration">
+        <md-button data-ng-click="vm.selectHighSchool(vm.selectedHighSchool)">Cancel</md-button>
+        <md-button class="md-primary md-raised" data-ng-click="vm.addHighSchool(vm.selectedHighSchool)">Save</md-button>
+    </div>
+    <div data-ng-if="vm.selectedHighSchool && vm.forRegistration">
+        <br>
+        <md-button class="md-primary md-raised" layout-fill data-ng-click="vm.addHighSchool(vm.selectedHighSchool)" flex>Submit</md-button>
+    </div>
+</div>

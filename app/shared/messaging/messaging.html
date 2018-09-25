@@ -1,0 +1,16 @@
+<div layout="row" flex>
+    <md-sidenav md-component-id="sidebar"
+                md-is-locked-open="$mdMedia('gt-sm')"
+                md-whiteframe="3"
+                layout="column" id="sidebar" class="md-sidenav-left" >
+        <sidebar></sidebar>
+    </md-sidenav>
+    <md-content class="no-scroll" layout="column" flex>
+        <div layout="column" ng-if="vm.currentLocation.indexOf('applications') > -1" flex ui-view></div>
+        <div layout="column" ng-if="!(vm.currentLocation.indexOf('applications') > -1)" flex x-ng-view></div>
+    </md-content>
+    <md-sidenav md-component-id="right" class="md-sidenav-right" md-open="vm.show" md-whiteframe="3" layout="column">
+        <messaging-sidenav></messaging-sidenav>
+    </md-sidenav>
+</div>
+

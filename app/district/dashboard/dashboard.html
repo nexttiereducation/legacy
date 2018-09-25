@@ -1,0 +1,57 @@
+<div id="district-dashboard" layout="column" flex>
+    <div ng-if="!(dash.DistrictModel.district || dash.admin)">
+        <h1>This account is not associated with a district.</h1>
+        <h1>Please contact NextTier for assistance.</h1>
+    </div>
+    <div ng-if="dash.DistrictModel.district || dash.admin" layout="column" flex>
+        <md-toolbar class="md-menu-toolbar md-whiteframe-z3">
+            <md-tabs md-stretch-tabs="always" class="md-primary md-hue-3 brand-ink" md-selected="dash.selectedTabIndex">
+                <md-tab ng-click="dash.routeTo('/all')">
+                    <img src="https://next-tier.s3.amazonaws.com/images/district/roster.png"
+                         alt="{{dash.DistrictModel.currentPage === 'all' ? 'Active' : 'Inactive'}}">
+                    <span>Roster</span>
+                </md-tab>
+                <md-tab ng-click="dash.routeTo('/summary')">
+                    <img src="https://next-tier.s3.amazonaws.com/images/district/summary.png"
+                         alt="{{dash.DistrictModel.currentPage === 'summary' ? 'Active' : 'Inactive'}}">
+                    <span>Summary</span>
+                </md-tab>
+                <md-tab ng-click="dash.routeTo('/graph')"
+                        ng-if="false && dash.DistrictModel.district.size > 0 && dash.DistrictModel.district.size < 500">
+                    <img src="https://next-tier.s3.amazonaws.com/images/district/graph.png"
+                         alt="{{dash.DistrictModel.currentPage === 'graph' ? 'Active' : 'Inactive'}}">
+                    <span>Graph</span>
+                </md-tab>
+                <md-tab ng-click="dash.routeTo('/edit')">
+                    <img src="https://next-tier.s3.amazonaws.com/images/district/edit-roster.png"
+                         alt="{{dash.DistrictModel.currentPage === 'edit' ? 'Active' : 'Inactive'}}">
+                    <span>Edit Roster</span>
+                </md-tab>
+                <md-tab ng-click="dash.routeTo('/setup')" ng-if="dash.admin">
+                    <img src="https://next-tier.s3.amazonaws.com/images/district/edit-roster.png"
+                         alt="{{dash.DistrictModel.currentPage === 'setup' ? 'Active' : 'Inactive'}}">
+                    <span>Setup Districts</span>
+                </md-tab>
+            </md-tabs>
+        </md-toolbar>
+        <div layout="column" flex
+             ng-show="dash.DistrictModel.currentPage == 'summary'"
+             ng-include="'dashboard/team-stats.html'">
+        </div>
+        <div id="graph-page" ng-if="dash.DistrictModel.currentPage == 'graph' && !$rootScope.isMobile()">
+            <div>
+                <input id="collegeFollowers" type="checkbox" ng-model="dash.highlight"
+                       ng-click="dash.updateHighlight()"><label class="margin-top-15" for="collegeFollowers">
+                Highlight
+                Students that are following at least one college</label>
+            </div>
+            <div rich-nodes data="dash.datanodes"></div>
+        </div>
+        <div ng-show="dash.DistrictModel.currentPage == 'all'"
+             ng-include="'accounts/team.html'" layout="column" flex></div>
+        <div ng-if="dash.DistrictModel.currentPage == 'edit'"
+             ng-include="'accounts/edit-members.html'" layout="column" flex></div>
+        <div ng-if="dash.DistrictModel.currentPage == 'setup'"
+             ng-include="'setup/district-setup.html'" layout="row" flex></div>
+    </div>
+</div>

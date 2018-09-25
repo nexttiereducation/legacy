@@ -1,0 +1,74 @@
+<div id="team-page" ng-controller="Team as vm" layout="row" flex>
+    <md-sidenav class="md-sidenav-left bg-dark-blue" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4">
+        <div layout-padding layout="column" flex>
+            <div class="large-square center hidden-xs">
+                <img class="width-100" src="https://next-tier.s3.amazonaws.com/images/ic_school_large.png">
+            </div>
+            <h2 ng-if="!vm.admin" class="text-center hidden-xs">{{ vm.DistrictModel.district.name }}</h2>
+            <h4 class="text-center hidden-xs margin-top-0">{{vm.DistrictModel.totalResults}} Members</h4>
+            <div id="scholarship-filters" class="margin-top-15">
+                <nte-filter filters="vm.DistrictModel.filters"
+                            on-filter-change="vm.getFilteredStakeholders"
+                            class="nte-filter"
+                            results="vm.DistrictModel.district.size">
+                </nte-filter>
+            </div>
+        </div>
+    </md-sidenav>
+    <div layout="column" layout-align="top stretch" flex>
+        <md-toolbar class="md-menu-toolbar md-background md-hue-1">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                <div flex>{{ vm.DistrictModel.district.name }} Roster</div>
+                <md-button class="md-icon-button" ng-click="vm.messageStakeholders()">
+                    <i class="fa fa-envelope"></i>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="vm.exportStakeholders()">
+                    <i class="fa fa-download"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+         <md-toolbar class="table-header-container md-whiteframe-z2">
+            <md-grid-list md-cols="14" md-row-height="50px" md-gutter="4px" class="md-body-2 table-header">
+                <md-grid-tile md-colspan="1">
+                    <div class="full-width text-center">Id</div></md-grid-tile>
+                <md-grid-tile md-colspan="3">
+                    <div class="full-width text-left" >Email</div></md-grid-tile>
+                <md-grid-tile md-colspan="1">
+                    <div class="full-width text-left" >Type</div></md-grid-tile>
+                <md-grid-tile md-colspan="2">
+                    <div class="full-width text-left" >First Name</div></md-grid-tile>
+                <md-grid-tile md-colspan="2">
+                    <div class="full-width text-left" >Last Name</div></md-grid-tile>
+                <md-grid-tile md-colspan="2">
+                    <div class="full-width text-left" >High School</div></md-grid-tile>
+                <md-grid-tile md-colspan="1">
+                    <div class="full-width text-left" >SISID</div></md-grid-tile>
+                <md-grid-tile md-colspan="2">
+                    <div class="full-width text-center">Actions</div></md-grid-tile>
+            </md-grid-list>
+        </md-toolbar>
+        <div class="scroll-y table-body" flex layout="column"
+                infinite-scroll="vm.nextPage()"
+                infinite-scroll-distance="10">
+            <md-grid-list md-cols="14" md-row-height="50px" md-gutter="4px" class="clickable"
+                ng-repeat="stake in vm.DistrictModel.pagedStakeholderList track by stake.id"
+                id="stakeholder{{ stake.id }}">
+                <md-grid-tile md-colspan="1">{{ stake.id }}</md-grid-tile>
+                <md-grid-tile md-colspan="3">{{ stake.email }}</md-grid-tile>
+                <md-grid-tile md-colspan="1">{{ vm.getType(stake.stakeholder_type) }}</md-grid-tile>
+                <md-grid-tile md-colspan="2">{{ stake.first_name }}</md-grid-tile>
+                <md-grid-tile md-colspan="2">{{ stake.last_name }}</md-grid-tile>
+                <md-grid-tile md-colspan="2">{{ stake.highschool.name }}</md-grid-tile>
+                <md-grid-tile md-colspan="1">{{ stake.sisid || 'N/A' }}</md-grid-tile>
+                <md-grid-tile md-colspan="2">
+                    <md-button class="md-icon-button md-accent" ng-click="vm.editAccount( stake, dash)">
+                        <md-icon class="material-icons">edit_mode</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button md-accent" ng-click="vm.deleteAccount( stake )">
+                        <md-icon class="material-icons">delete</md-icon>
+                    </md-button>
+                </md-grid-tile>
+            </md-grid-list>
+        </div>
+    </div>
+</div>

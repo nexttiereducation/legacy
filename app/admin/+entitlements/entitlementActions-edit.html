@@ -1,0 +1,30 @@
+<h2>Edit Actions</h2>
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <table>
+        <thead>
+            <th>Action Name</th>
+            <th>Enterprise</th>
+        </thead>
+        <tr data-ng-repeat="action in actions track by $index">
+            <td>{{ action.name }}</td>
+            <td>{{ action.enterprise }}</td>
+            <td>
+                <button type="button"
+                        class="btn btn-primary add-new-item"
+                        data-ng-click="openEditActionForm(action )">Edit Action</button>
+            </td>
+            <td>
+                <button type="button"
+                        class="btn btn-primary add-new-item"
+                        data-ng-click="openDeleteActionForm(action )">Delete</button>
+            </td>
+        </tr>
+    </table>
+    <div class="form-controls clearfix">
+        <button id="edit-item-submit"
+                type="submit"
+                class="btn btn-primary">Save and exit</button>
+    </div>
+</form>

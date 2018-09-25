@@ -1,0 +1,44 @@
+<h2>Edit Sponsorship
+    <span>{{ vm.sponsorship.name }}</span>
+</h2>
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <h3>Individual Fields</h3>
+    <div>
+        <label>
+            <span>Priority (1 to 100)</span>
+            <input type="number"
+                   min="1"
+                   max="100"
+                   name="name"
+                   data-ng-model="vm.sponsorship.priority"
+                   required />
+        </label>
+        <label>
+            <span>Begin Date (MM/DD/YYY)</span>
+            <input type="date"
+                   name="name"
+                   data-ng-model="vm.sponsorship.start_date"
+                   required />
+        </label>
+        <label>
+            <span>End Date (MM/DDYYYY)</span>
+            <input type="date"
+                   name="name"
+                   data-ng-model="vm.sponsorship.end_date"
+                   required />
+        </label>
+        <label style="color: red;"
+               ng-hide="vm.valid">Invalid Dates, Start Date Must Be Before End Date</label>
+    </div>
+    <div class="form-controls clearfix">
+        <button type="button"
+                class="btn btn-default edit-item-cancel"
+                data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit"
+                type="submit"
+                class="btn btn-primary"
+                data-ng-disabled="detailForm.$invalid; !vm.dateValidate();">Save and exit</button>
+    </div>
+</form>

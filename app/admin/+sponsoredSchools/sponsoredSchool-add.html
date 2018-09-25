@@ -1,0 +1,44 @@
+<div class="row-container list-container">
+    <h2>Search For An Institution</h2>
+    <div class="row">
+        <div class="table-controls form-inline clearfix">
+            <label>
+                <span>Filter by Name, City, or State:</span>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Name, City, or State"
+                       data-ng-model="vm.query"
+                       data-ng-model-options="{ updateOn: 'default blur submit', debounce: {'default': 500, 'blur': 0} }"
+                       data-ng-change="vm.getInstItems();vm.items.nextPage();">
+            </label>
+        </div>
+        <table ng-hide="!vm.items.items.length">
+            <thead>
+                <th>Id</th>
+                <th data-sort-header="name">Name</th>
+                <th data-sort-header="city">City</th>
+                <th data-sort-header="state">State</th>
+                <th> </th>
+            </thead>
+            <tbody infinite-scroll="vm.items.nextPage()"
+                   infinite-scroll-disabled="vm.items.busy || vm.items.url === null"
+                   infinite-scroll-distance="0">
+                <tr data-ng-repeat="item in vm.items.items track by item.id"
+                    id="institution{{ item.id }}">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.city }}</td>
+                    <td>{{ item.state }}</td>
+                    <td>
+                        <button class="btn btn-primary add-new-item"
+                                data-ng-click="closeThisDialog();vm.createNewSponsor(item)">Add</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button style="float: right; margin-top: 1cm"
+                type="button"
+                class="btn btn-default edit-item-cancel"
+                data-ng-click="closeThisDialog()">Cancel</button>
+    </div>
+</div>

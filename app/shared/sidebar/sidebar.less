@@ -1,0 +1,289 @@
+@background: #10446a;
+@highlight: #0c3350;
+@accent: #2e7cb7;
+@red: #EF443F;
+
+sidebar[data-logo-only] {
+    height: 50px;
+    position: relative;
+    display: inline-block;
+    width: 50px;
+}
+
+sidebar {
+    display:block;
+    height:100%;
+}
+
+md-sidenav#sidebar {
+    height: 100vh;
+}
+
+#sidebar {
+    background-color: @background;
+    color: fade(white, 60);
+    box-shadow: 0px 0 2px 2px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    height:100%;
+    > .clickable {
+        background-color: @background;
+    }
+
+    .permission-title {
+        opacity: 0;
+    }
+
+    #title-bar {
+        background-color: @highlight;
+        height: 50px;
+        min-height: 50px;
+        .active-indicator {
+            top: 2px;
+            left: 25px;
+            display: none;
+        }
+    }
+
+    #logo-text {
+        height: 30px;
+    }
+
+    .bottom-links {
+        background-color: @highlight;
+        height: 50px;
+        padding:0px;
+        .icon {
+            color: fade(@accent, 60);
+            &:hover {
+                color: @accent;
+            }
+        }
+        .md-button.md-icon-button {
+            height: 100% !important;
+            width: 46px;
+            margin-left: 0;
+        }
+    }
+
+    .icon {
+        font-size: 30px !important;
+        width: 30px;
+        height: 30px;
+        line-height:30px;
+    }
+
+    md-list-item:hover,
+    md-list-item .md-button:hover {
+        .permission-title {
+            color: white;
+            opacity: 1;
+        }
+        .icon {
+            color: @accent;
+        }
+    }
+
+    .sidebar-row {
+        border-left: 3px solid @background;
+       .md-list-item {
+            padding:0 8px !important;
+            height: 50px;
+        }
+        .icon {
+            color: fade(@accent, 60);
+            position: relative;
+            margin:0;
+        }
+
+        .permission-title {
+            opacity: 0.5;
+            color:white;
+            font-weight: 400;
+            margin-left:15px;
+        }
+
+        &.active {
+            background-color: @highlight;
+            color: white;
+            border-left-color: @accent;
+            .icon {
+                color: @accent;
+            }
+            .permission-title {
+                opacity: 1;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .active-indicator {
+        background-color: @red;
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        font-size: 13px;
+        color: white;
+        font-size: .85em;
+        font-weight: 600;
+        padding: 0px 6px 0px 5.5px;
+        letter-spacing: -0.5px;
+        border-radius: 15px;
+        display: inline-block;
+        margin: -1px 0 0 5px;
+        font-family: 'Roboto Condensed';
+        min-width: 1.4em;
+        text-align: center;
+        line-height: 1.4;
+    }
+
+    #google_translate_element {
+        opacity: 0;
+        width: 40px;
+        height: 40px;
+        position: relative;
+        right: 40px;
+        overflow: hidden;
+    }
+
+    md-list-item > .md-button,
+    md-list-item > .md-button > button {
+        min-width:50px;
+    }
+
+    md-list-item.less-padding > div.md-button {
+        padding:0 8px !important;
+    }
+
+    md-list-item,
+    md-button {
+        &:active,
+        &:focus {
+            background-color: @highlight;
+        }
+    }
+
+    md-list-item .md-button:not([disabled]):hover,
+    md-list-item:hover .md-button:not([disabled]) {
+        background-color:transparent;
+    }
+}
+
+@sidebar-width: 50px;
+@sidebar-width-full: 300px;
+@md-width-min: 960px;
+@sm-width-max: 959px;
+
+#sidebar md-list,
+.bottom-links {
+    min-width: @sidebar-width-full !important;
+}
+
+@media screen and (min-width: @md-width-min) {
+    md-sidenav#sidebar + md-content {
+        transition-duration: 0.5s;
+        margin-left:0px !important;
+    }
+    md-sidenav#sidebar {
+        transition-duration: 0.5s;
+    }
+    md-sidenav#sidebar,
+    md-sidenav#sidebar + md-content {
+        transition-property: width, margin-left, padding-left;
+        transform: translate3d(0, 0, 0);
+    }
+    md-sidenav#sidebar:NOT(.md-closed) {
+         width: @sidebar-width-full !important;
+         + md-content {
+            padding-left: 0px;
+         }
+         .bottom-links {
+            min-width: @sidebar-width-full;
+            width: @sidebar-width-full;
+            position:absolute;
+            bottom:0px;
+            left:0px;
+         }
+    }
+    md-sidenav#sidebar.md-closed {
+        display:block;
+        visibility: visible;
+        width: @sidebar-width;
+        max-width: @sidebar-width;
+        top: 0;
+        left: 0;
+        transition-delay: 0.01s;
+        + md-content,
+        + .md-content {
+            md-sidenav.md-sidenav-left:NOT(.md-closed):NOT(#applications) {
+                padding-left: @sidebar-width;
+            }
+        }
+    }
+    md-sidenav#sidebar #title-bar {
+        margin-bottom: 25px;
+    }
+}
+@media screen and (max-width: @sm-width-max) {
+    md-sidenav#sidebar {
+        width: @sidebar-width-full !important;
+    }
+    .skiptranslate:NOT([style="display: none;"]) + div #sidebar {
+        top: 40px !important;
+    }
+    sidebar[data-logo-only] {
+        max-width: 50px;
+    }
+}
+
+/* LOGO STYLING */
+
+@logo-width: @sidebar-width;
+
+#logo {
+    height: 50px;
+    width: @logo-width;
+    padding: 5px;
+    outline: none !important;
+    &:active,
+    &:focus {
+        background-color: @highlight;
+    }
+}
+
+#logo + .active-indicator {
+    background: red;
+    border-radius: 15px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Roboto Condensed';
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: -.5px;
+    line-height: 1.4;
+    margin: -1px 0 0 5px;
+    min-width: 1.4em;
+    padding: 0 6px 0 5.5px;
+    position: absolute;
+    right: 2.5px;
+    text-align: center;
+    top: 7.5px;
+    width: auto;
+}
+
+.bg-blue-brand-darkest {
+    background-color: @background;
+}
+
+.logo-absolute {
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.profile-icon {
+    border-radius: 50%;
+}
+
+.scrollable {
+    overflow: auto;
+}

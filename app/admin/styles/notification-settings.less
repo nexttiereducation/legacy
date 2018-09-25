@@ -1,0 +1,94 @@
+.notification-settings {
+    .checklist-header {
+        margin-top: 10px;
+        padding: 5px;
+
+        img {
+            width: 40px;
+            vertical-align: middle;
+        }
+        .checklist-title {
+            font-size: 18pt;
+            margin-left: 2px;
+            position: relative;
+            top: 3px;
+        }
+        &:first-child {
+            margin-top: 0;
+        }
+
+        .check-list-controls {
+            float: right;
+
+            button {
+                float: right;
+                min-width: 0;
+                background-color: transparent;
+                border: 2px solid blue;
+                border-radius: 18px;
+                font-weight: bold;
+                min-height: 0;
+                padding-left: 9%;
+                padding-right: 9%;
+                color: blue;
+                font-size: 14px;
+                padding: 5px 15px;
+                margin: 0 29px 10px 0;
+
+                &::after {
+                    content: "All On";
+                }
+                &.depressed
+                {
+                    color: white;
+                    background-color: blue;
+                    &::after {
+                        content: "All Off";
+                    }
+                }
+            }
+
+            ul {
+                display: block;
+
+                li {
+                    display: inline-block;
+                    font-size: 12px;
+                    border-right: 2px solid gray;
+                    padding: 0 20px;
+
+                    &:last-child {
+                        border: 0;
+                        padding: 0 3px 0 12px;
+                    }
+                }
+            }
+        }
+    }
+    .checkbox-list {
+        li {
+            padding: 7px 0;
+            border-bottom: 1px solid gray;
+        }
+        .checkboxes {
+            float: right;
+            width: 102px;
+            display: inline-block;
+            position: relative;
+        }
+        .notification-type-title {
+            display: inline-block;
+            max-width: 228px;
+        }
+        label {
+            margin: auto !important;
+            width: auto !important;
+            float: none;
+            position: static;
+            display: inline-block;
+            &:first-child {
+                margin-right: 32px !important;
+            }
+        }
+    }
+}

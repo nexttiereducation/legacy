@@ -1,0 +1,113 @@
+<div layout="row"
+     layout-align="space-between center"
+     layout-margin>
+    <div class="table-controls form-inline clearfix">
+        <label>
+            <md-icon class="material-icons">filter_list</md-icon>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Filter by Name, City, or State"
+                   data-ng-model="query"
+                   data-ng-model-options="{ updateOn: 'default blur submit', debounce: {'default': 500, 'blur': 0} }"
+                   data-ng-change="getListItems();items.nextPage();">
+        </label>
+    </div>
+    <div id="institution-headers">
+        <button type="button"
+                class="btn btn-primary add-new-item"
+                data-ng-click="openNewItemForm()">Add New</button>
+        <button type="button"
+                class="btn btn-primary"
+                data-ng-click="updateRolling()">Update Rolling Dates</button>
+        <span data-ng-if="!uploadingInstitutions"
+              class="btn btn-primary"
+              id="csv-upload-btn">Upload EXCEL
+            <input type="file"
+                   accept=".xlsx,.xls"
+                   onchange="angular.element(this).scope().uploadInstitutions(this.files)">
+        </span>
+        <span data-ng-if="uploadingInstitutions"
+              class="btn btn-primary"
+              id="csv-upload-btn">
+            <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+            Uploading EXCEL...
+        </span>
+    </div>
+</div>
+<section class="table-fixed">
+    <div class="table-fixed-container">
+        <table class="table-hover table-bordered table-responsive"
+               infinite-scroll="items.nextPage()"
+               infinite-scroll-distance="1"
+               infinite-scroll-container="'.table-fixed-container'">
+            <!--                infinite-scroll-disabled="items.busy || items.url === null" -->
+            <thead>
+                <th style="width:10%">
+                    <div data-sort-header="unit id">
+                        <span>Unit ID</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='unit id'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:40%">
+                    <div data-sort-header="name">
+                        <span>Name</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='name'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:20%">
+                    <div data-sort-header="city">
+                        <span>City</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='city'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:10%">
+                    <div data-sort-header="state">
+                        <span>State</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='state'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:10%">
+                    <div>Internal ID</div>
+                </th>
+                <th style="width:10%"
+                    class="text-center">
+                    <div>Disable</div>
+                </th>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="item in items.items track by item.id"
+                    id="institution{{ item.id }}"
+                    data-ng-class="{ disabled: !item.is_displayed }">
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.unit_id }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.name }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.city }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.state }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.id }}</td>
+                    <td class="text-center">
+                        <md-button class="md-accent"
+                                   ng-click="toggleDisable( item, $index )"
+                                   ng-class="{'md-icon-button': item.is_displayed, 'no-italics no-margin btn-sm': !item.is_displayed}">
+                            <md-icon class="material-icons"
+                                     ng-class="{ 'text-grey': item.is_displayed }"
+                                     ng-if="item.is_displayed">cancel</md-icon>
+                            <span ng-if="!item.is_displayed">Enable</span>
+                        </md-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6"
+                        class="text-center">
+                        <div class="md-padding md-subhead text-blue">
+                            <span data-ng-show="items.busy">
+                                <i class="fa fa-refresh fa-spin"></i> Loading data . . .</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

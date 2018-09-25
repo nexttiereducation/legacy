@@ -1,0 +1,24 @@
+<div layout="column" layout-align="center center" flex>
+	<md-input-container class="no-margin">
+		  <input class="text-white" flex
+		  		 type="number"
+		  		 ng-model="option.value"
+				 min="{{option.rangeOptions.floor}}"
+				 max="{{option.rangeOptions.ceil}}"
+				 step="{{option.rangeOptions.step}}"
+		  		 aria-label="Range Input">
+	</md-input-container>
+	<md-slider-container flex>
+		<span ng-bind="option.rangeOptions.floor"></span>
+		<md-slider class="md-primary" flex
+				   ng-model="option.value"
+				   min="{{option.rangeOptions.floor}}"
+				   max="{{option.rangeOptions.ceil}}"
+				   step="{{option.rangeOptions.step}}"
+				   aria-label="Range Slider"
+				   id="range-slider">
+		</md-slider>
+		<span ng-bind="option.rangeOptions.ceil"></span>
+	</md-slider-container>
+	<md-button ng-click="toggleOption()" class="no-margin md-primary">Apply Filter</md-button>
+</div>

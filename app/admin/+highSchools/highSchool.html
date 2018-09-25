@@ -1,0 +1,75 @@
+<h2>Edit Item:
+    <span>{{ item.name }}</span>
+</h2>
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <div>
+        <label for="name">
+            <span>Name</span>
+            <input class="form-control"
+                   type="text"
+                   id="name"
+                   name="name"
+                   data-ng-model="item.name"
+                   required>
+        </label>
+        <label for="nces">
+            <span>NCES Id</span>
+            <input class="form-control"
+                   type="text"
+                   id="nces"
+                   name="nces"
+                   data-ng-model="item.nces"
+                   pattern="[a-zA-Z0-9]{9,12}"
+                   title="12 digit NCES Id">
+        </label>
+        <label for="city">
+            <span>City</span>
+            <input class="form-control"
+                   type="text"
+                   id="city"
+                   name="city"
+                   data-ng-model="item.city"
+                   required>
+        </label>
+        <label for="state">
+            <span>State</span>
+            <input class="form-control"
+                   type="text"
+                   id="state"
+                   name="state"
+                   data-ng-model="item.state"
+                   required>
+        </label>
+        <label for="zipcode">
+            <span>Zipcode</span>
+            <input class="form-control"
+                   type="text"
+                   id="zipcode"
+                   name="zipcode"
+                   data-ng-model="item.zipcode"
+                   required>
+        </label>
+        <label for="district">
+            <span>District</span>
+            <select class="form-control"
+                    id="district"
+                    name="district"
+                    data-ng-model="item.district"
+                    ng-options="dist.id as dist.name for dist in districts"></select>
+                </label>
+        <label>
+            <span>Item Id: {{ item.id }}</span>
+        </label>
+    </div>
+    <div class="form-controls clearfix">
+        <button type="button"
+                class="btn btn-default edit-item-cancel"
+                data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit"
+                type="submit"
+                class="btn btn-primary"
+                data-ng-disabled="detailForm.$invalid">Save and exit</button>
+    </div>
+</form>

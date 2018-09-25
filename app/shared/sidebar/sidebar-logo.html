@@ -1,0 +1,12 @@
+<img id="logo" class="bg-blue-brand-darkest clickable" ng-click="toggleSidebar()"
+     src="https://s3.amazonaws.com/next-tier/images/logo-white-cropped.svg" />
+<span class="active-indicator"
+      ng-if="stakeholderUser.isStudent && (messagingModel.unreadCount || notificationManager.count.unread)"
+      ng-click="toggleSidebar()">
+        {{messagingModel.unreadCount + notificationManager.count.unread}}
+</span>
+<span class="active-indicator"
+      ng-if="stakeholderUser.isCounselor && (messagingModel.unreadCount)"
+      ng-click="toggleSidebar()">
+        {{messagingModel.unreadCount}}
+</span>

@@ -1,0 +1,33 @@
+<md-content class="bg-grey" layout="row" layout-align="center start" layout-wrap>
+    <md-card ng-click="dash.showStudentDetails(stake.id)"
+        ng-repeat="stake in dash.DistrictModel.members">
+        <md-card-content>
+            <h5 class="md-title text-center">{{ dash.getStakeholderName(stake) }}</h5>
+            <table class="table table-condensed table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <td>Connections</td>
+                        <td class="text-right"> {{ stake.summary.connections || 0 }} </td>
+                    </tr>
+                    <tr>
+                        <td>Students applying to college</td>
+                        <td class="text-right"> {{ stake.summary.students_with_a_school || 0 }} </td>
+                    </tr>
+                    <tr>
+                        <td>Custom tasks created</td>
+                        <td class="text-right"> {{ stake.summary.custom_tasks || 0 }} </td>
+                    </tr>
+                    <tr>
+                        <td>Recommendations made</td>
+                        <td class="text-right"> {{ stake.summary.recommendations || 0 }}</td>
+                    </tr>
+                    <tr>
+                        <td>Date of last login</td>
+                        <td class="text-right"> {{ stake.last_login | date:shortDate || 0 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-card-content>
+    </md-card>
+</md-content>
+

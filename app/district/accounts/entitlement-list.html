@@ -1,0 +1,13 @@
+<div ng-if="vm.DistrictModel.selectedStakeholder.stakeholder_type=='Counselor'">
+    <div class="md-headline">Faculty Entitlements</div>
+    <br>
+    <div ng-repeat="role in vm.DistrictModel.district.roles track by $index">
+        <div class="checkbox-inline">
+            <label for="role{{role.id}}" class="">
+                <input id="role{{role.id}}" class="" type="checkbox"
+                       ng-checked="vm.DistrictModel.selectedStakeholder.roles.indexOf(role.id) > -1"
+                       ng-click="vm.toggleEntitlement(role.id)">
+                <strong>{{ role.name }}</strong><br>{{role.description}}</label>
+        </div>
+    </div>
+</div>

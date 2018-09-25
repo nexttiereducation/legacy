@@ -1,0 +1,34 @@
+<div id="search-high-school" data-ng-hide="vm.DistrictModel.selectedStakeholder.highschool">
+    <div id="search-high-school-info-text">
+        <p>Search for your high school by entering its 5-digit zip code and/or name. Select the school from available options in the drop-down menu and add it to your profile.
+            If no matches are found, email <a href="mailto:info@nexttiereducation.com">info@nexttiereducation.com</a> for assistance.</p>
+    </div>
+
+    <input
+            class="form-control ng-pristine ng-valid ng-touched"
+            placeholder="Enter your high school's zip code"
+            type="text"
+            ng-model="vm.highSchoolSearchObject.highSchoolSearchZipCode"
+            ng-keyup="vm.searchHighSchoolsByZipCodeOrName()"
+    />
+
+    <div id="search-partition">
+        <p>-OR-</p>
+    </div>
+
+    <input
+            class="form-control ng-pristine ng-valid ng-touched"
+            placeholder="Enter your high school's name"
+            type="text"
+            data-ng-model="vm.highSchoolSearchObject.highSchoolSearchName"
+            ng-keyup="vm.searchHighSchoolsByZipCodeOrName()"
+    />
+    <div id="box-of-highschools" data-ng-if="vm.highSchools.length > 0">
+        <ul class="selectable" data-ng-repeat="highSchool in vm.highSchools track by $index">
+            <li data-ng-click="vm.selectHighSchool(highSchool)" id="list-of-highschools">
+                <p>{{highSchool.name}} -
+                    {{highSchool.city + ", " + highSchool.state + " " + highSchool.zipcode}}</p>
+            </li>
+        </ul>
+    </div>
+</div>

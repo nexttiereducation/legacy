@@ -1,0 +1,20 @@
+<md-toolbar class="md-menu-toolbar">
+    <div class="md-toolbar-tools">
+        <button type="button"
+                class="btn tos-button"
+                data-ng-class="{ 'btn-primary': editingToU, 'btn-default': !editingToU }"
+                data-ng-click="editToU()">Terms of Service</button>
+        <button type="button"
+                class="btn pp-button"
+                data-ng-class="{ 'btn-primary': !editingToU, 'btn-default': editingToU }"
+                data-ng-click="editPP()">Privacy Policy</button>
+        <span flex></span>
+        <button type="button"
+                class="btn btn-primary save-content"
+                data-ng-click="save()">Save</button>
+    </div>
+</md-toolbar>
+<md-content class="md-padding">
+    <div text-angular
+         data-ng-model="textContent"></div>
+</md-content>

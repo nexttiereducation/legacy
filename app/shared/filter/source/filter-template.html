@@ -1,0 +1,23 @@
+<div class="filters" ng-class="{'expanded': showFilters, 'top': isExpanded}" layout="column" flex>
+    <div class="sub-menu-header search-wrapper" ng-class="{'expanded': showFilters}"
+         layout="row" layout-align="space-between center">
+        <md-input-container md-no-float layout="row" layout-align="space-between center" flex>
+            <md-icon class="material-icons text-white">search</md-icon>
+            <input class="search-input text-white" ng-model="searchTerm"
+                   ng-change="triggerSearch()" ng-model-options="{debounce: 500}" type="text"
+                   placeholder="Type in your search request here" flex />
+        </md-input-container>
+        <md-icon class="material-icons text-white search-clear-button" ng-click="clearSearch()" ng-if="searchTerm">close</md-icon>
+    </div>
+    <div class="scroll filter-container" layout="column" layout-align="start stretch" flex ng-show="!hideFilters">
+        <div class="text-left text-white" layout="row" layout-align="start center">
+            <md-icon class="material-icons text-white">filter_list</md-icon>
+            <span class="image-text-spacer"></span>
+            <div class="md-title" flex>FILTER</div>
+            <div ng-if="results" class="text-right"><small>RESULTS</small>: {{results}}</div>
+        </div>
+        <div class="filters-wrapper md-margin" layout="column" layout-align="start stretch" flex><!--  ng-if="showFilters" -->
+            <category-filter ng-repeat="category in filters" category="category" layout="column"></category-filter>
+        </div>
+    </div>
+</div>

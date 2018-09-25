@@ -1,0 +1,149 @@
+<div layout="row"
+     layout-align="space-between center"
+     layout-margin>
+    <div class="table-controls form-inline"
+         layout="row"
+         layout-wrap
+         flex="35">
+        <div layout="row">
+            <md-icon class="material-icons">filter_list</md-icon>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Filter by Email Address"
+                   data-ng-model="query"
+                   data-ng-model-options="{ updateOn: 'default blur submit', debounce: {'default': 500, 'blur': 0} }"
+                   data-ng-change="getListItems();items.nextPage();" />
+        </div>
+        <label class="md-margin">
+            <input type="checkbox"
+                   data-ng-model="hideAnonymous"
+                   data-ng-change="getListItems();items.nextPage();">
+            <span>Hide Anonymous Users</span>
+        </label>
+    </div>
+    <div id="stakeholder-headers"
+         flex="65"
+         layout="row"
+         layout-align="end center"
+         layout-wrap>
+        <button type="button"
+                class="btn btn-primary add-new-item"
+                data-ng-click="openNewItemForm()">Add New</button>
+        <button type="button"
+                class="btn btn-primary phase-dates"
+                data-ng-click="openPhaseDatesForm()">Phase Transition Dates</button>
+        <button type="button"
+                class="btn btn-primary"
+                data-ng-click="exportAmbassadorList()"
+                data-ng-disabled="loadingCsv">Export Ambassador List</button>
+        <button type="button"
+                class="btn btn-primary"
+                data-ng-if="!isExportingStakeholdersReport"
+                data-ng-click="openFormToQueryStakeholders()">Export Stakeholders Report</button>
+        <button type="button"
+                class="btn btn-primary"
+                data-ng-if="isExportingStakeholdersReport">
+            <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>Exporting Stakeholders Report...</button>
+    </div>
+</div>
+<section class="table-fixed">
+    <div class="table-fixed-container">
+        <table class="table-hover table-bordered table-responsive"
+               infinite-scroll="items.nextPage()"
+               infinite-scroll-disabled="items.busy || items.url === null"
+               infinite-scroll-distance="10">
+            <thead>
+                <th style="width:7.5%">
+                    <div>ID</div>
+                </th>
+                <th style="width:25%"
+                    nowrap>
+                    <div data-sort-header="email">
+                        <span>Email</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='email'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:12.5%">
+                    <div data-sort-header="stakeholder_type">
+                        <span>Stakeholder Type</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='stakeholder_type'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:17.5%">
+                    <div data-sort-header="first_name">
+                        <span>First Name</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='first_name'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:17.5%">
+                    <div data-sort-header="last_name">
+                        <span>Last Name</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='last_name'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:7.5%">
+                    <div data-sort-header="verified"
+                         class="text-center">
+                        <span>Verified?</span>
+                        <md-icon class="material-icons"
+                                 ng-show="sorting.field=='verified'">{{'arrow_drop_' + sorting.direction}}</md-icon>
+                    </div>
+                </th>
+                <th style="width:7.5%">
+                    <div class="text-center">
+                        <span>Disable</span>
+                    </div>
+                </th>
+                <th style="width:5%">
+                    <div class="text-center">
+                        <span>Delete</span>
+                    </div>
+                </th>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="item in items.items track by item.id"
+                    id="stakeholder{{ item.id }}"
+                    data-ng-class="{ 'disabled': !item.is_active }">
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.id }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.email }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.stakeholder_type }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.first_name }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.last_name }}</td>
+                    <td data-ng-click="openEditForm( item, $index )"
+                        class="text-center">
+                        <md-icon class="material-icons">{{item.verified ? 'check_box' : 'check_box_outline_blank'}}</md-icon>
+                    </td>
+                    <td class="text-center">
+                        <md-button class="md-accent"
+                                   ng-click="toggleDisable( item, $index )"
+                                   ng-class="{'md-icon-button': item.is_active, 'no-italics no-margin btn-sm': !item.is_active}">
+                            <md-icon class="material-icons"
+                                     ng-class="{ 'text-grey': item.is_active }"
+                                     ng-if="item.is_active">cancel</md-icon>
+                            <span ng-if="!item.is_active">Enable</span>
+                        </md-button>
+                    </td>
+                    <td class="text-center">
+                        <md-button class="md-icon-button md-accent"
+                                   ng-click="deleteAccount( item, $index )">
+                            <md-icon class="material-icons">delete</md-icon>
+                        </md-button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8"
+                        class="text-center">
+                        <div class="md-padding md-subhead text-blue">
+                            <span data-ng-show="items.busy">
+                                <i class="fa fa-refresh fa-spin"></i> Loading data . . .</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

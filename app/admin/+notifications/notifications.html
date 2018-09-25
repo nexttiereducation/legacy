@@ -1,0 +1,38 @@
+<div class="row-container list-container">
+    <div class="row">
+
+        <div class="table-controls form-inline clearfix">
+            <label>
+                <span>Filter by Stakeholder ID:</span>
+                <input type="text" class="form-control" placeholder="Stakeholder ID"
+                    data-ng-model="query"
+                    data-ng-model-options="{ updateOn: 'default blur submit', debounce: {'default': 500, 'blur': 0} }"
+                    data-ng-change="getListItems();items.nextPage();">
+            </label>
+        </div>
+
+        <table class="table-hover table-bordered table-responsive">
+            <thead>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Stakeholder Id</th>
+                <th>Text</th>
+
+            </thead>
+            <tbody infinite-scroll="items.nextPage()"
+                    infinite-scroll-disabled="items.busy || items.url === null"
+                    infinite-scroll-distance="0">
+                <tr data-ng-repeat="item in items.items track by item.id" id="notification{{ item.id }}">
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.id }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">
+                        <span data-ng-if="!!item.achievement">Achievement</span>
+                        <span data-ng-if="!item.achievement">Notification</span>
+                    </td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.stakeholder }}</td>
+                    <td data-ng-click="openEditForm( item, $index )">{{ item.body }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div data-ng-show="items.busy">Loading data...</div>
+    </div>
+</div>

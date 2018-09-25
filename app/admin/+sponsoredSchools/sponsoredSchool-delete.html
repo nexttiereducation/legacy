@@ -1,0 +1,17 @@
+<h2>Remove Sponsorship
+    <span>{{ vm.sponsorship.name }}</span>
+</h2>
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <h2>Are you sure you want to remove this Sponsorship?</h2>
+    <div class="form-controls clearfix">
+        <button type="button"
+                class="btn btn-default edit-item-cancel"
+                data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit"
+                type="submit"
+                class="btn btn-primary"
+                data-ng-click="vm.removeSponsor(vm.sponsorship)">Remove</button>
+    </div>
+</form>

@@ -1,0 +1,63 @@
+<h2>Edit Item:
+    <span>{{ item.name }}</span>
+</h2>
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <h3>Individual Fields for Achievement {{ item.id }}</h3>
+    <div>
+        <label>
+            <span>Title</span>
+            <input class="form-control"
+                   type="text"
+                   name="title"
+                   data-ng-model="item.title"
+                   required />
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Description</span>
+            <textarea name="description"
+                      data-ng-model="item.description"></textarea>
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Color Photo Url</span>
+            <input class="form-control"
+                   type="text"
+                   name="photo_url"
+                   data-ng-model="item.photo_url" />
+            <img data-ng-src="{{ item.photo_url }}" />
+        </label>
+        <label>
+            <span>Black &amp; White Photo Url</span>
+            <input class="form-control"
+                   type="text"
+                   name="bw_photo_url"
+                   data-ng-model="item.bw_photo_url" />
+            <img data-ng-src="{{ item.bw_photo_url }}" />
+        </label>
+    </div>
+    <div>
+        <label>
+            <span>Disabled?</span>
+            <input class="form-control"
+                   type="checkbox"
+                   name="disabled"
+                   data-ng-init="item.isDisabled = !item.is_visible"
+                   data-ng-model="item.isDisabled"
+                   data-ng-change="item.is_visible = !item.isDisabled" />
+        </label>
+    </div>
+    <div class="form-controls clearfix">
+        <button type="button"
+                class="btn btn-default edit-item-cancel"
+                data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit"
+                type="submit"
+                class="btn btn-primary"
+                data-ng-disabled="detailForm.$invalid">Save and exit</button>
+    </div>
+</form>

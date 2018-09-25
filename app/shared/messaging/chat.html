@@ -1,0 +1,23 @@
+<div class="chat-window" layout="column" layout-align="space-between stretch" layout-fill flex>
+    <div class="chat-history" flex>
+        <md-button ng-if="nextPage" ng-click="getMessages(true)"
+                   class="md-primary full-width no-margin">Load More</md-button>
+        <div ng-repeat="message in messages" class="chat-message-container">
+            <div ng-if="newDate(message.created_on.slice(0,10)) || $index === 0" class="md-caption text-center">{{::message.created_on | date: shortDate}}</div>
+            <div class="chat-message md-body-1"
+                ng-class="{'from-me': message.author.id !== chat.id, 'from-them': message.author.id === chat.id}">
+                <div class="chat-text" ng-bind-html="linkify(message.body)"></div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-box bg-white md-whiteframe-z1" layout="row" layout-align="space-between center">
+        <md-input-container md-no-float class="md-block" flex>
+            <textarea placeholder="New Message" ng-model="newMessage"
+                      ng-keyup="$event.keyCode == 13 && sendMessage()"
+                      rows="1" md-select-on-focus></textarea>
+        </md-input-container>
+        <md-button class="md-icon-button" ng-click="sendMessage()">
+            <md-icon class="material-icons text-blue">send</md-icon>
+        </md-button>
+    </div>
+</div>

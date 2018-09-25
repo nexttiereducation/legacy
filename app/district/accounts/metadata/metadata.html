@@ -1,0 +1,15 @@
+<md-content class="bg-grey" id="metadata" ng-controller="Metadata as vm" layout="column" flex>
+	<md-card>
+		<md-card-content>
+		    <div class="md-headline">Set District Identifier</div>
+		    <br>
+		    <div class="md-subhead"><strong>Current District Identifier</strong>: {{ vm.metadata.field_name }}</div>
+		    <br>
+		    <div class="form-group">
+	            <label class="control-label">Enter Your Unique District Identifier</label>
+	            <input class="form-control district-search" type="text" id="uniqueIdentifier" name="uniqueIdentifier" placeholder="Unique Identifier">
+		    </div>
+            <button class="btn btn-primary" ng-click="vm.updateMetadata()" type="submit">Submit</button>
+	    </md-card-content>
+    </md-card>
+</md-content>

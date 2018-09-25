@@ -1,0 +1,91 @@
+#district-dashboard{
+  overflow: hidden;
+  .double-right-panel{
+    padding-bottom: 0;
+  }
+}
+
+.results-table {
+  height: 560px;
+}
+
+.summary-table {
+  width: 100%;
+  height: 560px;
+}
+
+.team-stats{
+  padding-bottom: 100px;
+}
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+.scrollable-tbody {
+  position: absolute;
+  top: 60px;
+  overflow: scroll;
+  bottom: 0px;
+}
+
+#stake_table{
+  top: 75px;
+}
+
+#editForm{
+  position: absolute;
+  left: 0;
+  z-index: 1200;
+  height: 100%;
+  background-color: white;
+}
+.modal-backdrop.am-fade {
+  opacity: .5;
+  transition: opacity .15s linear;
+  &.ng-enter {
+    opacity: 0;
+    &.ng-enter-active {
+      opacity: .5;
+    }
+  }
+  &.ng-leave {
+    opacity: .5;
+    &.ng-leave-active {
+      opacity: 0;
+    }
+  }
+}
+#metadata {
+    .district-search {
+        display: inline;
+        width: 300px;
+    }
+}
+#district-high-school-scroll {
+    overflow: scroll;
+    height: calc(~"100vh - 175px");
+}
+
+@tabs-height: 75px;
+@header-height: 68px;
+.full-height-minus-header{
+  height: ~"calc(100% - @{header-height})";
+  .full-height-minus-header-and-tabs{
+    height: ~"calc(100% - @{tabs-height})";
+  }
+}
+.full-height-minus-tabs{
+  height: ~"calc(100% - @{tabs-height})";
+}
+
+
+.full-height-minus-header-and-tabs{
+  height: ~"calc(100% - (@{tabs-height} + @{header-height}))";
+}

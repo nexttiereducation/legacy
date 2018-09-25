@@ -1,0 +1,36 @@
+<h2>Edit Action
+    <span>{{ action.name }}</span>
+</h2>
+<form id="edit-item"
+      name="detailForm"
+      data-ng-submit="confirm();">
+    <h3>Individual Fields</h3>
+    <div>
+        <label>
+            <span>Name</span>
+            <input type="text"
+                   name="name"
+                   data-ng-model="action.name"
+                   required>
+        </label>
+        <label>
+            <span>Resource</span>
+            <input type="text"
+                   name="resource"
+                   data-ng-model="action.resource">
+        </label>
+        <span>Enterprise</span>
+        <input type="checkbox"
+               name="enterprise"
+               data-ng-model="action.enterprise">
+    </div>
+    <div class="form-controls clearfix">
+        <button type="button"
+                class="btn btn-default edit-item-cancel"
+                data-ng-click="closeThisDialog()">Cancel</button>
+        <button id="edit-item-submit"
+                type="submit"
+                class="btn btn-primary"
+                data-ng-disabled="detailForm.$invalid">Save and exit </button>
+    </div>
+</form>

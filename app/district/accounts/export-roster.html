@@ -1,0 +1,48 @@
+<md-dialog aria-label="Export Roster" ng-cloak ng-controller="Team as exportVM">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Export Roster Data</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="vm.closeDialog()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div layout-gt-xs="row" layout-align="space-between start" layout="column">
+                    <div layout="column" flex="45">
+                        <div class="md-headline">Analytics Report</div>
+                        <div layout="row" layout-align="space-between center">
+                            <i class="fa fa-bar-chart fa-5x"></i>
+                            <div class="md-margin">Download an analytics report of your students. Ideal for
+                                creating detailed pivot tables and graphing.</div>
+                        </div>
+                        <div class="download-button-wrapper">
+                            <button class="btn btn-primary" data-ng-click="exportVM.actuallyExport(true)">
+                                <i class="fa fa-download"></i> Download<span ng-if="exportVM.analyticsIsDownloading">ing...</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div layout="column" flex="45">
+                        <div class="md-headline">Summary Report</div>
+                        <div layout="row" layout-align="space-between center">
+                            <i class="fa fa-table fa-5x"></i>
+                            <div class="md-margin">Download a summary report of your roster. Ideal for a brief one-line
+                                summary of each team member.</div>
+                        </div>
+                        <div class="download-button-wrapper">
+                            <button class="btn btn-primary" data-ng-click="exportVM.actuallyExport(false)">
+                                <i class="fa fa-download"></i> Download<span ng-if="exportVM.summaryIsDownloading">ing...</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="center center">
+            <span class="md-caption">*Reports based on filters selected.</span>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
